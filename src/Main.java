@@ -1,11 +1,10 @@
 package src;
 
+import src.boundary.MainMenuBoundary;
 import src.controller.AuthenticationController;
 import src.controller.LoginController;
 import src.model.User;
 import src.utils.SystemInitialiser;
-
-import java.util.Scanner;
 
 public class Main {
     private static final AuthenticationController authController = new AuthenticationController();
@@ -18,7 +17,7 @@ public class Main {
 
         if (loggedInUser != null) {
             System.out.println("Login successful! Role: " + loggedInUser.getRole());
-            loggedInUser.accessHMS();
+            MainMenuBoundary.displayMenu(loggedInUser);
         } else {
             System.out.println("Login failed. Please try again.");
         }
