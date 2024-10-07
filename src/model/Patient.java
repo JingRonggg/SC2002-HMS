@@ -6,7 +6,6 @@ import java.util.List;
 public class Patient extends User {
 
     //TODO declare all Data classes
-    private final String patientID;
     private final String dateOfBirth;
     private final String bloodType;
 //    private final List<String, PastDiagnosis> pastDiagnosisList;
@@ -15,9 +14,8 @@ public class Patient extends User {
 //    private String phoneNumber;
     private String emailAddress;
 
-    public Patient(String hospitalID, String patientID, String patientName, String dateOfBirth, String patientGender, String bloodType, String emailAddress) {
-        super(hospitalID, "Patient", patientName, patientGender);
-        this.patientID = patientID;
+    public Patient(String patientID, String patientName, String dateOfBirth, String patientGender, String bloodType, String emailAddress) {
+        super(patientID, "Patient", patientName, patientGender);
         this.dateOfBirth = dateOfBirth;
         this.bloodType = bloodType;
         this.emailAddress = emailAddress;
@@ -39,21 +37,11 @@ public class Patient extends User {
         this.emailAddress = emailAddress;
     }
 
-    public String getPatientID() {
-        return patientID;
-    }
-
     public String getDateOfBirth() {
         return dateOfBirth;
     }
 
     public String getBloodType() {
         return bloodType;
-    }
-
-    //TODO move to view
-    @Override
-    public void accessHMS() {
-        System.out.println("Welcome, Patient! Accessing patient-specific features...");
     }
 }

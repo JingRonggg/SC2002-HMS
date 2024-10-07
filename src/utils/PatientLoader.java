@@ -28,9 +28,7 @@ public class PatientLoader {
                 String bloodType = values[4];
                 String contactInformation = values[5];
 
-                String hospitalID = IDGenerator.nextID();
-
-                authController.addUser(new Patient(hospitalID, patientID, patientName, dateOfBirth, gender, bloodType, contactInformation));
+                authController.addUser(new Patient(patientID, patientName, dateOfBirth, gender, bloodType, contactInformation));
             }
         } catch (IOException e) {
             e.printStackTrace();

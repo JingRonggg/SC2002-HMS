@@ -27,17 +27,15 @@ public class StaffLoader {
                 String gender = values[3];
                 String age = values[4];
 
-                String hospitalID = IDGenerator.nextID();
-
                 switch (staffRole.toUpperCase()) {
                     case "ADMINISTRATOR":
-                        authController.addUser(new Administrator(hospitalID, staffID, staffName, staffRole, gender, age));
+                        authController.addUser(new Administrator(staffID, staffName, staffRole, gender, age));
                         break;
                     case "DOCTOR":
-                        authController.addUser(new Doctor(hospitalID, staffID, staffName, staffRole, gender, age));
+                        authController.addUser(new Doctor(staffID, staffName, staffRole, gender, age));
                         break;
                     case "PHARMACIST":
-                        authController.addUser(new Pharmacist(hospitalID, staffID, staffName, staffRole, gender, age));
+                        authController.addUser(new Pharmacist(staffID, staffName, staffRole, gender, age));
                         break;
                     default:
                         System.out.println("Invalid staff role: " + staffRole);

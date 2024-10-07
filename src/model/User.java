@@ -38,6 +38,4 @@ public abstract class User {
     public String getRole() {
         return role;
     }
-
-    public abstract void accessHMS();  // Method for role-specific HMS access
 }
