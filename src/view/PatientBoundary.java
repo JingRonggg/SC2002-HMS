@@ -1,10 +1,19 @@
 package src.view;
 
+import src.controller.PatientController;
+
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
 public class PatientBoundary {
+    private final PatientController patientController;
+    private final String hospitalID;
+
+    public PatientBoundary(PatientController patientController, String hospitalID) {
+        this.patientController = patientController;
+        this.hospitalID = hospitalID;
+    }
 
     public void displayPatientMenu(Scanner scanner) {
         while (true) {
@@ -23,9 +32,11 @@ public class PatientBoundary {
 
             switch (choice) {
                 case 1:
+                    patientController.getPatientInformation(hospitalID);
                     System.out.println("Insert view medical record function");
                     break;
                 case 2:
+                    patientController.updatePatientInformation(hospitalID);
                     System.out.println("Insert update personal information function");
                     break;
                 case 3:

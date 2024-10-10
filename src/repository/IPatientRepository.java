@@ -6,4 +6,6 @@ import java.util.Collection;
 
 public interface IPatientRepository extends IUserRepository {
     Collection<Patient> getAllPatients();
+    Patient getPatientInfo(String hospitalID);
+    boolean updatePatientEmail(String hospitalID, String newEmail);
 }
