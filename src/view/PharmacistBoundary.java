@@ -1,4 +1,4 @@
-package src.boundary;
+package src.view;
 
 import java.util.Scanner;
 

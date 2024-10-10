@@ -1,10 +1,18 @@
-package src.boundary;
+package src.view;
+
+import src.controller.AdminController;
 
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
 public class AdministratorBoundary {
+    private final AdminController adminController;
+
+    public AdministratorBoundary(AdminController adminController) {
+        this.adminController = adminController;
+    }
+
     public void displayAdministratorMenu(Scanner scanner) {
         while (true) {
             System.out.println("Administrator Menu:");
@@ -19,6 +27,7 @@ public class AdministratorBoundary {
             switch (choice) {
                 case 1:
                     System.out.println("Insert View and Manage Hospital Staff function");
+                    adminController.viewAllStaff();
                     break;
                 case 2:
                     System.out.println("Insert View Appointments Details function");

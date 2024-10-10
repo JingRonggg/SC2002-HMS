@@ -1,6 +1,4 @@
-package src.boundary;
-
-import src.model.Patient;
+package src.view;
 
 import java.util.Scanner;
 

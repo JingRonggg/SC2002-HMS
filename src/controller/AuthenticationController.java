@@ -1,24 +1,20 @@
 package src.controller;
 
 import src.model.User;
+import src.repository.IUserRepository;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class AuthenticationController {
-    private HashMap<String, User> users;
+    private final IUserRepository userRepository;
 
-    public AuthenticationController() {
-        users = new HashMap<>();
-    }
-
-    public void addUser(User user) {
-        users.put(user.getHospitalID(), user);
+    public AuthenticationController(IUserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public User authenticate(String hospitalID, String password) {
-        User user = users.get(hospitalID);
+        User user = userRepository.getUserByHospitalID(hospitalID);
         if (user != null && user.getPassword().equals(password)) {
             return user;  // Successful login
         }
@@ -29,6 +25,7 @@ public class AuthenticationController {
         System.out.println("Enter your new password: ");
         String newPassword = scanner.nextLine();
         user.setPassword(newPassword);
+        userRepository.updateUser(user);
         System.out.println("Password changed successfully!");
     }
 
@@ -37,6 +34,14 @@ public class AuthenticationController {
     }
 
     public Collection<User> getAllUsers() {
-        return users.values();
+        return userRepository.getAllUsers();
+    }
+
+    public void addUser(User user) {
+        userRepository.addUser(user);
+    }
+
+    public void deleteUser(String hospitalID) {
+        userRepository.deleteUser(hospitalID);
     }
 }

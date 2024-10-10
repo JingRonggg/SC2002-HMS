@@ -35,14 +35,19 @@ public class LoginController {
     }
 
     public void changePassword(User loggedInUser) {
-        authController.changePassword(loggedInUser, scanner);
-        System.out.println("Please enter your new password to verify: ");
-        String newPassword = scanner.nextLine();
+        boolean isPasswordChanged = false;
 
-        if (authController.isPasswordCorrect(loggedInUser, newPassword)) {
-            System.out.println("Password change verified successfully!");
-        } else {
-            System.out.println("Password verification failed!");
+        while (!isPasswordChanged) {
+            authController.changePassword(loggedInUser, scanner);
+            System.out.println("Please enter your new password to verify: ");
+            String newPassword = scanner.nextLine();
+
+            if (authController.isPasswordCorrect(loggedInUser, newPassword)) {
+                System.out.println("Password change verified successfully!");
+                isPasswordChanged = true; // Exit the loop
+            } else {
+                System.out.println("Password verification failed! Please try again.");
+            }
         }
     }
 }

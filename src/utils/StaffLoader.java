@@ -29,13 +29,13 @@ public class StaffLoader {
 
                 switch (staffRole.toUpperCase()) {
                     case "ADMINISTRATOR":
-                        authController.addUser(new Administrator(staffID, staffName, staffRole, gender, age));
+                        authController.addUser(new Administrator(staffID, staffRole, staffName, gender, age));
                         break;
                     case "DOCTOR":
-                        authController.addUser(new Doctor(staffID, staffName, staffRole, gender, age));
+                        authController.addUser(new Doctor(staffID, staffRole, staffName, gender, age));
                         break;
                     case "PHARMACIST":
-                        authController.addUser(new Pharmacist(staffID, staffName, staffRole, gender, age));
+                        authController.addUser(new Pharmacist(staffID, staffRole, staffName, gender, age));
                         break;
                     default:
                         System.out.println("Invalid staff role: " + staffRole);
