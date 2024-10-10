@@ -1,7 +1,9 @@
 package src.view;
 
 import src.controller.AdminController;
+import src.controller.PatientController;
 import src.model.User;
+import src.repository.PatientRepository;
 import src.repository.StaffRepository;
 
 import java.util.Scanner;
@@ -11,6 +13,7 @@ public class MainMenuBoundary {
 
     public static void displayMenu(User user) {
         String role = user.getRole();
+        String hospitalID = user.getHospitalID();
         switch (role.toUpperCase()) {
             case "ADMINISTRATOR":
                 StaffRepository staffRepository = new StaffRepository();
@@ -19,7 +22,9 @@ public class MainMenuBoundary {
                 administratorBoundary.displayAdministratorMenu(scanner);
                 break;
             case "PATIENT":
-                PatientBoundary patientBoundary = new PatientBoundary();
+                PatientRepository patientRepository = new PatientRepository();
+                PatientController patientController = new PatientController(patientRepository);
+                PatientBoundary patientBoundary = new PatientBoundary(patientController, hospitalID);
                 patientBoundary.displayPatientMenu(scanner);
                 break;
             case "DOCTOR":
