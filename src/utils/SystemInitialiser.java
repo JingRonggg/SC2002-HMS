@@ -12,9 +12,11 @@ public class SystemInitialiser {
 
         PatientLoader patientLoader = new PatientLoader(patientFilePath);
         StaffLoader staffLoader = new StaffLoader(staffFilePath);
+        MedicationLoader medicationLoader = new MedicationLoader(medicineFilePath);
 
         patientLoader.loadPatients(authController);
         staffLoader.loadStaff(authController);
+        medicationLoader.loadMedication();
 
         // TODO
         // removing this part cause its for testing
