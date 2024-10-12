@@ -1,15 +1,20 @@
 package src.controller;
 
+import src.model.MedicalRecord;
 import src.model.Patient;
 import src.repository.IPatientRepository;
+import src.repository.IMedicalRecordRepository;
+import src.repository.MedicalRecordRepository;
 
 import java.util.Scanner;
 
 public class PatientController {
     private final IPatientRepository patientRepository;
+    private final IMedicalRecordRepository medicalRecordRepository;
 
-    public PatientController(IPatientRepository patientRepository) {
+    public PatientController(IPatientRepository patientRepository, IMedicalRecordRepository medicalRecordRepository) {
         this.patientRepository = patientRepository;
+        this.medicalRecordRepository = medicalRecordRepository;
     }
 
     public void getPatientInformation(String hospitalID) {
@@ -38,6 +43,17 @@ public class PatientController {
             };
         } else {
             System.out.println("Could not update patient information.");
+        }
+    }
+
+    public void viewMedicalRecord(String hospitalID) {
+        Patient patient = patientRepository.getPatientInfo(hospitalID);
+        MedicalRecord medicalRecord = medicalRecordRepository.readMedicalRecord(patient.getHospitalID());
+        if (medicalRecord != null) {
+            System.out.println("Medical Record:");
+            System.out.println("Treatments:" + medicalRecord.getTreatments());
+            System.out.println("Past Diagnosis:" + medicalRecord.getPastDiagnosis());
+            System.out.println("Prescribe Medications:" + medicalRecord.getPrescribeMedications());
         }
     }
 }

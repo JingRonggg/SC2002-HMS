@@ -33,7 +33,7 @@ public class PatientBoundary {
             switch (choice) {
                 case 1:
                     patientController.getPatientInformation(hospitalID);
-                    System.out.println("Insert view medical record function");
+                    patientController.viewMedicalRecord(hospitalID);
                     break;
                 case 2:
                     patientController.updatePatientInformation(hospitalID);
