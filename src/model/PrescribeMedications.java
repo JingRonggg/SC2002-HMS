@@ -34,4 +34,10 @@ public class PrescribeMedications {
     public void setStockAlert(int lowstockalert){
         this.lowstockalert = lowstockalert;
     }
+
+    // Override toString to print human-readable information
+    @Override
+    public String toString() {
+        return "Medication: " + medicinename + ", Stock: " + stock + ", Low Stock Alert: " + lowstockalert;
+    }
 }
