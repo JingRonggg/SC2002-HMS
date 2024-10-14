@@ -3,6 +3,7 @@ package src.view;
 import src.controller.AdminController;
 import src.controller.PatientController;
 import src.model.User;
+import src.repository.MedicalRecordRepository;
 import src.repository.PatientRepository;
 import src.repository.StaffRepository;
 
@@ -23,7 +24,8 @@ public class MainMenuBoundary {
                 break;
             case "PATIENT":
                 PatientRepository patientRepository = new PatientRepository();
-                PatientController patientController = new PatientController(patientRepository);
+                MedicalRecordRepository medicalRecordRepository = new MedicalRecordRepository();
+                PatientController patientController = new PatientController(patientRepository, medicalRecordRepository);
                 PatientBoundary patientBoundary = new PatientBoundary(patientController, hospitalID);
                 patientBoundary.displayPatientMenu(scanner);
                 break;
