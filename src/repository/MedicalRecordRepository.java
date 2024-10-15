@@ -1,8 +1,10 @@
 package src.repository;
 
-import src.model.*;
+import src.model.MedicalRecord;
+import src.model.PastDiagnosis;
+import src.model.PrescribeMedications;
+import src.model.Treatments;
 
-import java.util.Collection;
 import java.util.HashMap;
 
 public class MedicalRecordRepository implements IMedicalRecordRepository {

@@ -5,7 +5,6 @@ import src.model.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class PatientRepository extends UserRepository implements IPatientRepository {
     public PatientRepository() {}

@@ -6,7 +6,6 @@ import src.model.Patient;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Set;
 
 public class PatientLoader {
     private String filePath;
@@ -31,7 +30,7 @@ public class PatientLoader {
                 authController.addUser(new Patient(patientID, patientName, dateOfBirth, gender, bloodType, contactInformation));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error reading the file: " + e.getMessage());
         }
     }
 }

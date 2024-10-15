@@ -4,7 +4,6 @@ import src.model.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 public class StaffRepository extends UserRepository implements IStaffRepository {
     public StaffRepository() {}
