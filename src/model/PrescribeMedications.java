@@ -1,24 +1,24 @@
 package src.model;
 
 public class PrescribeMedications {
-    private String medicinename;
+    private String medicineName;
     private int stock;
-    private int lowstockalert;
+    private int lowStockAlert;
     private String status;
 
-    public PrescribeMedications(String medicinename, int stock, int lowstockalert){
-        this.medicinename = medicinename;
+    public PrescribeMedications(String medicineName, int stock, int lowStockAlert){
+        this.medicineName = medicineName;
         this.stock = stock;
-        this.lowstockalert = lowstockalert;
+        this.lowStockAlert = lowStockAlert;
         this.status = "disperse";
     }
 
     public String getMedicineName(){
-      return medicinename;
+      return medicineName;
     }
     
-    public void newMedicine(String medicinename){
-        this.medicinename = medicinename;
+    public void newMedicine(String medicineName){
+        this.medicineName = medicineName;
     }
 
     public int getStock(){
@@ -30,11 +30,11 @@ public class PrescribeMedications {
     }
 
     public int getStockAlert(){
-        return lowstockalert;
+        return lowStockAlert;
     }
 
-    public void setStockAlert(int lowstockalert){
-        this.lowstockalert = lowstockalert;
+    public void setStockAlert(int lowStockAlert){
+        this.lowStockAlert = lowStockAlert;
     }
 
     public String getStatus() {
