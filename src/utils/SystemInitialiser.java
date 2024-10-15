@@ -2,6 +2,7 @@ package src.utils;
 
 import src.model.*;
 import src.controller.AuthenticationController;
+import src.controller.MedicineController;
 import src.controller.PatientController;
 
 public class SystemInitialiser {

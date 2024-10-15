@@ -4,11 +4,13 @@ public class PrescribeMedications {
     private String medicinename;
     private int stock;
     private int lowstockalert;
+    private String status;
 
     public PrescribeMedications(String medicinename, int stock, int lowstockalert){
         this.medicinename = medicinename;
         this.stock = stock;
         this.lowstockalert = lowstockalert;
+        this.status = "disperse";
     }
 
     public String getMedicineName(){
@@ -35,9 +37,11 @@ public class PrescribeMedications {
         this.lowstockalert = lowstockalert;
     }
 
-    // Override toString to print human-readable information
-    @Override
-    public String toString() {
-        return "Medication: " + medicinename + ", Stock: " + stock + ", Low Stock Alert: " + lowstockalert;
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

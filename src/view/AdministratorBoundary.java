@@ -1,5 +1,6 @@
 package src.view;
 
+import src.controller.MedicineController;
 import src.controller.AdminController;
 
 import java.util.Scanner;
@@ -8,9 +9,11 @@ import static java.lang.Integer.parseInt;
 
 public class AdministratorBoundary {
     private final AdminController adminController;
+    private final MedicineController medicineController;
 
-    public AdministratorBoundary(AdminController adminController) {
+    public AdministratorBoundary(AdminController adminController, MedicineController medicineController) {
         this.adminController = adminController;
+        this.medicineController = medicineController;
     }
 
     public void displayAdministratorMenu(Scanner scanner) {
@@ -34,9 +37,11 @@ public class AdministratorBoundary {
                     break;
                 case 3:
                     System.out.println("Insert View and Manage Medication Inventory function");
+                    medicineController.displayAllMedicines();
                     break;
                 case 4:
                     System.out.println("Insert Approve Replenishment Request function");
+                    medicineController.replenishMedicine();
                     break;
                 case 5:
                     System.out.println("Logging out...");
