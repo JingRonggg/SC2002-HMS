@@ -3,7 +3,9 @@ import java.util.HashMap;
 import src.model.PrescribeMedications;
 
 public class MedicineRepository implements IMedicineRepository{
-    protected HashMap<String, PrescribeMedications> medicationInventory = new HashMap<>();
+    protected static HashMap<String, PrescribeMedications> medicationInventory = new HashMap<>();
+
+    public MedicineRepository() {}
 
     public void addMedicine(PrescribeMedications medication) {
         String medicineName = medication.getMedicineName();

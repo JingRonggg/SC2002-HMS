@@ -2,9 +2,8 @@ package src.controller;
 
 import src.model.MedicalRecord;
 import src.model.Patient;
-import src.repository.IPatientRepository;
 import src.repository.IMedicalRecordRepository;
-import src.repository.MedicalRecordRepository;
+import src.repository.IPatientRepository;
 
 import java.util.Scanner;
 

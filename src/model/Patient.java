@@ -1,8 +1,5 @@
 package src.model;
 
-import java.util.Date;
-import java.util.List;
-
 public class Patient extends User {
 
     //TODO declare all Data classes

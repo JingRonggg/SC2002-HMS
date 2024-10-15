@@ -17,14 +17,12 @@ public class Main {
     static MedicineRepository medicineRepo = new MedicineRepository();
     private static final AuthenticationController authController = new AuthenticationController(userRepository);
     private static final LoginController loginController = new LoginController(authController);
+    private static final MedicineController medicineController = new MedicineController(medicineRepo);
 
     public static void main(String[] args) {
         // Initialize system data
-        SystemInitialiser.initialiser(authController);
+        SystemInitialiser.initialiser(authController, medicineController);
         User loggedInUser = loginController.login();
-        
-        //TODO remove this later, checking the subclasses added into user hashmap
-        ((UserRepository) userRepository).checkUserClasses();
 
         if (loggedInUser != null) {
             System.out.println("Login successful! Role: " + loggedInUser.getRole());

@@ -1,9 +1,8 @@
 package src.controller;
 
-import java.util.HashMap;
 import src.model.PrescribeMedications;
 import src.repository.IMedicineRepository;
-import src.repository.MedicineRepository;
+
 import java.util.Scanner;
 
 

@@ -5,9 +5,9 @@ import src.controller.MedicineController;
 import src.controller.PatientController;
 import src.model.User;
 import src.repository.MedicalRecordRepository;
+import src.repository.MedicineRepository;
 import src.repository.PatientRepository;
 import src.repository.StaffRepository;
-import src.repository.MedicineRepository;
 
 import java.util.Scanner;
 

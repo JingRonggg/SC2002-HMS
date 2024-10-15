@@ -42,7 +42,7 @@ public class StaffLoader {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error reading the file: " + e.getMessage());
         }
     }
 }
