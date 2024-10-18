@@ -1,6 +1,6 @@
 package src.utils;
 
-import src.controller.AuthenticationController;
+import src.controller.InitialiserUserController;
 import src.model.Patient;
 
 import java.io.BufferedReader;
@@ -14,7 +14,7 @@ public class PatientLoader {
         this.filePath = filePath;
     }
 
-    public void loadPatients(AuthenticationController authController) {
+    public void loadPatients() {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             br.readLine();
@@ -27,7 +27,7 @@ public class PatientLoader {
                 String bloodType = values[4];
                 String contactInformation = values[5];
 
-                authController.addUser(new Patient(patientID, patientName, dateOfBirth, gender, bloodType, contactInformation));
+                InitialiserUserController.addUser(new Patient(patientID, patientName, dateOfBirth, gender, bloodType, contactInformation));
             }
         } catch (IOException e) {
             System.out.println("Error reading the file: " + e.getMessage());

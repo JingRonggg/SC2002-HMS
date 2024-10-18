@@ -10,8 +10,8 @@ import src.repository.PatientRepository;
 import java.util.Scanner;
 
 public class PatientController {
-    private final IPatientRepository patientRepository;
-    private final IMedicalRecordRepository medicalRecordRepository;
+    private static IPatientRepository patientRepository;
+    private static IMedicalRecordRepository medicalRecordRepository;
 
     public PatientController() {
         patientRepository = new PatientRepository();

@@ -7,7 +7,7 @@ import src.repository.AdminRepository;
 import java.util.Collection;
 
 public class AdminController {
-    private final IAdminRepository staffRepo;
+    private static IAdminRepository staffRepo;
 
     public AdminController() {
         staffRepo = new AdminRepository();
