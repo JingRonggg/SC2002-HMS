@@ -19,18 +19,11 @@ public class MainMenuBoundary {
         String hospitalID = user.getHospitalID();
         switch (role.toUpperCase()) {
             case "ADMINISTRATOR":
-                MedicineRepository medicineRepository = new MedicineRepository();
-                MedicineController medicineController = new MedicineController(medicineRepository);
-                StaffRepository staffRepository = new StaffRepository();
-                AdminController adminController = new AdminController(staffRepository);
-                AdministratorBoundary administratorBoundary = new AdministratorBoundary(adminController, medicineController);
+                AdministratorBoundary administratorBoundary = new AdministratorBoundary();
                 administratorBoundary.displayAdministratorMenu(scanner);
                 break;
             case "PATIENT":
-                PatientRepository patientRepository = new PatientRepository();
-                MedicalRecordRepository medicalRecordRepository = new MedicalRecordRepository();
-                PatientController patientController = new PatientController(patientRepository, medicalRecordRepository);
-                PatientBoundary patientBoundary = new PatientBoundary(patientController, hospitalID);
+                PatientBoundary patientBoundary = new PatientBoundary(hospitalID);
                 patientBoundary.displayPatientMenu(scanner);
                 break;
             case "DOCTOR":

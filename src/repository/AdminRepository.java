@@ -5,8 +5,8 @@ import src.model.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class StaffRepository extends UserRepository implements IStaffRepository {
-    public StaffRepository() {}
+public class AdminRepository extends UserRepository implements IAdminRepository {
+    public AdminRepository() {}
 
     @Override
     public Collection<Staff> getAllStaff() {

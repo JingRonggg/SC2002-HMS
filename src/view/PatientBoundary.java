@@ -10,8 +10,8 @@ public class PatientBoundary {
     private final PatientController patientController;
     private final String hospitalID;
 
-    public PatientBoundary(PatientController patientController, String hospitalID) {
-        this.patientController = patientController;
+    public PatientBoundary(String hospitalID) {
+        patientController = new PatientController();
         this.hospitalID = hospitalID;
     }
 

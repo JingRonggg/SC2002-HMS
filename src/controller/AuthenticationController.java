@@ -2,6 +2,7 @@ package src.controller;
 
 import src.model.User;
 import src.repository.IUserRepository;
+import src.repository.UserRepository;
 
 import java.util.Collection;
 import java.util.Scanner;
@@ -9,8 +10,8 @@ import java.util.Scanner;
 public class AuthenticationController {
     private final IUserRepository userRepository;
 
-    public AuthenticationController(IUserRepository userRepository) {
-        this.userRepository = userRepository;
+    public AuthenticationController() {
+        userRepository = new UserRepository();
     }
 
     public User authenticate(String hospitalID, String password) {

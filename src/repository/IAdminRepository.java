@@ -7,7 +7,7 @@ import src.model.Staff;
 
 import java.util.Collection;
 
-public interface IStaffRepository extends IUserRepository {
+public interface IAdminRepository{
     Collection<Staff> getAllStaff();
     Collection<Doctor> getAllDoctors();
     Collection<Pharmacist> getAllPharmacists();

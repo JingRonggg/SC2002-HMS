@@ -1,15 +1,16 @@
 package src.controller;
 
 import src.model.Staff;
-import src.repository.IStaffRepository;
+import src.repository.IAdminRepository;
+import src.repository.AdminRepository;
 
 import java.util.Collection;
 
 public class AdminController {
-    private final IStaffRepository staffRepo;
+    private final IAdminRepository staffRepo;
 
-    public AdminController(IStaffRepository staffRepo) {
-        this.staffRepo = staffRepo;
+    public AdminController() {
+        staffRepo = new AdminRepository();
     }
 
     public void viewAllStaff() {

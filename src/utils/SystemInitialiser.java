@@ -5,6 +5,7 @@ import src.controller.MedicineController;
 
 public class SystemInitialiser {
 
+    // TODO move this whole class into controller, name it DB controller, ignore calling of auth controller, move CRUD operations from authentication controller to here, implement in interface
     public static void initialiser(AuthenticationController authController, MedicineController medicineController) {
         String patientFilePath = "./data/Patient_List.csv";
         String staffFilePath = "./data/Staff_List.csv";

@@ -8,8 +8,8 @@ public class LoginController {
     private final AuthenticationController authController;
     private final Scanner scanner;
 
-    public LoginController(AuthenticationController authController) {
-        this.authController = authController;
+    public LoginController() {
+        authController = new AuthenticationController();
         this.scanner = new Scanner(System.in);
     }
 

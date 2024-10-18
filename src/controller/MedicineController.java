@@ -2,6 +2,7 @@ package src.controller;
 
 import src.model.PrescribeMedications;
 import src.repository.IMedicineRepository;
+import src.repository.MedicineRepository;
 
 import java.util.Scanner;
 
@@ -9,8 +10,8 @@ import java.util.Scanner;
 public class MedicineController {
     private final IMedicineRepository medicineRepo;
 
-    public MedicineController (IMedicineRepository medicineRepo){
-        this.medicineRepo = medicineRepo;
+    public MedicineController (){
+        medicineRepo = new MedicineRepository();
     }
 
     public void addMedicine(PrescribeMedications medication) {
