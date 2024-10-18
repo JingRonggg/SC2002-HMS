@@ -2,6 +2,7 @@ package src;
 
 import src.controller.UserController;
 import src.controller.LoginController;
+import src.controller.MedicineController;
 import src.model.User;
 import src.view.MainMenuBoundary;
 
@@ -9,11 +10,14 @@ import java.util.Scanner;
 
 public class Main {
     private static final LoginController loginController = new LoginController();
+    private static MedicineController medicineController;
 
     public static void main(String[] args) {
         try {
             UserController initialiserController = new UserController();
             Scanner scanner = new Scanner(System.in);
+
+            medicineController = new MedicineController(); // Initialize MedicineController once
 
             // Loop until a successful login or exit
             while (true) {
@@ -25,7 +29,8 @@ public class Main {
 
                     // Session loop for the logged-in user
                     while (continueSession) {
-                        continueSession = MainMenuBoundary.displayMenu(loggedInUser);
+                        // Pass the loggedInUser and shared MedicineController to the MainMenuBoundary
+                        continueSession = MainMenuBoundary.displayMenu(loggedInUser, medicineController);
                     }
                 } else {
                     System.out.println("Login failed. Please try again.");
@@ -43,3 +48,4 @@ public class Main {
         }
     }
 }
+

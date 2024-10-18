@@ -89,5 +89,15 @@ public class MedicineRepository implements IMedicineRepository {
         }
     }
 
+    public void updateMedicine(String medicineName, int stock, int lowStockAlert) {
+        if (medicationInventory.containsKey(medicineName)) {
+            setStock(medicineName, stock);
+            setStockAlert(medicineName, lowStockAlert);
+            System.out.println(medicineName + " has been updated with new stock and stock alert.");
+        } else {
+            System.out.println("Medicine " + medicineName + " not found in inventory.");
+        }
+    }
+
 }
 

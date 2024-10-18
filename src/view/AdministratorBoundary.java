@@ -11,9 +11,9 @@ public class AdministratorBoundary {
     private final AdminController adminController;
     private final MedicineController medicineController;
 
-    public AdministratorBoundary() {
-        adminController = new AdminController();
-        medicineController = new MedicineController();
+    public AdministratorBoundary(AdminController adminController, MedicineController medicineController) {
+        this.adminController = adminController;
+        this.medicineController = medicineController;
     }
 
     public void displayAdministratorMenu(Scanner scanner) {

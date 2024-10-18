@@ -125,20 +125,20 @@ public class MedicineController {
     
                 case 3:
                     System.out.print("Input medicine name to update: ");
-                    String medicinestock = sc.nextLine();
-                    PrescribeMedications checkmedicine = medicineRepo.getMedicine(medicinestock);
-                    if (checkmedicine != null) {
+                    String medicineStock = sc.nextLine();
+                    PrescribeMedications checkMedicine = medicineRepo.getMedicine(medicineStock);
+                    if (checkMedicine != null) {
                         System.out.print("Input new stock: ");
-                        int stocklevel = sc.nextInt();
+                        int stockLevel = sc.nextInt();
                         System.out.print("Input new low stock alert: ");
-                        int stockalert = sc.nextInt();
-                        medicineRepo.setStock(medicinestock, stocklevel);
-                        medicineRepo.setStockAlert(medicinestock, stockalert);
-                        System.out.println(medicinestock + " has been updated.");
+                        int stockAlert = sc.nextInt();
+                        medicineRepo.updateMedicine(medicineStock, stockLevel, stockAlert);
+                        System.out.println(medicineStock + " has been updated.");
                     } else {
-                        System.out.println(medicinestock + " is not in the inventory!");
+                        System.out.println(medicineStock + " is not in the inventory!");
                     }
                     break;
+                
     
                 case 4:
                     System.out.println("Exiting...");

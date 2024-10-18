@@ -11,8 +11,8 @@ public class PharmacistBoundary {
 
     private final MedicineController medicineController;
 
-    public PharmacistBoundary() {
-        medicineController = new MedicineController();
+    public PharmacistBoundary(MedicineController medicineController) {
+       this.medicineController = medicineController;
     }
     public void displayPharmacistMenu(Scanner scanner) {
         while (true) {

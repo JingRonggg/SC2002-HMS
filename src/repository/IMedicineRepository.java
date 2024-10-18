@@ -28,4 +28,6 @@ public interface IMedicineRepository {
 
     public void deleteMedicine(String medicineName);
 
+    public void updateMedicine(String medicineName, int stock, int lowStockAlert);
+
 }
