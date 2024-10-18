@@ -15,7 +15,7 @@ public class MedicationLoader {
     }
 
     // Method to load the CSV file into the medication inventory
-    public void loadMedication(MedicineController medicineController) {
+    public void loadMedication() {
         String line;
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             br.readLine(); // Skip the header row
@@ -27,7 +27,7 @@ public class MedicationLoader {
 
                 // Create a Medication object and store it in the inventory
                 PrescribeMedications medication = new PrescribeMedications(medicineName, stock, lowStockAlert);
-                medicineController.addMedicine(medication); // Use MedicineController to add medicine
+                MedicineController.addMedicine(medication); // Use MedicineController to add medicine
             }
         } catch (IOException e) {
             System.out.println("Error reading the file: " + e.getMessage());

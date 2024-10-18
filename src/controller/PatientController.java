@@ -4,16 +4,18 @@ import src.model.MedicalRecord;
 import src.model.Patient;
 import src.repository.IMedicalRecordRepository;
 import src.repository.IPatientRepository;
+import src.repository.MedicalRecordRepository;
+import src.repository.PatientRepository;
 
 import java.util.Scanner;
 
 public class PatientController {
-    private final IPatientRepository patientRepository;
-    private final IMedicalRecordRepository medicalRecordRepository;
+    private static IPatientRepository patientRepository;
+    private static IMedicalRecordRepository medicalRecordRepository;
 
-    public PatientController(IPatientRepository patientRepository, IMedicalRecordRepository medicalRecordRepository) {
-        this.patientRepository = patientRepository;
-        this.medicalRecordRepository = medicalRecordRepository;
+    public PatientController() {
+        patientRepository = new PatientRepository();
+        medicalRecordRepository = new MedicalRecordRepository();
     }
 
     public void getPatientInformation(String hospitalID) {

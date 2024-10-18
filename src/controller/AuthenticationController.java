@@ -2,15 +2,15 @@ package src.controller;
 
 import src.model.User;
 import src.repository.IUserRepository;
+import src.repository.UserRepository;
 
-import java.util.Collection;
 import java.util.Scanner;
 
 public class AuthenticationController {
-    private final IUserRepository userRepository;
+    private static IUserRepository userRepository;
 
-    public AuthenticationController(IUserRepository userRepository) {
-        this.userRepository = userRepository;
+    public AuthenticationController() {
+        userRepository = new UserRepository();
     }
 
     public User authenticate(String hospitalID, String password) {
@@ -31,17 +31,5 @@ public class AuthenticationController {
 
     public boolean isPasswordCorrect(User user, String password) {
         return user.getPassword().equals(password);
-    }
-
-    public Collection<User> getAllUsers() {
-        return userRepository.getAllUsers();
-    }
-
-    public void addUser(User user) {
-        userRepository.addUser(user);
-    }
-
-    public void deleteUser(String hospitalID) {
-        userRepository.deleteUser(hospitalID);
     }
 }

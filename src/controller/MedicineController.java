@@ -2,18 +2,27 @@ package src.controller;
 
 import src.model.PrescribeMedications;
 import src.repository.IMedicineRepository;
+import src.repository.MedicineRepository;
+import src.utils.MedicationLoader;
 
 import java.util.Scanner;
 
 
 public class MedicineController {
-    private final IMedicineRepository medicineRepo;
+    private static IMedicineRepository medicineRepo;
 
-    public MedicineController (IMedicineRepository medicineRepo){
-        this.medicineRepo = medicineRepo;
+    public MedicineController (){
+        medicineRepo = new MedicineRepository();
+        loadMedications();
     }
 
-    public void addMedicine(PrescribeMedications medication) {
+    private void loadMedications() {
+        String medicineFilePath = "./data/Medicine_List.csv";
+        MedicationLoader medicationLoader = new MedicationLoader(medicineFilePath);
+        medicationLoader.loadMedication();
+    }
+
+    public static void addMedicine(PrescribeMedications medication) {
         medicineRepo.addMedicine(medication);
     }
 
