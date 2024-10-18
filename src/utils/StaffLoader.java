@@ -1,6 +1,6 @@
 package src.utils;
 
-import src.controller.InitialiserUserController;
+import src.controller.UserController;
 import src.model.Administrator;
 import src.model.Doctor;
 import src.model.Pharmacist;
@@ -29,13 +29,13 @@ public class StaffLoader {
 
                 switch (staffRole.toUpperCase()) {
                     case "ADMINISTRATOR":
-                        InitialiserUserController.addUser(new Administrator(staffID, staffRole, staffName, gender, age));
+                        UserController.addUser(new Administrator(staffID, staffRole, staffName, gender, age));
                         break;
                     case "DOCTOR":
-                        InitialiserUserController.addUser(new Doctor(staffID, staffRole, staffName, gender, age));
+                        UserController.addUser(new Doctor(staffID, staffRole, staffName, gender, age));
                         break;
                     case "PHARMACIST":
-                        InitialiserUserController.addUser(new Pharmacist(staffID, staffRole, staffName, gender, age));
+                        UserController.addUser(new Pharmacist(staffID, staffRole, staffName, gender, age));
                         break;
                     default:
                         System.out.println("Invalid staff role: " + staffRole);
