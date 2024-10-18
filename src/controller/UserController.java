@@ -8,10 +8,10 @@ import src.utils.StaffLoader;
 
 import java.util.Collection;
 
-public class InitialiserUserController {
+public class UserController {
     private static IUserRepository userRepository;
 
-    public InitialiserUserController() {
+    public UserController() {
         userRepository = new UserRepository();
         loadPatients();
         loadStaff();

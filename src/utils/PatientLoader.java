@@ -1,6 +1,6 @@
 package src.utils;
 
-import src.controller.InitialiserUserController;
+import src.controller.UserController;
 import src.model.Patient;
 
 import java.io.BufferedReader;
@@ -27,7 +27,7 @@ public class PatientLoader {
                 String bloodType = values[4];
                 String contactInformation = values[5];
 
-                InitialiserUserController.addUser(new Patient(patientID, patientName, dateOfBirth, gender, bloodType, contactInformation));
+                UserController.addUser(new Patient(patientID, patientName, dateOfBirth, gender, bloodType, contactInformation));
             }
         } catch (IOException e) {
             System.out.println("Error reading the file: " + e.getMessage());
