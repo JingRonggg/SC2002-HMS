@@ -38,6 +38,7 @@ public class AdministratorBoundary {
                 case 3:
                     System.out.println("Insert View and Manage Medication Inventory function");
                     medicineController.displayAllMedicines();
+                    medicineController.updateMedicineInventory();
                     break;
                 case 4:
                     System.out.println("Insert Approve Replenishment Request function");

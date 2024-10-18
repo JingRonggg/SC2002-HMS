@@ -25,13 +25,14 @@ public class MedicationLoader {
                 int stock = Integer.parseInt(data[1].trim());
                 int lowStockAlert = Integer.parseInt(data[2].trim());
 
-                // Create a Medication object and store it in the inventory
-                PrescribeMedications medication = new PrescribeMedications(medicineName, stock, lowStockAlert);
-                MedicineController.addMedicine(medication); // Use MedicineController to add medicine
+                // Create a Medication object without stock details
+                PrescribeMedications medication = new PrescribeMedications(medicineName);
+
+                // Add medication using MedicineController, passing stock and alert info separately
+                MedicineController.addMedicine(medication, stock, lowStockAlert);
             }
         } catch (IOException e) {
             System.out.println("Error reading the file: " + e.getMessage());
         }
     }
-
 }
