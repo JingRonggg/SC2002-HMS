@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class MainMenuBoundary {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static void displayMenu(User user) {
+    public static boolean displayMenu(User user) {
         String role = user.getRole();
         String hospitalID = user.getHospitalID();
         switch (role.toUpperCase()) {
@@ -30,5 +30,6 @@ public class MainMenuBoundary {
             default:
                 System.out.println("Invalid role");
         }
+        return false;
     }
 }
