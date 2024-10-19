@@ -7,6 +7,7 @@ import src.repository.UserRepository;
 import src.view.MainMenuBoundary;
 import src.controller.AuthenticationController;
 import src.controller.LoginController;
+import src.controller.MedicineController;
 import src.controller.AdminController;
 import src.controller.PatientController;
 import src.controller.MedicineController;
@@ -67,4 +68,3 @@ public class Main {
         }
     }
 }
-

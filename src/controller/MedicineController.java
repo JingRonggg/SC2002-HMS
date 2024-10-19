@@ -7,6 +7,7 @@ import src.utils.MedicationLoader;
 
 import java.util.Scanner;
 
+
 public class MedicineController {
     private static IMedicineRepository medicineRepo;
 
@@ -131,4 +132,3 @@ public class MedicineController {
     }
 
 }
-
