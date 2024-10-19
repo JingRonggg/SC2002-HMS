@@ -3,8 +3,8 @@ package src.model;
 public abstract class User {
     private final String hospitalID;
     private final String role;
-    private final String name;
-    private final String gender;
+    private String name;
+    private String gender;
     private String password;
 
     public User(String hospitalID, String role, String name, String gender) {
@@ -15,8 +15,15 @@ public abstract class User {
         this.gender = gender;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
     public String getName() {
         return name;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getGender() {
@@ -34,6 +41,7 @@ public abstract class User {
     public void setPassword(String newPassword) {
         this.password = newPassword;
     }
+
 
     public String getRole() {
         return role;
