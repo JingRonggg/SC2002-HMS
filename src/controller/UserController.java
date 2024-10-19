@@ -11,8 +11,8 @@ import java.util.Collection;
 public class UserController {
     private static IUserRepository userRepository;
 
-    public UserController() {
-        userRepository = new UserRepository();
+    public UserController(UserRepository userRepo) {
+        this.userRepository = userRepo;
         loadPatients();
         loadStaff();
     }

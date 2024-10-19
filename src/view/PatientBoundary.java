@@ -11,8 +11,8 @@ public class PatientBoundary {
     private final String hospitalID;
     
 
-    public PatientBoundary(String hospitalID) {
-        patientController = new PatientController();
+    public PatientBoundary(PatientController patientController, String hospitalID) {
+        this.patientController = patientController;
         this.hospitalID = hospitalID;
     }
 
@@ -56,7 +56,7 @@ public class PatientBoundary {
                     System.out.println("Insert view scheduled appointment function");
                     break;
                 case 8:
-                    System.out.println("insert view past appointment function");
+                    System.out.println("Insert view past appointment function");
                     break;
                 case 9:
                     System.out.println("Logging out...");

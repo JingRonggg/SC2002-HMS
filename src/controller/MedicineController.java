@@ -7,11 +7,12 @@ import src.utils.MedicationLoader;
 
 import java.util.Scanner;
 
+
 public class MedicineController {
     private static IMedicineRepository medicineRepo;
 
-    public MedicineController() {
-        medicineRepo = new MedicineRepository();
+    public MedicineController (MedicineRepository medicineRepo) {
+        this.medicineRepo = medicineRepo;
         loadMedications();
     }
 
@@ -95,7 +96,7 @@ public class MedicineController {
             System.out.print("Select an option: ");
             int choice = sc.nextInt();
             sc.nextLine(); // Consume the newline left by nextInt
-    
+
             switch (choice) {
                 case 1:
                     System.out.print("Input medicine name to add: ");
@@ -112,7 +113,7 @@ public class MedicineController {
                         System.out.println(medicineName + " is already in inventory!");
                     }
                     break;
-    
+
                 case 2:
                     System.out.print("Input medicine name to remove: ");
                     String meddelete = sc.nextLine();
@@ -122,7 +123,7 @@ public class MedicineController {
                         System.out.println(meddelete + " is not in the inventory!");
                     }
                     break;
-    
+
                 case 3:
                     System.out.print("Input medicine name to update: ");
                     String medicineStock = sc.nextLine();
@@ -138,16 +139,15 @@ public class MedicineController {
                         System.out.println(medicineStock + " is not in the inventory!");
                     }
                     break;
-                
-    
+
+
                 case 4:
                     System.out.println("Exiting...");
                     return; // Exit the method
-    
+
                 default:
                     System.out.println("Invalid choice!");
             }
         }
     }
 }
-
