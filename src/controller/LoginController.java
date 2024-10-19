@@ -8,8 +8,8 @@ public class LoginController {
     private final AuthenticationController authController;
     private final Scanner scanner;
 
-    public LoginController() {
-        authController = new AuthenticationController();
+    public LoginController(AuthenticationController authController) {
+        this.authController = authController;
         this.scanner = new Scanner(System.in);
     }
 
@@ -22,6 +22,12 @@ public class LoginController {
         System.out.println("Welcome to the Hospital Management System");
         System.out.println("Enter your hospital ID: ");
         String hospitalID = scanner.nextLine();
+
+        if (!authController.existenceCheck(hospitalID)) {
+            System.out.println("Invalid hospital ID");
+            return null;
+        }
+
         System.out.println("Enter your password: ");
         String password = scanner.nextLine();
         User loggedInUser = authController.authenticate(hospitalID, password);

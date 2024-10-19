@@ -2,19 +2,18 @@ package src.controller;
 
 import src.model.Staff;
 import src.repository.IAdminRepository;
-import src.repository.AdminRepository;
 
 import java.util.Collection;
 
 public class AdminController {
-    private static IAdminRepository staffRepo;
+    private final IAdminRepository staffRepo;
 
-    public AdminController() {
-        staffRepo = new AdminRepository();
+    public AdminController(IAdminRepository staffRepo) {
+        this.staffRepo = staffRepo;
     }
 
     public void viewAllStaff() {
-        System.out.println("This are all the staff");
+        System.out.println("These are all the staff:");
         Collection<Staff> staffs = staffRepo.getAllStaff();
         if (staffs.isEmpty()) {
             System.out.println("No staff members found.");

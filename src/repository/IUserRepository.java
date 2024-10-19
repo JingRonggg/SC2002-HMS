@@ -21,4 +21,7 @@ public interface IUserRepository {
 
     //Delete user
     boolean deleteUser(String id);
+
+    //Check for user existence
+    boolean userExists(String hospitalID);
 }

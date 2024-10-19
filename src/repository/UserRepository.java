@@ -40,6 +40,11 @@ public class UserRepository implements IUserRepository {
         }
     }
 
+    @Override
+    public boolean userExists(String hospitalID) {
+        return users.containsKey(hospitalID);
+    }
+
     //TODO Delete later, for checking purposes
     public void checkUserClasses() {
         System.out.println("Checking user classes in repository:");
