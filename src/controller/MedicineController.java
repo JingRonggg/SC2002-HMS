@@ -11,8 +11,8 @@ import java.util.Scanner;
 public class MedicineController {
     private static IMedicineRepository medicineRepo;
 
-    public MedicineController (){
-        medicineRepo = new MedicineRepository();
+    public MedicineController (MedicineRepository medicineRepo) {
+        this.medicineRepo = medicineRepo;
         loadMedications();
     }
 

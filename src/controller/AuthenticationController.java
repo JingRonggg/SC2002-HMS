@@ -9,8 +9,8 @@ import java.util.Scanner;
 public class AuthenticationController {
     private static IUserRepository userRepository;
 
-    public AuthenticationController() {
-        userRepository = new UserRepository();
+    public AuthenticationController(UserRepository userRepo) {
+        this.userRepository = userRepo;
     }
 
     public User authenticate(String hospitalID, String password) {
@@ -19,6 +19,10 @@ public class AuthenticationController {
             return user;  // Successful login
         }
         return null;  // Invalid credentials
+    }
+
+    public boolean existenceCheck(String hospitalID) {
+        return userRepository.userExists(hospitalID);
     }
 
     public void changePassword(User user, Scanner scanner) {
