@@ -9,7 +9,6 @@ import java.util.Scanner;
 
 public class MainMenuBoundary {
     private static final Scanner scanner = new Scanner(System.in);
-    private static AdminController adminController = new AdminController(); // Assuming it's needed for admin
 
     public static boolean displayMenu(User user, AdminController adminController, PatientController patientController, MedicineController medicineController) {
         String role = user.getRole();
@@ -29,7 +28,7 @@ public class MainMenuBoundary {
                 doctorBoundary.displayDoctorMenu(scanner);
                 break;
             case "PHARMACIST":
-                PharmacistBoundary pharmacistBoundary = new PharmacistBoundary(); // Assuming a PharmacistBoundary constructor that does not need parameters
+                PharmacistBoundary pharmacistBoundary = new PharmacistBoundary(medicineController); // Assuming a PharmacistBoundary constructor that does not need parameters
                 pharmacistBoundary.displayPharmacistMenu(scanner);
                 break;
             default:
