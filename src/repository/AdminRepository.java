@@ -50,4 +50,19 @@ public class AdminRepository extends UserRepository implements IAdminRepository 
         }
         return Administrators;
     }
+
+    @Override
+    public void addStaff(Staff staff) {
+        addUser(staff);
+    }
+
+    @Override
+    public void updateStaff(Staff staff) {
+        updateUser(staff);
+    }
+
+    @Override
+    public boolean removeStaff(String hospitalID) {
+        return deleteUser(hospitalID);
+    }
 }

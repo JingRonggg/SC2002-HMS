@@ -1,9 +1,6 @@
 package src.repository;
 
-import src.model.Administrator;
-import src.model.Doctor;
-import src.model.Pharmacist;
-import src.model.Staff;
+import src.model.*;
 
 import java.util.Collection;
 
@@ -12,4 +9,9 @@ public interface IAdminRepository{
     Collection<Doctor> getAllDoctors();
     Collection<Pharmacist> getAllPharmacists();
     Collection<Administrator> getAllAdministrators();
+    void addStaff(Staff staff);
+    void updateStaff(Staff staff);
+    boolean removeStaff(String hospitalID);
+    User getUserByHospitalID(String hospitalID);
+    boolean userExists(String hospitalID);
 }

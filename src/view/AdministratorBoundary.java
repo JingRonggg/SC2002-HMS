@@ -30,7 +30,7 @@ public class AdministratorBoundary {
             switch (choice) {
                 case 1:
                     System.out.println("Insert View and Manage Hospital Staff function");
-                    adminController.viewAllStaff();
+                    ManageStaffBoundary.displayMenu(adminController, scanner);
                     break;
                 case 2:
                     System.out.println("Insert View Appointments Details function");
