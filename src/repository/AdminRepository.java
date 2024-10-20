@@ -65,4 +65,12 @@ public class AdminRepository extends UserRepository implements IAdminRepository 
     public boolean removeStaff(String hospitalID) {
         return deleteUser(hospitalID);
     }
+
+    public String getDoctorName(String doctorID) {
+        User user = users.get(doctorID);
+        if (user instanceof Doctor) {
+            return ((Doctor) user).getName();
+        }
+        return null;
+    }
 }

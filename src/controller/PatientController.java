@@ -117,14 +117,19 @@ public class PatientController {
     }
 
     //creating an appointmnet
-    public String scheduleAppointment (String doctorID, LocalDate date, LocalTime startTime) {
+    public void scheduleAppointment (String doctorID, String patientID, LocalDate date, LocalTime startTime) {
         LocalTime endTime = startTime.plusHours(1);
-        if (!appointmentRepository.isSlotAvailable(doctorID, date, startTime, endTime)) {
-            return "Doctor is unavailable at this time.";
+        String doctorName = adminRepository.getDoctorName(doctorID);
+        if (doctorName == null) {
+            System.out.println("Doctor not found.");
+        } else if (!appointmentRepository.isSlotAvailable(doctorID, date, startTime, endTime)) {
+            System.out.println("Doctor is unavailable at this time.");
+        } else{
+            Appointment newappointment = new Appointment(doctorID, patientID, doctorName, date, startTime, endTime, "Confirmed");
+            appointmentRepository.saveAppointment(newappointment);
+            System.out.println("Appointment requested successfully.");
         }
-        Appointment newappointment = new Appointment(doctorID, null, null, date, startTime, endTime, "Pending");
-        appointmentRepository.saveAppointment(newappointment);
-        return "Appointment requested successfully.";
+
     }
 
     // rescheduling appointment
@@ -162,8 +167,30 @@ public class PatientController {
         return "Appointment canceled successfully!";
     }
 
-    public HashMap<String, Appointment> viewScheduledAppointments(String patientID) {
-        return appointmentRepository.getScheduledPatientAppointment(patientID);
+    public void viewScheduledAppointments(String patientID) {
+        try{
+            HashMap<String, Appointment> scheduledAppointments = appointmentRepository.getScheduledPatientAppointment(patientID);
+
+            if (scheduledAppointments.isEmpty()) {
+                System.out.println("No scheduled appointments found.");
+            } else {
+                System.out.println("Scheduled appointments found. Here is the list");
+                for (Map.Entry<String, Appointment> entry : scheduledAppointments.entrySet()) {
+                    String appointmentID = entry.getKey();
+                    Appointment appointment = entry.getValue();
+
+                    System.out.println("----------------------------------------------------------------------------");
+                    System.out.println("Appointment ID: " + appointmentID);
+                    System.out.println("Date: " + appointment.getAppointmentDate());
+                    System.out.println("Appointment Time: " + appointment.getAppointmentStartTime());
+                    System.out.println("Doctor: " + appointment.getDoctorName());
+                    System.out.println("Status: " + appointment.getStatus());
+                    System.out.println("----------------------------------------------------------------------------");
+                }
+            }
+        }catch(Exception e){
+            System.out.println("Error in getting scheduled appointments.");
+        }
     }
 
     public HashMap<String, Appointment> viewPastAppointmentOutcomes(String patientID) {

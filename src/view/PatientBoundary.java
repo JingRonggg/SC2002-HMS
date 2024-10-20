@@ -4,6 +4,7 @@ import src.appointment.Appointment;
 import src.controller.PatientController;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ public class PatientBoundary {
             System.out.println("9. Logout");
             System.out.print("Enter your choice: ");
             int choice = parseInt(scanner.nextLine());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             switch (choice) {
                 case 1:
@@ -46,8 +48,6 @@ public class PatientBoundary {
                     System.out.println("Insert update personal information function");
                     break;
                 case 3:
-                    System.out.println("Insert view available appointment function");
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     System.out.print("Enter a date (yyyy-MM-dd): ");
                     String date = scanner.nextLine();
                     try {
@@ -59,6 +59,19 @@ public class PatientBoundary {
                     break;
                 case 4:
                     System.out.println("Insert schedule an appointment function");
+                    System.out.println("Enter the doctor's ID that you want to schedule an appointment with: ");
+                    String doctorID = scanner.nextLine();
+                    System.out.print("Enter a date (yyyy-MM-dd): ");
+                    date = scanner.nextLine();
+                    System.out.println("Enter a time (HH:mm): ");
+                    String time = scanner.nextLine();
+                    try{
+                        LocalDate localDate = LocalDate.parse(date, formatter);
+                        LocalTime startTime = LocalTime.parse(time);
+                        patientController.scheduleAppointment(doctorID, hospitalID, localDate, startTime);
+                    } catch (DateTimeParseException e){
+                        System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+                    }
                     break;
                 case 5:
                     System.out.println("Insert reschedule an appointment function");
@@ -68,6 +81,7 @@ public class PatientBoundary {
                     break;
                 case 7:
                     System.out.println("Insert view scheduled appointment function");
+                    patientController.viewScheduledAppointments(hospitalID);
                     break;
                 case 8:
                     System.out.println("Insert view past appointment function");

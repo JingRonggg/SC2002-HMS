@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 // primary key generator, save to csv, when rerun, it will start from 1???
 public class AppointmentRepository implements IAppointmentRepository {
-    private HashMap<String, Appointment> appointments = new HashMap<>();
+    private static HashMap<String, Appointment> appointments = new HashMap<>();
 
     @Override
     public void saveAppointment(Appointment appointment) {
@@ -64,7 +64,7 @@ public class AppointmentRepository implements IAppointmentRepository {
         try {
             for (String appointmentID : appointments.keySet()) {
                 Appointment appointment = appointments.get(appointmentID);
-                if (appointment.getPatientID().equals(patientID) && appointment.getStatus().equals("Scheduled")) {
+                if (appointment.getPatientID().equals(patientID) && appointment.getStatus().equals("Confirmed")) {
                     patientScheduledAppointments.put(appointmentID, appointment);
                 }
             }
@@ -97,7 +97,7 @@ public class AppointmentRepository implements IAppointmentRepository {
         try {
             for (Appointment appointment : appointments.values()) {
                 if (appointment.getDoctorID().equals(doctorID) && appointment.getAppointmentDate().equals(date)) {
-                    if (startTime.isBefore(appointment.getAppointmentStartTime()) && endTime.isBefore(appointment.getAppointmentEndTime())) {
+                    if (startTime.isBefore(appointment.getAppointmentEndTime()) && endTime.isAfter(appointment.getAppointmentStartTime())) {
                         return false;
                     }
             }
