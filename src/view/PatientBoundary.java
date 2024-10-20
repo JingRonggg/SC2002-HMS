@@ -1,7 +1,12 @@
 package src.view;
 
+import src.appointment.Appointment;
 import src.controller.PatientController;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
@@ -42,6 +47,15 @@ public class PatientBoundary {
                     break;
                 case 3:
                     System.out.println("Insert view available appointment function");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    System.out.print("Enter a date (yyyy-MM-dd): ");
+                    String date = scanner.nextLine();
+                    try {
+                        LocalDate localDate = LocalDate.parse(date, formatter);
+                        patientController.viewAvailableSlots(localDate);
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+                    }
                     break;
                 case 4:
                     System.out.println("Insert schedule an appointment function");
