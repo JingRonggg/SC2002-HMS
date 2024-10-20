@@ -75,9 +75,25 @@ public class PatientBoundary {
                     break;
                 case 5:
                     System.out.println("Insert reschedule an appointment function");
+                    System.out.println("Enter the appointment ID that you want to reschedule: ");
+                    String appointmentID = scanner.nextLine();
+                    System.out.print("Enter a new date (yyyy-MM-dd): ");
+                    date = scanner.nextLine();
+                    System.out.println("Enter a new time (HH:mm): ");
+                    time = scanner.nextLine();
+                    try{
+                        LocalDate localDate = LocalDate.parse(date, formatter);
+                        LocalTime startTime = LocalTime.parse(time);
+                        patientController.rescheduleAppointment(appointmentID, localDate, startTime);
+                    } catch (DateTimeParseException e){
+                        System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+                    }
                     break;
                 case 6:
                     System.out.println("Insert cancel an appointment function");
+                    System.out.println("Enter the appointment ID that you want to cancel: ");
+                    appointmentID = scanner.nextLine();
+                    patientController.cancelAppointment(appointmentID);
                     break;
                 case 7:
                     System.out.println("Insert view scheduled appointment function");
