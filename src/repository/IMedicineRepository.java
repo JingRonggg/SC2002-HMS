@@ -6,17 +6,28 @@ import src.model.PrescribeMedications;
 
 public interface IMedicineRepository {
     
-    void addMedicine(PrescribeMedications medication);
+    public void addMedicine(PrescribeMedications medication, int stock, int lowStockAlert);
 
-    PrescribeMedications getMedicine(String medicineName);
+    public PrescribeMedications getMedicine(String medicineName);
+    
+    public HashMap<String, PrescribeMedications> getAllMedicines();
 
-    void updateStock(String medicineName, int newStock);
+    public int getStock(String medicineName);
 
-    void checkLowStock();
+    public void setStock(String medicineName, int stock);
 
-    HashMap<String, PrescribeMedications> getAllMedicines();
+    public int getStockAlert(String medicineName);
 
-    void updateStatus( String medicineName, String status);
+    public void setStockAlert(String medicineName, int lowStockAlert);
 
-    void checkReplenishReq();
+    public void checkLowStock();
+
+    public void updateStatus(String medicineName, String status);
+
+    public void checkReplenishReq();
+
+    public void deleteMedicine(String medicineName);
+
+    public void updateMedicine(String medicineName, int stock, int lowStockAlert);
+
 }

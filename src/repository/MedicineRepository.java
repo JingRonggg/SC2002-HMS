@@ -1,43 +1,62 @@
 package src.repository;
+
 import java.util.HashMap;
 import src.model.PrescribeMedications;
 
-public class MedicineRepository implements IMedicineRepository{
+public class MedicineRepository implements IMedicineRepository {
     protected static HashMap<String, PrescribeMedications> medicationInventory = new HashMap<>();
+    protected static HashMap<String, Integer> stockInventory = new HashMap<>();
+    protected static HashMap<String, Integer> stockAlertInventory = new HashMap<>();
 
     public MedicineRepository() {}
 
-    public void addMedicine(PrescribeMedications medication) {
+    public void addMedicine(PrescribeMedications medication, int stock, int lowStockAlert) {
         String medicineName = medication.getMedicineName();
         medicationInventory.put(medicineName, medication);
-        System.out.println(medicineName + " has been added to the inventory.");
+        stockInventory.put(medicineName, stock);
+        stockAlertInventory.put(medicineName, lowStockAlert);
     }
 
     public PrescribeMedications getMedicine(String medicineName) {
-        return medicationInventory.get(medicineName.trim().toLowerCase());
+        return medicationInventory.get(medicineName);
     }
 
-    
-    public void updateStock(String medicineName, int newStock) {
-        PrescribeMedications medication = medicationInventory.get(medicineName);
-        if (medication != null) {
-            medication.setStock(newStock);
-            System.out.println(medicineName + "'s stock has been updated to: " + newStock);
+    public HashMap<String, PrescribeMedications> getAllMedicines() {
+        return medicationInventory;
+    }
+
+    public int getStock(String medicineName) {
+        return stockInventory.getOrDefault(medicineName, 0);
+    }
+
+    public void setStock(String medicineName, int stock) {
+        if (medicationInventory.containsKey(medicineName)) {
+            stockInventory.put(medicineName, stock);
+            System.out.println(medicineName + "'s stock has been updated to: " + stock);
+        } else {
+            System.out.println("Medicine " + medicineName + " not found in inventory.");
+        }
+    }
+
+    public int getStockAlert(String medicineName) {
+        return stockAlertInventory.getOrDefault(medicineName, 0);
+    }
+
+    public void setStockAlert(String medicineName, int lowStockAlert) {
+        if (medicationInventory.containsKey(medicineName)) {
+            stockAlertInventory.put(medicineName, lowStockAlert);
+            System.out.println(medicineName + "'s low stock alert has been updated to: " + lowStockAlert);
         } else {
             System.out.println("Medicine " + medicineName + " not found in inventory.");
         }
     }
 
     public void checkLowStock() {
-        for (PrescribeMedications medication : medicationInventory.values()) {
-            if (medication.getStock() < medication.getStockAlert()) {
-                System.out.println("Alert: " + medication.getMedicineName() + " is below the low stock threshold.");
+        for (String medicineName : medicationInventory.keySet()) {
+            if (getStock(medicineName) < getStockAlert(medicineName)) {
+                System.out.println("Alert: " + medicineName + " is below the low stock threshold.");
             }
         }
-    }
-
-    public HashMap<String, PrescribeMedications> getAllMedicines() {
-        return medicationInventory;
     }
 
     public void updateStatus(String medicineName, String status) {
@@ -50,11 +69,35 @@ public class MedicineRepository implements IMedicineRepository{
         }
     }
 
-    public void checkReplenishReq(){
+    public void checkReplenishReq() {
         for (PrescribeMedications medication : medicationInventory.values()) {
             if ("replenish".equals(medication.getStatus())) {
-                System.out.println( medication.getMedicineName() + " needs to be replenished");
+                System.out.println(medication.getMedicineName() + " needs to be replenished.");
             }
         }
     }
+
+    public void deleteMedicine(String medicineName){
+        if (medicationInventory.containsKey(medicineName)) {
+            // Remove medicine from all related inventories
+            medicationInventory.remove(medicineName);
+            stockInventory.remove(medicineName);
+            stockAlertInventory.remove(medicineName);
+            System.out.println(medicineName + " has been removed from the inventory.");
+        } else {
+            System.out.println("Medicine " + medicineName + " not found in inventory.");
+        }
+    }
+
+    public void updateMedicine(String medicineName, int stock, int lowStockAlert) {
+        if (medicationInventory.containsKey(medicineName)) {
+            setStock(medicineName, stock);
+            setStockAlert(medicineName, lowStockAlert);
+            System.out.println(medicineName + " has been updated with new stock and stock alert.");
+        } else {
+            System.out.println("Medicine " + medicineName + " not found in inventory.");
+        }
+    }
+
 }
+

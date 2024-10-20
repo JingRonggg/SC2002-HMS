@@ -4,7 +4,16 @@ import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
+import src.controller.AdminController;
+import src.controller.MedicineController;
+
 public class PharmacistBoundary {
+
+    private final MedicineController medicineController;
+
+    public PharmacistBoundary(MedicineController medicineController) {
+       this.medicineController = medicineController;
+    }
     public void displayPharmacistMenu(Scanner scanner) {
         while (true) {
             System.out.println("Pharmacist Menu:");
@@ -25,9 +34,11 @@ public class PharmacistBoundary {
                     break;
                 case 3:
                     System.out.println("Insert View Medication Inventory function");
+                    medicineController.displayAllMedicines();
                     break;
                 case 4:
                     System.out.println("Insert Submit Replenishment Request function");
+                    medicineController.reqMedicine();
                     break;
                 case 5:
                     System.out.println("Logging out...");

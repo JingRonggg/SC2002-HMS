@@ -1,6 +1,8 @@
 package src.view;
 
 import src.model.User;
+import src.controller.MedicineController;
+import src.controller.AdminController;
 import src.controller.AdminController;
 import src.controller.PatientController;
 import src.controller.MedicineController;
@@ -24,11 +26,11 @@ public class MainMenuBoundary {
                 patientBoundary.displayPatientMenu(scanner);
                 break;
             case "DOCTOR":
-                DoctorBoundary doctorBoundary = new DoctorBoundary(); // Assuming a DoctorBoundary constructor that does not need parameters
+                DoctorBoundary doctorBoundary = new DoctorBoundary();
                 doctorBoundary.displayDoctorMenu(scanner);
                 break;
             case "PHARMACIST":
-                PharmacistBoundary pharmacistBoundary = new PharmacistBoundary(); // Assuming a PharmacistBoundary constructor that does not need parameters
+                PharmacistBoundary pharmacistBoundary = new PharmacistBoundary(medicineController);
                 pharmacistBoundary.displayPharmacistMenu(scanner);
                 break;
             default:
