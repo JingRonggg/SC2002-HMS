@@ -125,7 +125,7 @@ public class PatientController {
         } else if (!appointmentRepository.isSlotAvailable(doctorID, date, startTime, endTime)) {
             System.out.println("Doctor is unavailable at this time.");
         } else{
-            Appointment newappointment = new Appointment(doctorID, patientID, doctorName, date, startTime, endTime, "Confirmed");
+            Appointment newappointment = new Appointment(doctorID, patientID, doctorName, date, startTime, endTime, "Pending");
             appointmentRepository.saveAppointment(newappointment);
             System.out.println("Appointment requested successfully.");
         }

@@ -1,10 +1,8 @@
 package src.view;
 
+import src.controller.*;
 import src.model.User;
-import src.controller.MedicineController;
 import src.controller.AdminController;
-import src.controller.AdminController;
-import src.controller.PatientController;
 import src.controller.MedicineController;
 
 import java.util.Scanner;
@@ -12,7 +10,7 @@ import java.util.Scanner;
 public class MainMenuBoundary {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static boolean displayMenu(User user, AdminController adminController, PatientController patientController, MedicineController medicineController) {
+    public static boolean displayMenu(User user, AdminController adminController, PatientController patientController, MedicineController medicineController, DoctorController doctorController) {
         String role = user.getRole();
         String hospitalID = user.getHospitalID();
 
@@ -26,7 +24,7 @@ public class MainMenuBoundary {
                 patientBoundary.displayPatientMenu(scanner);
                 break;
             case "DOCTOR":
-                DoctorBoundary doctorBoundary = new DoctorBoundary();
+                DoctorBoundary doctorBoundary = new DoctorBoundary(doctorController, hospitalID);
                 doctorBoundary.displayDoctorMenu(scanner);
                 break;
             case "PHARMACIST":

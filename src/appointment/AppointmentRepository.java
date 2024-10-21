@@ -26,9 +26,6 @@ public class AppointmentRepository implements IAppointmentRepository {
                 if (appointmentIDs.equals(appointmentID)) {
                     return appointments.get(appointmentID);
                 }
-                else {
-                    return null;
-                }
             }
         } catch (Exception e) {
             System.out.println("An error occurred while getting the appointment: " + e.getMessage());
@@ -131,6 +128,38 @@ public class AppointmentRepository implements IAppointmentRepository {
         } catch (Exception e) {
             System.out.println("An error occurred while deleting appointment: " + e.getMessage());
         }
+    }
+
+    @Override
+    public HashMap<String, Appointment> getAllPendingAppointment(String doctorID) {
+        HashMap<String, Appointment> doctorPendingAppointments = new HashMap<>();
+        try {
+            for (String appointmentID : appointments.keySet()) {
+                Appointment appointment = appointments.get(appointmentID);
+                if (appointment.getDoctorID().equals(doctorID) && appointment.getStatus().equals("Pending")) {
+                    doctorPendingAppointments.put(appointmentID, appointment);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while getting the appointment: " + e.getMessage());
+        }
+        return doctorPendingAppointments;
+    }
+
+    @Override
+    public HashMap<String, Appointment> getAllConfirmedAppointment(String doctorID) {
+        HashMap<String, Appointment> doctorPendingAppointments = new HashMap<>();
+        try {
+            for (String appointmentID : appointments.keySet()) {
+                Appointment appointment = appointments.get(appointmentID);
+                if (appointment.getDoctorID().equals(doctorID) && appointment.getStatus().equals("Confirmed")) {
+                    doctorPendingAppointments.put(appointmentID, appointment);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while getting the appointment: " + e.getMessage());
+        }
+        return doctorPendingAppointments;
     }
 
 }

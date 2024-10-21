@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Appointment {
-    private String appointmentID;
     private String doctorID;
     private String patientID;
     private String doctorName;
@@ -28,14 +27,6 @@ public class Appointment {
         setAppointmentEndTime(appointmentEndTime);
         this.status = status;
 //        this.medicalRecord = medicalRecord;
-    }
-
-    public String getAppointmentID() {
-        return appointmentID;
-    }
-
-    public void setAppointmentID(String appointmentID) {
-        this.appointmentID = appointmentID;
     }
 
     public String getDoctorID() {

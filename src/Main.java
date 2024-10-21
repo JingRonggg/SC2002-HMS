@@ -1,15 +1,12 @@
 package src;
 
-import src.controller.UserController;
+import src.appointment.AppointmentRepository;
+import src.appointment.IAppointmentRepository;
+import src.controller.*;
 import src.repository.MedicalRecordRepository;
 import src.repository.MedicineRepository;
 import src.repository.UserRepository;
 import src.view.MainMenuBoundary;
-import src.controller.AuthenticationController;
-import src.controller.LoginController;
-import src.controller.MedicineController;
-import src.controller.AdminController;
-import src.controller.PatientController;
 import src.controller.MedicineController;
 import src.model.User;
 import src.repository.IAdminRepository;
@@ -33,10 +30,12 @@ public class Main {
             IAdminRepository adminRepo = new AdminRepository();
             IPatientRepository patientRepo = new PatientRepository();
             IMedicalRecordRepository medicalRecordRepo = new MedicalRecordRepository();
+            IAppointmentRepository appointmentRepo = new AppointmentRepository();
 
             AdminController adminController = new AdminController(adminRepo);
             PatientController patientController = new PatientController(patientRepo, medicalRecordRepo);
             MedicineController medicineController = new MedicineController(medicineRepository);
+            DoctorController doctorController = new DoctorController(appointmentRepo, adminRepo);
             UserController userController = new UserController(userRepository);
 
             Scanner scanner = new Scanner(System.in);
@@ -50,7 +49,7 @@ public class Main {
 
                     // Session loop for the logged-in user
                     while (continueSession) {
-                        continueSession = MainMenuBoundary.displayMenu(loggedInUser, adminController, patientController, medicineController);
+                        continueSession = MainMenuBoundary.displayMenu(loggedInUser, adminController, patientController, medicineController, doctorController);
                     }
                 } else {
                     System.out.println("Login failed. Please try again.");
