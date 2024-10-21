@@ -93,12 +93,14 @@ public class AppointmentRepository implements IAppointmentRepository {
         try {
             for (Appointment appointment : appointments.values()) {
                 if (appointment.getDoctorID().equals(doctorID) && appointment.getAppointmentDate().equals(date)) {
-                    if (startTime.isBefore(appointment.getAppointmentEndTime()) && endTime.isAfter(appointment.getAppointmentStartTime())) {
-                        return false;
+                    if (!appointment.getStatus().equals("Cancelled") && !appointment.getStatus().equals("Pending")) {
+                        if (startTime.isBefore(appointment.getAppointmentEndTime()) && endTime.isAfter(appointment.getAppointmentStartTime())) {
+                            return false;
+                        }
                     }
-            }
                 }
-        } catch (Exception e){
+            }
+        } catch (Exception e) {
             System.out.println("An error occurred while checking for slot availability: " + e.getMessage());
         }
         return true;
@@ -162,4 +164,17 @@ public class AppointmentRepository implements IAppointmentRepository {
         return doctorPendingAppointments;
     }
 
+    @Override
+    public HashMap<String, Appointment> getAllAppointment() {
+        HashMap<String, Appointment> allAppointments = new HashMap<>();
+        try {
+            for (String appointmentID : appointments.keySet()) {
+                Appointment appointment = appointments.get(appointmentID);
+                allAppointments.put(appointmentID, appointment);
+                }
+        } catch (Exception e) {
+            System.out.println("An error occurred while getting the appointment: " + e.getMessage());
+        }
+        return allAppointments;
+    }
 }

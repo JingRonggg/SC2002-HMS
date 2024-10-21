@@ -75,8 +75,15 @@ public class DoctorController {
             System.out.println("Appointment not found.");
         } else {
             if (Objects.equals(status, "Cancelled") || Objects.equals(status, "Confirmed")) {
-                appointment.setStatus(status);
-                appointmentRepository.saveAppointment(appointment);
+                // Check if the slot is available before confirming
+                if (status.equals("Confirmed") && !appointmentRepository.isSlotAvailable(appointment.getDoctorID(), appointment.getAppointmentDate(), appointment.getAppointmentStartTime(), appointment.getAppointmentEndTime())) {
+                    System.out.println("Slot is not available. Cancelling the appointment request.");
+                    appointment.setStatus("Cancelled");
+                    appointmentRepository.updateAppointment(appointmentID, appointment);
+                } else {
+                    appointment.setStatus(status);
+                    appointmentRepository.updateAppointment(appointmentID, appointment);
+                }
             } else {
                 System.out.println("No such status");
             }
@@ -103,11 +110,11 @@ public class DoctorController {
         }
     }
 
-    private void printDetails(HashMap<String, Appointment> Appointments) {
+    private void printDetails(HashMap<String, Appointment> appointments) {
         System.out.println("------------------------------------------");
 
         // Iterate through the HashMap and print details
-        for (Map.Entry<String, Appointment> entry : Appointments.entrySet()) {
+        for (Map.Entry<String, Appointment> entry : appointments.entrySet()) {
             String appointmentID = entry.getKey();
             Appointment appointment = entry.getValue();
 

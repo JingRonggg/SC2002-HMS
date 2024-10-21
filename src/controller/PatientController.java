@@ -147,6 +147,7 @@ public class PatientController {
             existingAppointment.setAppointmentDate(newDate);
             existingAppointment.setAppointmentStartTime(newStartTime);
             existingAppointment.setAppointmentEndTime(newEndtime);
+            existingAppointment.setStatus("Pending");
             appointmentRepository.updateAppointment(appointmentID, existingAppointment);
 
         } catch (Exception e) {

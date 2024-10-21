@@ -45,8 +45,6 @@ public class PatientBoundary {
                     break;
                 case 2:
                     patientController.updatePatientInformation(hospitalID);
-                    System.out.println("Insert update personal information function");
-                    break;
                 case 3:
                     System.out.print("Enter a date (yyyy-MM-dd): ");
                     String date = scanner.nextLine();
@@ -58,7 +56,6 @@ public class PatientBoundary {
                     }
                     break;
                 case 4:
-                    System.out.println("Insert schedule an appointment function");
                     System.out.println("Enter the doctor's ID that you want to schedule an appointment with: ");
                     String doctorID = scanner.nextLine();
                     System.out.print("Enter a date (yyyy-MM-dd): ");
@@ -74,7 +71,6 @@ public class PatientBoundary {
                     }
                     break;
                 case 5:
-                    System.out.println("Insert reschedule an appointment function");
                     System.out.println("Enter the appointment ID that you want to reschedule: ");
                     String appointmentID = scanner.nextLine();
                     System.out.print("Enter a new date (yyyy-MM-dd): ");
@@ -90,13 +86,11 @@ public class PatientBoundary {
                     }
                     break;
                 case 6:
-                    System.out.println("Insert cancel an appointment function");
                     System.out.println("Enter the appointment ID that you want to cancel: ");
                     appointmentID = scanner.nextLine();
                     patientController.cancelAppointment(appointmentID);
                     break;
                 case 7:
-                    System.out.println("Insert view scheduled appointment function");
                     patientController.viewScheduledAppointments(hospitalID);
                     break;
                 case 8:

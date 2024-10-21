@@ -32,7 +32,7 @@ public class Main {
             IMedicalRecordRepository medicalRecordRepo = new MedicalRecordRepository();
             IAppointmentRepository appointmentRepo = new AppointmentRepository();
 
-            AdminController adminController = new AdminController(adminRepo);
+            AdminController adminController = new AdminController(adminRepo, appointmentRepo);
             PatientController patientController = new PatientController(patientRepo, medicalRecordRepo);
             MedicineController medicineController = new MedicineController(medicineRepository);
             DoctorController doctorController = new DoctorController(appointmentRepo, adminRepo);

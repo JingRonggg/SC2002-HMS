@@ -29,19 +29,16 @@ public class AdministratorBoundary {
 
             switch (choice) {
                 case 1:
-                    System.out.println("Insert View and Manage Hospital Staff function");
                     ManageStaffBoundary.displayMenu(adminController, scanner);
                     break;
                 case 2:
-                    System.out.println("Insert View Appointments Details function");
+                    adminController.viewAllAppointments();
                     break;
                 case 3:
-                    System.out.println("Insert View and Manage Medication Inventory function");
                     medicineController.displayAllMedicines();
                     MedicineInventoryBoundary.displayMedicineInventory(medicineController, scanner);
                     break;
                 case 4:
-                    System.out.println("Insert Approve Replenishment Request function");
                     medicineController.replenishMedicine();
                     break;
                 case 5:

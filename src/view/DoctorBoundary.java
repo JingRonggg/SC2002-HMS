@@ -43,8 +43,7 @@ public class DoctorBoundary {
                     System.out.println("Insert Update Patient Medical Record function");
                     break;
                 case 3:
-                    System.out.println("Insert View Personal Schedule function");
-                    System.out.print("Enter the date you want to check your schedule (yyyy-MM-dd): ");
+                    System.out.println("Enter the date you want to check your schedule (yyyy-MM-dd): ");
                     date = scanner.nextLine();
                     try {
                         LocalDate localDate = LocalDate.parse(date, formatter);
@@ -54,7 +53,7 @@ public class DoctorBoundary {
                     }
                     break;
                 case 4:
-                    System.out.print("Enter a date (yyyy-MM-dd): ");
+                    System.out.println("Enter a date (yyyy-MM-dd): ");
                     date = scanner.nextLine();
                     System.out.println("Enter start time (HH:mm): ");
                     String startTime = scanner.nextLine();
@@ -70,7 +69,6 @@ public class DoctorBoundary {
                     }
                     break;
                 case 5:
-                    System.out.println("Insert Accept or decline Appointment function");
                     if (doctorController.viewPendingAppointments(doctorID)) {
                         System.out.println("Which Appointment do you want to accept/decline?");
                         String appointmentID = scanner.nextLine();
@@ -86,7 +84,6 @@ public class DoctorBoundary {
                     }
                     break;
                 case 6:
-                    System.out.print("Insert View Upcoming Appointments function");
                     doctorController.viewUpComingAppointments(doctorID);
                     break;
                 case 7:
