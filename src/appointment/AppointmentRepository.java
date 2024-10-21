@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
 
-// primary key generator, save to csv, when rerun, it will start from 1???
 public class AppointmentRepository implements IAppointmentRepository {
     private static HashMap<String, Appointment> appointments = new HashMap<>();
 

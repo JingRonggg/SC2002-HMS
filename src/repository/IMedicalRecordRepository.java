@@ -5,17 +5,20 @@ import src.model.PastDiagnosis;
 import src.model.PrescribeMedications;
 import src.model.Treatments;
 
+import java.util.ArrayList;
+
 public interface IMedicalRecordRepository {
     // Crud operations on "Medical Records Table"
+
     // Create a new MedicalRecord
-    void createMedicalRecord(MedicalRecord medicalRecord, Treatments treatments, PastDiagnosis pastDiagnosis, PrescribeMedications prescribeMedications);
+    public void createMedicalRecord (MedicalRecord medicalRecord, Treatments treatments, PastDiagnosis pastDiagnosis, PrescribeMedications prescribeMedications);
 
     // Read (retrieve) MedicalRecord by PatientID
-    MedicalRecord readMedicalRecord(String patientID);
+    public ArrayList<MedicalRecord> readMedicalRecord(String patientID);
 
     // Update an existing MedicalRecord
-    void updateMedicalRecord(MedicalRecord medicalRecord);
+    public void updateMedicalRecord(String medicalRecordID, Treatments treatments, PastDiagnosis pastDiagnosis, PrescribeMedications prescribeMedications);
 
     // Delete a MedicalRecord by PatientID
-    boolean deleteMedicalRecord(String patientID);
+    public boolean deleteMedicalRecord(String medicalRecordID);
 }

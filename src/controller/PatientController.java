@@ -61,20 +61,20 @@ public class PatientController {
     }
 
     public void viewMedicalRecord(String hospitalID) {
-        Patient patient = patientRepository.getPatientInfo(hospitalID);
-        if (patient != null) {
-            MedicalRecord medicalRecord = medicalRecordRepository.readMedicalRecord(patient.getHospitalID());
-            if (medicalRecord != null) {
-                System.out.println("Medical Record:");
-                System.out.println("Treatments: " + medicalRecord.getTreatments());
-                System.out.println("Past Diagnosis: " + medicalRecord.getPastDiagnosis());
-                System.out.println("Prescribed Medications: " + medicalRecord.getPrescribeMedications());
-            } else {
-                System.out.println("No medical record found.");
-            }
-        } else {
-            System.out.println("Could not retrieve patient information.");
-        }
+//        Patient patient = patientRepository.getPatientInfo(hospitalID);
+//        if (patient != null) {
+//            ArrayList<MedicalRecord> medicalRecord = medicalRecordRepository.readMedicalRecord(patient.getHospitalID());
+//            if (medicalRecord != null) {
+//                System.out.println("Medical Record:");
+//                System.out.println("Treatments: " + medicalRecord.getTreatments());
+//                System.out.println("Past Diagnosis: " + medicalRecord.getPastDiagnosis());
+//                System.out.println("Prescribed Medications: " + medicalRecord.getPrescribeMedications());
+//            } else {
+//                System.out.println("No medical record found.");
+//            }
+//        } else {
+//            System.out.println("Could not retrieve patient information.");
+//        }
     }
 
     // return all slots with doctors

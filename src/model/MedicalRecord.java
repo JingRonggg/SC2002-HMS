@@ -5,42 +5,47 @@ import java.util.List;
 
 public class MedicalRecord {
     private String patientID;
-    private List<PastDiagnosis> pastDiagnosis;
-    private List<Treatments> treatments;
-    private List<PrescribeMedications> prescribeMedications;
+    private PastDiagnosis pastDiagnosis;
+    private Treatments treatments;
+    private PrescribeMedications prescribeMedications;
 
     public MedicalRecord(String patientID){
         this.patientID = patientID;
-        this.pastDiagnosis = new ArrayList<PastDiagnosis>();
-        this.treatments = new ArrayList<Treatments>();
-        this.prescribeMedications = new ArrayList<PrescribeMedications>();
+        this.pastDiagnosis = null;
+        this.treatments = null;
+        this.prescribeMedications = null;
+    }
+
+    public void setPatientID(String patientID) {
+        this.patientID = patientID;
+    }
+
+    public void setPastDiagnosis(PastDiagnosis pastDiagnosis) {
+        this.pastDiagnosis = pastDiagnosis;
+    }
+
+    public void setTreatments(Treatments treatments) {
+        this.treatments = treatments;
+    }
+
+    public void setPrescribeMedications(PrescribeMedications prescribeMedications) {
+        this.prescribeMedications = prescribeMedications;
     }
 
     public String getPatientID() {
         return patientID;
     }
 
-    public List<PastDiagnosis> getPastDiagnosis() {
+    public PastDiagnosis getPastDiagnosis() {
         return pastDiagnosis;
     }
 
-    public List<Treatments> getTreatments(){
+    public Treatments getTreatments(){
         return treatments;
     }
 
-    public List<PrescribeMedications> getPrescribeMedications(){
+    public PrescribeMedications getPrescribeMedications(){
         return prescribeMedications;
     }
 
-    public void addPrescribeMedications(PrescribeMedications prescribeMedications){
-        this.prescribeMedications.add(prescribeMedications);
-    }
-
-    public void addPastDiagnosis(PastDiagnosis pastDiagnosis){
-        this.pastDiagnosis.add(pastDiagnosis);
-    }
-
-    public void addTreatments(Treatments treatments){
-        this.treatments.add(treatments);
-    }
 }
