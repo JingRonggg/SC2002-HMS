@@ -10,7 +10,6 @@ import src.controller.LoginController;
 import src.controller.MedicineController;
 import src.controller.AdminController;
 import src.controller.PatientController;
-import src.controller.MedicineController;
 import src.model.User;
 import src.repository.IAdminRepository;
 import src.repository.IPatientRepository;
