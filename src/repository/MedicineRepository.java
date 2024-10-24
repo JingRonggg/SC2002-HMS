@@ -1,27 +1,29 @@
 package src.repository;
 
 import java.util.HashMap;
+
+import src.model.MedicationStorage;
 import src.model.PrescribeMedications;
 
 public class MedicineRepository implements IMedicineRepository {
-    protected static HashMap<String, PrescribeMedications> medicationInventory = new HashMap<>();
+    protected static HashMap<String, MedicationStorage> medicationInventory = new HashMap<>();
     protected static HashMap<String, Integer> stockInventory = new HashMap<>();
     protected static HashMap<String, Integer> stockAlertInventory = new HashMap<>();
 
     public MedicineRepository() {}
 
-    public void addMedicine(PrescribeMedications medication, int stock, int lowStockAlert) {
-        String medicineName = medication.getMedicineName();
-        medicationInventory.put(medicineName, medication);
+    public void addMedicine(MedicationStorage medicationStorage, int stock, int lowStockAlert) {
+        String medicineName = medicationStorage.getMedicineName();
+        medicationInventory.put(medicineName, medicationStorage);
         stockInventory.put(medicineName, stock);
         stockAlertInventory.put(medicineName, lowStockAlert);
     }
 
-    public PrescribeMedications getMedicine(String medicineName) {
+    public MedicationStorage getMedicine(String medicineName) {
         return medicationInventory.get(medicineName);
     }
 
-    public HashMap<String, PrescribeMedications> getAllMedicines() {
+    public HashMap<String, MedicationStorage> getAllMedicines() {
         return medicationInventory;
     }
 
@@ -66,9 +68,8 @@ public class MedicineRepository implements IMedicineRepository {
         if (alertGenerated){System.out.println("====================================================\n");}
     }
 
-    public void updateStatus(String medicineName, String status) {
-
-        PrescribeMedications medication = medicationInventory.get(medicineName);
+    public void updateStatus(String medicineName, String status){
+        MedicationStorage medication = medicationInventory.get(medicineName);
         if (medication != null) {
             medication.setStatus(status);
             //System.out.println("\nUpdated status of " + medicineName + " to " + status);
@@ -78,7 +79,7 @@ public class MedicineRepository implements IMedicineRepository {
     }
 
     public void checkReplenishReq() {
-        for (PrescribeMedications medication : medicationInventory.values()) {
+        for (MedicationStorage medication : medicationInventory.values()) {
             if ("replenish".equals(medication.getStatus())) {
                 System.out.println("\n" + medication.getMedicineName() + " needs to be replenished.");
             }

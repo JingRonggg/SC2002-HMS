@@ -6,25 +6,26 @@ import src.model.PrescribeMedications;
 import src.model.Treatments;
 
 import java.util.HashMap;
+import java.util.List;
 
 public interface IMedicalRecordRepository {
     // Crud operations on "Medical Records Table"
 
     // Create a new MedicalRecord
-    public void createMedicalRecord (MedicalRecord medicalRecord, PastDiagnosis pastDiagnosis, Treatments treatments);
+    void createMedicalRecord(String doctorID, String patientID, PastDiagnosis pastDiagnosis, Treatments treatments, List<PrescribeMedications> newPrescribeMedications);
 
     // Read (retrieve) MedicalRecord by PatientID
-    public HashMap<String, MedicalRecord> readMedicalRecord(String patientID);
+    HashMap<String, MedicalRecord> readMedicalRecord(String patientID);
 
     // Get all MedicalRecords by PatientID & DoctorID (For Doctors)
-    public HashMap<String, MedicalRecord> getAllMedicalRecords(String doctorID);
+    HashMap<String, MedicalRecord> getAllMedicalRecords(String doctorID);
 
     // Get MedicalRecord by MedicalRecordID
-    public MedicalRecord getMedicalRecordByID(String medicalRecordID);
+    MedicalRecord getMedicalRecordByID(String medicalRecordID);
 
     // Update an existing MedicalRecord
-    public boolean updateMedicalRecord(String medicalRecordID, PastDiagnosis pastDiagnosis, Treatments treatments);
+    boolean updateMedicalRecord(String medicalRecordID, PastDiagnosis pastDiagnosis, Treatments treatments, List<PrescribeMedications> newPrescribeMedications);
 
     // Delete a MedicalRecord by PatientID
-    public boolean deleteMedicalRecord(String medicalRecordID);
+    boolean deleteMedicalRecord(String medicalRecordID);
 }

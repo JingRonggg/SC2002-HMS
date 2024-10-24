@@ -1,20 +1,28 @@
 package src.controller;
 
-import java.util.InputMismatchException;
+import src.appointment.Appointment;
+import src.appointment.IAppointmentRepository;
+import src.model.MedicalRecord;
+import src.model.MedicationStorage;
 import src.model.PrescribeMedications;
+import src.repository.IMedicalRecordRepository;
 import src.repository.IMedicineRepository;
 import src.repository.MedicineRepository;
 import src.utils.MedicationLoader;
 
-import java.util.Scanner;
+import java.util.*;
 
 
 public class MedicineController {
     private static IMedicineRepository medicineRepo;
+    private static IMedicalRecordRepository medicalRecordRepo;
+    private static IAppointmentRepository appointmentRepo;
 
-    public MedicineController (MedicineRepository medicineRepo) {
+    public MedicineController (IMedicineRepository medicineRepo, IMedicalRecordRepository medicalRecordRepo, IAppointmentRepository appointmentRepo) {
         this.medicineRepo = medicineRepo;
         loadMedications();
+        this.medicalRecordRepo = medicalRecordRepo;
+        this.appointmentRepo = appointmentRepo;
     }
 
     private void loadMedications() {
@@ -24,8 +32,8 @@ public class MedicineController {
     }
 
     // Modified addMedicine method to handle stock and low stock alert
-    public static void addMedicine(PrescribeMedications medication, int stock, int lowStockAlert) {
-        medicineRepo.addMedicine(medication, stock, lowStockAlert);
+    public static void addMedicine(MedicationStorage medicationStorage, int stock, int lowStockAlert) {
+        medicineRepo.addMedicine(medicationStorage, stock, lowStockAlert);
     }
 
     public void displayAllMedicines() {
@@ -53,14 +61,14 @@ public class MedicineController {
         System.out.print("Enter the medicine name you would like to replenish: ");
         Scanner sc = new Scanner(System.in);
         String medicineName = sc.nextLine();
-        PrescribeMedications medication = medicineRepo.getMedicine(medicineName);
+        MedicationStorage medication = medicineRepo.getMedicine(medicineName);
         if (medication == null) {
             System.out.println(medicineName + " is not in the inventory.");
         } else {
             int stock = medicineRepo.getStock(medicineName);
             int lowStockAlert = medicineRepo.getStockAlert(medicineName);
             if (stock < lowStockAlert) {
-                medicineRepo.updateStatus(medicineName, "replenish");
+                medicineRepo.updateStatus(medicineName, "requested");
                 System.out.println("Requesting replenishment for " + medicineName + "!\n");
             } else {
                 System.out.println(medicineName + " has sufficient stock.");
@@ -74,14 +82,13 @@ public class MedicineController {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter the medication name to replenish: ");
         String medicineName = sc.nextLine();
-        PrescribeMedications medication = medicineRepo.getMedicine(medicineName);
+        MedicationStorage medication = medicineRepo.getMedicine(medicineName);
         if (medication != null) {
             if ("replenish".equals(medication.getStatus())) {
                 System.out.print("Enter the quantity to add: ");
                 int quantity = sc.nextInt();
                 int newStock = medicineRepo.getStock(medicineName) + quantity;
                 medicineRepo.setStock(medicineName, newStock);
-                medicineRepo.updateStatus(medicineName, "disperse"); // Reset status to 'disperse'
                 System.out.println("Accepted replenishment for " + medicineName +
                                    ". New stock: " + newStock + " units. Status: " + medication.getStatus());
             } else {
@@ -99,7 +106,7 @@ public class MedicineController {
         if (medicineName.isEmpty()) {
             System.out.println("Medicine name cannot be empty. Please try again.");
         } else {
-            PrescribeMedications medicine = medicineRepo.getMedicine(medicineName);
+            MedicationStorage medicine = medicineRepo.getMedicine(medicineName);
             
             if (medicine == null) {
                 try {
@@ -107,7 +114,7 @@ public class MedicineController {
                     int stock = sc.nextInt();
                     System.out.print("Input low stock alert: ");
                     int lowstock = sc.nextInt();
-                    medicineRepo.addMedicine(new PrescribeMedications(medicineName), stock, lowstock);
+                    medicineRepo.addMedicine(new MedicationStorage(medicineName), stock, lowstock);
                     System.out.println("\n" + medicineName + " has been added to inventory!");
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid input. Please enter a valid integer for stock and stock alert.\n");
@@ -145,7 +152,7 @@ public class MedicineController {
         Scanner sc = new Scanner(System.in);
         System.out.print("Input medicine name to update: ");
         String medicineStock = sc.nextLine();
-        PrescribeMedications checkMedicine = medicineRepo.getMedicine(medicineStock);
+        MedicationStorage checkMedicine = medicineRepo.getMedicine(medicineStock);
         if (checkMedicine != null) {
             try {
                 System.out.print("Input new stock: ");
@@ -165,4 +172,50 @@ public class MedicineController {
         }
     }
 
+    public void dispenseMedicine(String medicalRecordID) {
+        MedicalRecord medicalRecord = medicalRecordRepo.getMedicalRecordByID(medicalRecordID);
+        StringBuilder undispensedMedicines = new StringBuilder();
+
+        if (medicalRecord != null) {
+            for (PrescribeMedications prescribedMed : medicalRecord.getPrescribeMedications()) {
+                String medicineName = prescribedMed.getMedicineName();
+                int requiredQuantity = prescribedMed.getQuantity();
+
+                MedicationStorage medication = medicineRepo.getMedicine(medicineName);
+                if (medication == null) {
+                    undispensedMedicines.append(medicineName).append(" (not available in inventory); ");
+                    prescribedMed.setStatus("not dispensed");
+                    continue;
+                }
+
+                int availableStock = medicineRepo.getStock(medicineName);
+                if (availableStock < requiredQuantity) {
+                    if (availableStock > 0) {
+                        prescribedMed.setStatus("not dispensed");
+                        System.out.println("Dispensed " + availableStock + " of " + medicineName + ".");
+                    }
+                    undispensedMedicines.append(medicineName).append(" (not enough stock, please come back later); ");
+                } else {
+                    // Fully dispense the required quantity
+                    medicineRepo.setStock(medicineName, availableStock - requiredQuantity);
+                    prescribedMed.setStatus("Dispensed");
+                    System.out.println("Dispensed " + requiredQuantity + " of " + medicineName + ".");
+                }
+            }
+
+            // Update the medical record after processing all medications
+            medicalRecordRepo.updateMedicalRecord(medicalRecordID, null, null, medicalRecord.getPrescribeMedications());
+
+            // If there are any undispensed medications, inform the patient
+            if (!undispensedMedicines.isEmpty()) {
+                System.out.println("Please come back for the following medications: " + undispensedMedicines.toString());
+            }
+        } else {
+            System.out.println("Medical record not found.");
+        }
+    }
+
+//    public Map<String, Appointment> getAllCompletedAppointments() {
+////        return appointmentRepo.getAllCompletedAppointment();
+//    }
 }

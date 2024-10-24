@@ -9,17 +9,20 @@ public class MedicalRecord {
     private String patientID;
     private PastDiagnosis pastDiagnosis;
     private Treatments treatments;
+    private List<PrescribeMedications> prescribeMedications;
 
-
-    public MedicalRecord(String medicalRecordID, String doctorID, String patientID, PastDiagnosis pastDiagnosis, Treatments treatments) {
+    public MedicalRecord(String medicalRecordID, String doctorID, String patientID,
+                         PastDiagnosis pastDiagnosis, Treatments treatments,
+                         List<PrescribeMedications> prescribeMedications) {
         this.medicalRecordID = medicalRecordID;
         this.doctorID = doctorID;
         this.patientID = patientID;
         this.pastDiagnosis = pastDiagnosis;
         this.treatments = treatments;
+        this.prescribeMedications = prescribeMedications != null ? prescribeMedications : new ArrayList<>();
     }
 
-    public void setMedicalRecordID(String medicalRecordID){
+    public void setMedicalRecordID(String medicalRecordID) {
         this.medicalRecordID = medicalRecordID;
     }
 
@@ -39,6 +42,13 @@ public class MedicalRecord {
         this.treatments = treatments;
     }
 
+    public void setPrescribeMedications(List<PrescribeMedications> prescribeMedications) {
+        this.prescribeMedications = prescribeMedications != null ? prescribeMedications : new ArrayList<>();
+    }
+
+    public List<PrescribeMedications> getPrescribeMedications() {
+        return prescribeMedications;
+    }
 
     public String getMedicalRecordID() {
         return medicalRecordID;
@@ -56,9 +66,7 @@ public class MedicalRecord {
         return pastDiagnosis;
     }
 
-    public Treatments getTreatments(){
+    public Treatments getTreatments() {
         return treatments;
     }
-
-
 }

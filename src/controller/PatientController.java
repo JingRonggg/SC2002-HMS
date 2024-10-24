@@ -196,4 +196,8 @@ public class PatientController {
     public HashMap<String, Appointment> viewPastAppointmentOutcomes(String patientID) {
         return appointmentRepository.getAllPatientAppointment(patientID);
     }
+
+    public HashMap<String, MedicalRecord> viewPatientMedicalRecords(String patientID) {
+        return medicalRecordRepository.readMedicalRecord(patientID);
+    }
 }

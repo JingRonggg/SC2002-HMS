@@ -2,15 +2,16 @@ package src.repository;
 
 import java.util.HashMap;
 
+import src.model.MedicationStorage;
 import src.model.PrescribeMedications;
 
 public interface IMedicineRepository {
     
-    public void addMedicine(PrescribeMedications medication, int stock, int lowStockAlert);
+    public void addMedicine(MedicationStorage medicationStorage, int stock, int lowStockAlert);
 
-    public PrescribeMedications getMedicine(String medicineName);
+    public MedicationStorage getMedicine(String medicineName);
     
-    public HashMap<String, PrescribeMedications> getAllMedicines();
+    public HashMap<String, MedicationStorage> getAllMedicines();
 
     public int getStock(String medicineName);
 

@@ -39,8 +39,8 @@ public class Main {
 
             AdminController adminController = new AdminController(adminRepo, appointmentRepo);
             PatientController patientController = new PatientController(patientRepo, medicalRecordRepo);
-            MedicineController medicineController = new MedicineController(medicineRepository);
-            DoctorController doctorController = new DoctorController(appointmentRepo, adminRepo, medicalRecordRepo);
+            MedicineController medicineController = new MedicineController(medicineRepository, medicalRecordRepo, appointmentRepo);
+            DoctorController doctorController = new DoctorController(appointmentRepo, adminRepo, medicalRecordRepo, patientRepo);
             UserController userController = new UserController(userRepository);
 
             Scanner scanner = new Scanner(System.in);

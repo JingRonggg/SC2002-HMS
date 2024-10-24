@@ -17,6 +17,7 @@ public interface IAppointmentRepository {
     public HashMap<String, Appointment> getAllPendingAppointment(String doctorID);
     public HashMap<String, Appointment> getAllConfirmedAppointment(String doctorID);
     public HashMap<String, Appointment> getAllAppointment();
+    HashMap<String, Appointment> getAllCompletedAppointment();
 
     //update
     void updateAppointment(String appointmentID, Appointment updatedAppointment);

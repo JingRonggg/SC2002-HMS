@@ -1,69 +1,57 @@
 package src.controller;
 
 import src.appointment.Appointment;
-import src.appointment.AppointmentRepository;
 import src.appointment.IAppointmentRepository;
-import src.repository.AdminRepository;
+import src.model.*;
 import src.repository.IAdminRepository;
 import src.repository.IMedicalRecordRepository;
-import src.repository.MedicalRecordRepository;
-import src.model.MedicalRecord;
-import src.model.Treatments;
-import src.model.PastDiagnosis;
+import src.repository.IPatientRepository;
 
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static java.lang.Integer.parseInt;
+
 public class DoctorController {
     private final IAppointmentRepository appointmentRepository;
     private final IAdminRepository adminRepository;
     private final IMedicalRecordRepository medicalRecordRepository;
+    private final IPatientRepository patientRepository;
 
-    public DoctorController(IAppointmentRepository appointmentRepository, IAdminRepository adminrepository, IMedicalRecordRepository medicalRecordRepository) {
+    public DoctorController(IAppointmentRepository appointmentRepository, IAdminRepository adminRepository, IMedicalRecordRepository medicalRecordRepository, IPatientRepository patientRepository) {
         this.appointmentRepository = appointmentRepository;
-        this.adminRepository = adminrepository;
+        this.adminRepository = adminRepository;
         this.medicalRecordRepository = medicalRecordRepository;
+        this.patientRepository = patientRepository;
     }
 
-    public void viewPatientMedicalRecords(String doctorID) {
-        String doctorName = adminRepository.getDoctorName(doctorID);
-        HashMap<String, MedicalRecord> allPatientMedicalRecords = medicalRecordRepository.getAllMedicalRecords(doctorID);
-        System.out.println("Medical Records of Patients under " + doctorName);
-        printMedicalRecordDetails(allPatientMedicalRecords);
+    public HashMap<String, MedicalRecord> viewPatientMedicalRecords(String patientID) {
+        return medicalRecordRepository.readMedicalRecord(patientID);
     }
 
-    public void updatePatientMedicalRecords(String medicalRecordID) {
+    public Collection<Patient> viewAllPatients() {
+        return patientRepository.getAllPatients();
+    }
+
+    public void updatePatientMedicalRecords(String medicalRecordID, PastDiagnosis newDiagnosis, Treatments newTreatment, List<PrescribeMedications> newPrescribeMedications) {
         MedicalRecord medicalRecord = medicalRecordRepository.getMedicalRecordByID(medicalRecordID);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        if (medicalRecord != null){
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("New Diagnosis Name: ");
-            String newDiagnosisName = scanner.nextLine();
-            System.out.println("New Diagnosis Date (yyyy-MM-dd): ");
-            String diagnosisDateInput = scanner.nextLine();
-            LocalDate newDiagnosisDate = LocalDate.parse(diagnosisDateInput, formatter);
-            System.out.println("New Diagnosis Details: ");
-            String newDiagnosisDetails = scanner.nextLine();
-            PastDiagnosis newDiagnosis = new PastDiagnosis(newDiagnosisName, newDiagnosisDate, newDiagnosisDetails);
-            System.out.println("New Treatment Name: ");
-            String newTreatmentName = scanner.nextLine();
-            System.out.println("New Treatment Date (yyyy-MM-dd): ");
-            String treatmentDateInput = scanner.nextLine();
-            LocalDate newTreatmentDate = LocalDate.parse(treatmentDateInput, formatter);
-            System.out.println("New Treatment Details: ");
-            String newTreatmentDetails = scanner.nextLine();
-            Treatments newTreatment = new Treatments(newTreatmentName, newTreatmentDate, newTreatmentDetails);
-            if(medicalRecordRepository.updateMedicalRecord(medicalRecordID, newDiagnosis , newTreatment)){
+        if (medicalRecord != null) {
+            // Update the medical record with new details
+            if (medicalRecordRepository.updateMedicalRecord(medicalRecordID, newDiagnosis, newTreatment, newPrescribeMedications)) {
                 System.out.println("Medical Record Updated");
-            } else{
+            } else {
                 System.out.println("Failed to update Medical Record");
             }
-        } else{
+        } else {
             System.out.println("Medical Record not found");
         }
+    }
+
+    // to check if medical record exists
+    public boolean medicalRecordExists(String medicalRecordID) {
+        return medicalRecordRepository.getMedicalRecordByID(medicalRecordID) != null;
     }
 
     // shows upcoming appointments + available slots
@@ -132,58 +120,35 @@ public class DoctorController {
         }
     }
 
-    public void viewUpComingAppointments(String doctorID) {
-        HashMap<String, Appointment> confirmedAppointments = appointmentRepository.getAllConfirmedAppointment(doctorID);
-        System.out.println("Confirmed Appointments for Doctor ID: " + doctorID);
-        printDetails(confirmedAppointments);
+    public HashMap<String, Appointment> viewUpComingAppointments(String doctorID) {
+        return appointmentRepository.getAllConfirmedAppointment(doctorID);
     }
 
-    public void recordAppointmentOutcome() {}
-
-    public boolean viewPendingAppointments(String doctorID) {
-        HashMap<String, Appointment> pendingAppointments = appointmentRepository.getAllPendingAppointment(doctorID);
-        System.out.println("Pending Appointments for Doctor ID: " + doctorID);
-        if (pendingAppointments != null){
-            printDetails(pendingAppointments);
-            return true;
-        } else {
-            System.out.println("No pending appointments found for Doctor ID: " + doctorID);
+    public boolean recordAppointmentOutcome(String appointmentID, String doctorID) {
+        Appointment appointment = appointmentRepository.getSpecificAppointment(appointmentID);
+        if (appointment == null) {
+            System.out.println("Appointment not found.");
             return false;
+        } else {
+            if (!Objects.equals(doctorID, appointment.getDoctorID())) {
+                System.out.println("This is not your appointment!");
+                return false;
+            } else {
+                appointment.setStatus("Completed");
+                return true;
+            }
         }
     }
 
-    private void printDetails(HashMap<String, Appointment> appointments) {
-        System.out.println("------------------------------------------");
-
-        // Iterate through the HashMap and print details
-        for (Map.Entry<String, Appointment> entry : appointments.entrySet()) {
-            String appointmentID = entry.getKey();
-            Appointment appointment = entry.getValue();
-
-            System.out.println("Appointment ID: " + appointmentID);
-            System.out.println("Details: ");
-            System.out.println("PatientID: " + appointment.getPatientID());
-            System.out.println("Date: " + appointment.getAppointmentDate());
-            System.out.println("Start Time: " + appointment.getAppointmentStartTime());
-            System.out.println("End Time: " + appointment.getAppointmentEndTime());
-            System.out.println("------------------------------------------");
-        }
+    public void createNewMedicalRecord (String doctorID, String patientID, PastDiagnosis pastDiagnosis, Treatments treatments, List<PrescribeMedications> newPrescribeMedications) {
+        medicalRecordRepository.createMedicalRecord(doctorID, patientID, pastDiagnosis, treatments, newPrescribeMedications);
     }
 
-    private void printMedicalRecordDetails(HashMap<String, MedicalRecord> medicalRecords) {
-        System.out.println("------------------------------------------");
+    public HashMap<String, Appointment> viewPendingAppointments(String doctorID) {
+        return appointmentRepository.getAllPendingAppointment(doctorID);
+    }
 
-        // Iterate through the HashMap and print details
-        for (Map.Entry<String, MedicalRecord> entry : medicalRecords.entrySet()) {
-            String medicalRecordID = entry.getKey();
-            MedicalRecord medicalRecord = entry.getValue();
-
-            System.out.println("Medical Record ID: " + medicalRecordID);
-            System.out.println("Details: ");
-            System.out.println("PatientID: " + medicalRecord.getPatientID());
-            System.out.println("Past Diagnosis: " + medicalRecord.getPastDiagnosis());
-            System.out.println("Treatments: " + medicalRecord.getTreatments());
-            System.out.println("------------------------------------------");
-        }
+    public Appointment findAppointment(String appointmentID) {
+        return appointmentRepository.getSpecificAppointment(appointmentID);
     }
 }

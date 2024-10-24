@@ -11,6 +11,7 @@ public class PharmacistBoundary {
 
     private final MedicineController medicineController;
 
+
     public PharmacistBoundary(MedicineController medicineController) {
        this.medicineController = medicineController;
     }
@@ -28,9 +29,13 @@ public class PharmacistBoundary {
             switch (choice) {
                 case 1:
                     System.out.println("Insert View Appointment Outcome Record function");
+
                     break;
                 case 2:
                     System.out.println("Insert Update Prescription Status function");
+                    System.out.println("Dispense for which medical record? Provide the medical record ID");
+                    String medicalRecordID = scanner.nextLine();
+                    medicineController.dispenseMedicine(medicalRecordID);
                     break;
                 case 3:
                     System.out.println("Insert View Medication Inventory function");
