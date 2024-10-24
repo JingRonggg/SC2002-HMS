@@ -14,4 +14,5 @@ public interface IAdminRepository{
     boolean removeStaff(String hospitalID);
     User getUserByHospitalID(String hospitalID);
     boolean userExists(String hospitalID);
+    String getDoctorName(String doctorID);
 }

@@ -1,5 +1,7 @@
 package src.controller;
 
+import src.appointment.Appointment;
+import src.appointment.IAppointmentRepository;
 import src.model.Administrator;
 import src.model.Doctor;
 import src.model.Pharmacist;
@@ -7,15 +9,19 @@ import src.model.Staff;
 import src.repository.IAdminRepository;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AdminController {
     private final IAdminRepository staffRepo;
+    private final IAppointmentRepository appointmentRepo;
     private final Scanner scanner;
 
 
-    public AdminController(IAdminRepository staffRepo) {
+    public AdminController(IAdminRepository staffRepo, IAppointmentRepository appointmentRepo) {
         this.staffRepo = staffRepo;
+        this.appointmentRepo = appointmentRepo;
         this.scanner = new Scanner(System.in);
     }
 
@@ -112,5 +118,29 @@ public class AdminController {
         if (!name.isEmpty()) existingStaff.setName(name);
         if (!gender.isEmpty()) existingStaff.setGender(gender);
         if (!ageInput.isEmpty()) existingStaff.setAge(ageInput);
+    }
+
+    public void viewAllAppointments() {
+        System.out.println("These are all the appointments:");
+        HashMap<String, Appointment> appointments = new HashMap<>();
+        appointments = appointmentRepo.getAllAppointment();
+
+        try{
+            for (Map.Entry<String, Appointment> entry : appointments.entrySet()) {
+                String appointmentID = entry.getKey();
+                Appointment appointment = entry.getValue();
+
+                System.out.println("Appointment ID: " + appointmentID);
+                System.out.println("PatientID: " + appointment.getPatientID());
+                System.out.println("DoctorID: " + appointment.getDoctorID());
+                System.out.println("Date: " + appointment.getAppointmentDate());
+                System.out.println("Start time: " + appointment.getAppointmentStartTime());
+                System.out.println("End time: " + appointment.getAppointmentEndTime());
+                System.out.println("Status: " + appointment.getStatus());
+
+            }
+        } catch (Exception e) {
+            System.out.println("Error occured while getting appointments!");
+        }
     }
 }

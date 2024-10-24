@@ -1,6 +1,7 @@
 package src.utils;
 
 import src.controller.MedicineController;
+import src.model.MedicationStorage;
 import src.model.PrescribeMedications;
 
 import java.io.BufferedReader;
@@ -26,10 +27,10 @@ public class MedicationLoader {
                 int lowStockAlert = Integer.parseInt(data[2].trim());
 
                 // Create a Medication object without stock details
-                PrescribeMedications medication = new PrescribeMedications(medicineName);
+                MedicationStorage medicationStorage = new MedicationStorage(medicineName);
 
                 // Add medication using MedicineController, passing stock and alert info separately
-                MedicineController.addMedicine(medication, stock, lowStockAlert);
+                MedicineController.addMedicine(medicationStorage, stock, lowStockAlert);
             }
         } catch (IOException e) {
             System.out.println("Error reading the file: " + e.getMessage());

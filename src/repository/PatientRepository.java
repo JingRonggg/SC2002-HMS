@@ -1,5 +1,6 @@
 package src.repository;
 
+import src.model.Doctor;
 import src.model.Patient;
 import src.model.User;
 

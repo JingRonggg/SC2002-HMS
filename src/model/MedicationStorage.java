@@ -1,14 +1,12 @@
 package src.model;
 
-public class PrescribeMedications {
+public class MedicationStorage {
     private String medicineName;
-    private int quantity;
     private String status;
 
-    public PrescribeMedications(String medicineName, int quantity, String status) {
+    public MedicationStorage(String medicineName) {
         this.medicineName = medicineName;
-        this.quantity = quantity;
-        this.status = status;
+        this.status = null;
     }
 
     public String getMedicineName() {
@@ -26,14 +24,6 @@ public class PrescribeMedications {
     public void setStatus(String status) {
         this.status = status;
     }
-
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 }
+
 
