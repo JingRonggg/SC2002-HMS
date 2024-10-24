@@ -21,6 +21,7 @@ public class DoctorBoundary {
 
     public void displayDoctorMenu(Scanner scanner) {
         while (true) {
+            String patientID = null;
             String date = null;
             System.out.println("Doctor Menu:");
             System.out.println("1. View Patient Medical Records");
@@ -37,10 +38,12 @@ public class DoctorBoundary {
 
             switch (choice) {
                 case 1:
-                    System.out.println("Insert View Patient Medical Record function");
+                    doctorController.viewPatientMedicalRecords(doctorID);
                     break;
                 case 2:
-                    System.out.println("Insert Update Patient Medical Record function");
+                    System.out.println("Enter the ID of the Medical Record that you would like to update");
+                    String medicalRecordID = scanner.nextLine();
+                    doctorController.updatePatientMedicalRecords(medicalRecordID);
                     break;
                 case 3:
                     System.out.println("Enter the date you want to check your schedule (yyyy-MM-dd): ");

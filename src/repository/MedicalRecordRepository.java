@@ -10,41 +10,76 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MedicalRecordRepository implements IMedicalRecordRepository {
-    // Storage of medical records (Key: PatientID)
+    // Storage of medical records (Key: MedicalRecordID)
     protected static HashMap<String, MedicalRecord> medicalRecordData = new HashMap<>();
 
     // Create (Add) a new MedicalRecord
     @Override
-    public void createMedicalRecord (MedicalRecord medicalRecord, Treatments treatments, PastDiagnosis pastDiagnosis, PrescribeMedications prescribeMedications) {
+    public void createMedicalRecord (MedicalRecord medicalRecord, PastDiagnosis pastDiagnosis, Treatments treatments) {
+        medicalRecordData.put(medicalRecord.getMedicalRecordID(), medicalRecord);
         if (medicalRecordData.containsKey(medicalRecord.getPatientID())) {
             throw new IllegalArgumentException("Medical record for this patient already exists.");
         }
-        medicalRecord.setTreatments(treatments);
         medicalRecord.setPastDiagnosis(pastDiagnosis);
-        medicalRecord.setPrescribeMedications(prescribeMedications);
+        medicalRecord.setTreatments(treatments);
         String appointmentID = AppointmentIDGenerator.nextAppointmentID();
         medicalRecordData.put(appointmentID, medicalRecord);
     }
 
     // Read (Retrieve) MedicalRecord by PatientID(Key)
     @Override
-    public ArrayList<MedicalRecord> readMedicalRecord(String patientID){
-        ArrayList<MedicalRecord> medicalRecords = new ArrayList<>();
-
-        for (MedicalRecord patientMedicalRecord : medicalRecordData.values()) {
-            if (patientMedicalRecord.getPatientID().equals(patientID)) {
-                medicalRecords.add(patientMedicalRecord);
+    public HashMap<String, MedicalRecord> readMedicalRecord(String patientID){
+        HashMap<String, MedicalRecord> medicalRecords = new HashMap<>();
+        try{
+            for (String medicalRecordID : medicalRecordData.keySet()) {
+                MedicalRecord medicalRecord = medicalRecordData.get(medicalRecordID);
+                if (medicalRecord.getPatientID().equals(patientID)) {
+                    medicalRecords.put(medicalRecordID, medicalRecord);
+                }
             }
+        } catch(Exception e){
+        System.out.println("An error occurred while getting the Medical Record" + e.getMessage());
         }
-
         return medicalRecords;
     }
 
-    // Update MedicalRecord by PatientID
+    // Get all MedicalRecord by DoctorID (For Doctors)
+    public HashMap<String, MedicalRecord> getAllMedicalRecords(String doctorID){
+        HashMap<String, MedicalRecord> medicalRecords = new HashMap<>();
+        try{
+            for (String medicalRecordID : medicalRecordData.keySet()) {
+                MedicalRecord medicalRecord = medicalRecordData.get(medicalRecordID);
+                if (medicalRecord.getDoctorID().equals(doctorID)) {
+                    medicalRecords.put(medicalRecordID, medicalRecord);
+                }
+            }
+        } catch(Exception e){
+            System.out.println("An error occurred while getting the Medical Records" + e.getMessage());
+        }
+        return medicalRecords;
+    }
+
+    // Get MedicalRecord by MedicalRecordID
+    public MedicalRecord getMedicalRecordByID(String medicalRecordID){
+        try{
+            for (String medicalRecordsID : medicalRecordData.keySet()) {
+                MedicalRecord medicalRecord = medicalRecordData.get(medicalRecordID);
+                if (medicalRecord.getMedicalRecordID().equals(medicalRecordID)) {
+                    return medicalRecordData.get(medicalRecordID);
+                }
+            }
+        } catch(Exception e){
+            System.out.println("An error occurred while getting the Medical Record" + e.getMessage());
+        }
+        return null;
+    }
+
+    // Update MedicalRecord by MedicalRecordID
     @Override
-    public void updateMedicalRecord(String medicalRecordID, Treatments treatments, PastDiagnosis pastDiagnosis, PrescribeMedications prescribeMedications) {
+    public boolean updateMedicalRecord(String medicalRecordID, PastDiagnosis pastDiagnosis, Treatments treatments) {
         if (!medicalRecordData.containsKey(medicalRecordID)){
             System.out.println("No such medical record exists.");
+            return false;
         } else {
             MedicalRecord medicalRecord = medicalRecordData.get(medicalRecordID);
             if (!medicalRecord.getTreatments().equals(treatments)) {
@@ -53,14 +88,12 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
             if (!medicalRecord.getPastDiagnosis().equals(pastDiagnosis)) {
                 medicalRecord.setPastDiagnosis(pastDiagnosis);
             }
-            if (!medicalRecord.getPrescribeMedications().equals(prescribeMedications)) {
-                medicalRecord.setPrescribeMedications(prescribeMedications);
-            }
             medicalRecordData.put(medicalRecordID, medicalRecord);
+            return true;
         }
     }
 
-    // Delete MedicalRecord by PatientID
+    // Delete MedicalRecord by MedicalRecordID
     @Override
     public boolean deleteMedicalRecord(String medicalRecordID) {
         if (medicalRecordData.containsKey(medicalRecordID)) {
@@ -77,9 +110,6 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
         for (MedicalRecord medicalRecord : medicalRecordData.values()) {
             System.out.println("Treatments" + medicalRecord.getTreatments());
             System.out.println("Past Diagnosis" + medicalRecord.getPastDiagnosis());
-            System.out.println("Prescribed Medications" + medicalRecord.getPrescribeMedications());
         }
     }
-
-
 }
