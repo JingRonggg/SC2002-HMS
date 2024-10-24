@@ -4,20 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MedicalRecord {
+    private String medicalRecordID;
+    private String doctorID;
     private String patientID;
     private PastDiagnosis pastDiagnosis;
     private Treatments treatments;
-    private PrescribeMedications prescribeMedications;
 
-    public MedicalRecord(String patientID){
+
+    public MedicalRecord(String medicalRecordID, String doctorID, String patientID, PastDiagnosis pastDiagnosis, Treatments treatments) {
+        this.medicalRecordID = medicalRecordID;
+        this.doctorID = doctorID;
         this.patientID = patientID;
-        this.pastDiagnosis = null;
-        this.treatments = null;
-        this.prescribeMedications = null;
+        this.pastDiagnosis = pastDiagnosis;
+        this.treatments = treatments;
+    }
+
+    public void setMedicalRecordID(String medicalRecordID){
+        this.medicalRecordID = medicalRecordID;
     }
 
     public void setPatientID(String patientID) {
         this.patientID = patientID;
+    }
+
+    public void setDoctorID(String doctorID) {
+        this.doctorID = doctorID;
     }
 
     public void setPastDiagnosis(PastDiagnosis pastDiagnosis) {
@@ -28,12 +39,17 @@ public class MedicalRecord {
         this.treatments = treatments;
     }
 
-    public void setPrescribeMedications(PrescribeMedications prescribeMedications) {
-        this.prescribeMedications = prescribeMedications;
+
+    public String getMedicalRecordID() {
+        return medicalRecordID;
     }
 
     public String getPatientID() {
         return patientID;
+    }
+
+    public String getDoctorID() {
+        return doctorID;
     }
 
     public PastDiagnosis getPastDiagnosis() {
@@ -44,8 +60,5 @@ public class MedicalRecord {
         return treatments;
     }
 
-    public PrescribeMedications getPrescribeMedications(){
-        return prescribeMedications;
-    }
 
 }
