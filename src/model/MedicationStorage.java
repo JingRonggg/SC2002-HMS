@@ -2,11 +2,11 @@ package src.model;
 
 public class MedicationStorage {
     private String medicineName;
-    private String status;
+    private MedicationStorageStatus status;
 
     public MedicationStorage(String medicineName) {
         this.medicineName = medicineName;
-        this.status = null;
+        this.status = MedicationStorageStatus.AVAILABLE;
     }
 
     public String getMedicineName() {
@@ -17,11 +17,11 @@ public class MedicationStorage {
         this.medicineName = medicineName;
     }
 
-    public String getStatus() {
+    public MedicationStorageStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(MedicationStorageStatus status) {
         this.status = status;
     }
 }

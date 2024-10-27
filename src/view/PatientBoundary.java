@@ -1,6 +1,5 @@
 package src.view;
 
-import src.appointment.Appointment;
 import src.controller.PatientController;
 import src.model.MedicalRecord;
 import src.model.PastDiagnosis;
@@ -11,7 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;

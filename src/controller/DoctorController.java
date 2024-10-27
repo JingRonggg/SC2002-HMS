@@ -1,7 +1,7 @@
 package src.controller;
 
-import src.appointment.Appointment;
-import src.appointment.IAppointmentRepository;
+import src.model.Appointment;
+import src.repository.IAppointmentRepository;
 import src.model.*;
 import src.repository.IAdminRepository;
 import src.repository.IMedicalRecordRepository;
@@ -9,7 +9,6 @@ import src.repository.IPatientRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static java.lang.Integer.parseInt;
@@ -63,10 +62,9 @@ public class DoctorController {
         LocalTime currentTime = startTime;
         ArrayList<Appointment> availableSlots = new ArrayList<>();
         while (currentTime.isBefore(endTime)) {
-            LocalTime nextTime = currentTime.plusHours(1);
-            //TODO change the isSlotAvailable, currently will display all appointment booked
+            LocalTime nextTime = currentTime.plusMinutes(30);
             if (appointmentRepository.isSlotAvailable(doctorID, date, currentTime, nextTime)) {
-                availableSlots.add(new Appointment(doctorID, null, null, date, currentTime, nextTime, "available"));
+                availableSlots.add(new Appointment(doctorID, null, null, date, currentTime, nextTime, AppointmentStatus.AVAILABLE));
             }
             currentTime = currentTime.plusMinutes(30);
         }
@@ -93,7 +91,7 @@ public class DoctorController {
         } else if (!appointmentRepository.isSlotAvailable(doctorID, date, startTime, endTime)) {
             System.out.println("You have an appointment at this time!");
         } else {
-            Appointment appointment = new Appointment(doctorID, null, doctorName, date, startTime, endTime, "Not Free");
+            Appointment appointment = new Appointment(doctorID, null, doctorName, date, startTime, endTime, AppointmentStatus.NOT_AVAILABLE);
             appointmentRepository.saveAppointment(appointment);
         }
     }
@@ -108,10 +106,13 @@ public class DoctorController {
                 // Check if the slot is available before confirming
                 if (status.equals("Confirmed") && !appointmentRepository.isSlotAvailable(appointment.getDoctorID(), appointment.getAppointmentDate(), appointment.getAppointmentStartTime(), appointment.getAppointmentEndTime())) {
                     System.out.println("Slot is not available. Cancelling the appointment request.");
-                    appointment.setStatus("Cancelled");
+                    appointment.setStatus(AppointmentStatus.CANCELLED);
+                    appointmentRepository.updateAppointment(appointmentID, appointment);
+                } else if (status.equals("Cancelled")) {
+                    appointment.setStatus(AppointmentStatus.CANCELLED);
                     appointmentRepository.updateAppointment(appointmentID, appointment);
                 } else {
-                    appointment.setStatus(status);
+                    appointment.setStatus(AppointmentStatus.CONFIRMED);
                     appointmentRepository.updateAppointment(appointmentID, appointment);
                 }
             } else {
@@ -134,7 +135,7 @@ public class DoctorController {
                 System.out.println("This is not your appointment!");
                 return false;
             } else {
-                appointment.setStatus("Completed");
+                appointment.setStatus(AppointmentStatus.COMPLETED);
                 return true;
             }
         }

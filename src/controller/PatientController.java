@@ -1,12 +1,11 @@
 package src.controller;
 
-import src.appointment.Appointment;
-import src.appointment.AppointmentRepository;
-import src.appointment.IAppointmentRepository;
+import src.model.Appointment;
+import src.model.AppointmentStatus;
+import src.repository.IAppointmentRepository;
 import src.model.Doctor;
 import src.model.MedicalRecord;
 import src.model.Patient;
-import src.repository.AdminRepository;
 import src.repository.IAdminRepository;
 import src.repository.IMedicalRecordRepository;
 import src.repository.IPatientRepository;
@@ -21,12 +20,11 @@ public class PatientController {
     private final IAppointmentRepository appointmentRepository;
     private final IAdminRepository adminRepository;
 
-    public PatientController(IPatientRepository patientRepository, IMedicalRecordRepository medicalRecordRepository) {
+    public PatientController(IPatientRepository patientRepository, IMedicalRecordRepository medicalRecordRepository, IAdminRepository adminRepository, IAppointmentRepository appointmentRepository) {
         this.patientRepository = patientRepository;
         this.medicalRecordRepository = medicalRecordRepository;
-        // TODO change to dependency later
-        this.adminRepository = new AdminRepository();
-        this.appointmentRepository = new AppointmentRepository();
+        this.adminRepository = adminRepository;
+        this.appointmentRepository = appointmentRepository;
     }
 
     public void getPatientInformation(String hospitalID) {
@@ -88,10 +86,10 @@ public class PatientController {
             String doctorID = doctor.getHospitalID();
             String doctorName = doctor.getName();
             while (currentTime.isBefore(endTime)) {
-                LocalTime nextTime = currentTime.plusHours(1);
+                LocalTime nextTime = currentTime.plusMinutes(30);
                 if (appointmentRepository.isSlotAvailable(doctorID, date, currentTime, nextTime)) {
                     doctorSlots.put(currentTime.toString(),
-                            new Appointment(doctorID, null, doctorName, date, currentTime, nextTime, "available"));
+                            new Appointment(doctorID, null, doctorName, date, currentTime, nextTime, AppointmentStatus.AVAILABLE));
                 }
                 currentTime = currentTime.plusMinutes(30);
             }
@@ -117,14 +115,14 @@ public class PatientController {
 
     //creating an appointmnet
     public void scheduleAppointment (String doctorID, String patientID, LocalDate date, LocalTime startTime) {
-        LocalTime endTime = startTime.plusHours(1);
+        LocalTime endTime = startTime.plusMinutes(30);
         String doctorName = adminRepository.getDoctorName(doctorID);
         if (doctorName == null) {
             System.out.println("Doctor not found.");
         } else if (!appointmentRepository.isSlotAvailable(doctorID, date, startTime, endTime)) {
             System.out.println("Doctor is unavailable at this time.");
         } else{
-            Appointment newappointment = new Appointment(doctorID, patientID, doctorName, date, startTime, endTime, "Pending");
+            Appointment newappointment = new Appointment(doctorID, patientID, doctorName, date, startTime, endTime, AppointmentStatus.PENDING);
             appointmentRepository.saveAppointment(newappointment);
             System.out.println("Appointment requested successfully.");
         }
@@ -139,14 +137,14 @@ public class PatientController {
                 return "Appointment not found.";
             }
 
-            LocalTime newEndtime = newStartTime.plusHours(1);
+            LocalTime newEndtime = newStartTime.plusMinutes(30);
             if (!appointmentRepository.isSlotAvailable(existingAppointment.getDoctorID(), newDate, newEndtime, newEndtime)) {
                 return "Doctor is unavailable at this time.";
             }
             existingAppointment.setAppointmentDate(newDate);
             existingAppointment.setAppointmentStartTime(newStartTime);
             existingAppointment.setAppointmentEndTime(newEndtime);
-            existingAppointment.setStatus("Pending");
+            existingAppointment.setStatus(AppointmentStatus.PENDING);
             appointmentRepository.updateAppointment(appointmentID, existingAppointment);
 
         } catch (Exception e) {

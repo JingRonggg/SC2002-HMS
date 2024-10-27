@@ -1,4 +1,6 @@
-package src.appointment;
+package src.repository;
+
+import src.model.Appointment;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

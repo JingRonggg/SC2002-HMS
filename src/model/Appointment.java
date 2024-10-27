@@ -1,8 +1,5 @@
-package src.appointment;
+package src.model;
 
-import src.model.MedicalRecord;
-
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -13,12 +10,11 @@ public class Appointment {
     private LocalDate appointmentDate;
     private LocalTime appointmentStartTime;
     private LocalTime appointmentEndTime;
-    private String status;
-//    TODO add medical record into appointment
-//    private MedicalRecord medicalRecord;
+    private AppointmentStatus status;
+
     public Appointment(String doctorID, String patientID, String doctorName,
                        LocalDate appointmentDate, LocalTime appointmentStartTime, LocalTime appointmentEndTime,
-                       String status) {
+                       AppointmentStatus status) {
         this.doctorID = doctorID;
         this.patientID = patientID;
         this.doctorName = doctorName;
@@ -26,7 +22,6 @@ public class Appointment {
         setAppointmentStartTime(appointmentStartTime);
         setAppointmentEndTime(appointmentEndTime);
         this.status = status;
-//        this.medicalRecord = medicalRecord;
     }
 
     public String getDoctorID() {
@@ -61,11 +56,11 @@ public class Appointment {
         this.appointmentDate = appointmentDate;
     }
 
-    public String getStatus() {
+    public AppointmentStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(AppointmentStatus status) {
         this.status = status;
     }
 

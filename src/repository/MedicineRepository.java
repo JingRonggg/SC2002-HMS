@@ -3,6 +3,7 @@ package src.repository;
 import java.util.HashMap;
 
 import src.model.MedicationStorage;
+import src.model.MedicationStorageStatus;
 import src.model.PrescribeMedications;
 
 public class MedicineRepository implements IMedicineRepository {
@@ -71,7 +72,7 @@ public class MedicineRepository implements IMedicineRepository {
     public void updateStatus(String medicineName, String status){
         MedicationStorage medication = medicationInventory.get(medicineName);
         if (medication != null) {
-            medication.setStatus(status);
+            medication.setStatus(MedicationStorageStatus.valueOf(status));
             //System.out.println("\nUpdated status of " + medicineName + " to " + status);
         } else {
             System.out.println(medicineName + " not found in inventory.\n");
@@ -80,7 +81,7 @@ public class MedicineRepository implements IMedicineRepository {
 
     public void checkReplenishReq() {
         for (MedicationStorage medication : medicationInventory.values()) {
-            if ("replenish".equals(medication.getStatus())) {
+            if (MedicationStorageStatus.REQUESTED == medication.getStatus()) {
                 System.out.println("\n" + medication.getMedicineName() + " needs to be replenished.");
             }
         }

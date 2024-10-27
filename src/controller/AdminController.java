@@ -1,7 +1,7 @@
 package src.controller;
 
-import src.appointment.Appointment;
-import src.appointment.IAppointmentRepository;
+import src.model.Appointment;
+import src.repository.IAppointmentRepository;
 import src.model.Administrator;
 import src.model.Doctor;
 import src.model.Pharmacist;

@@ -1,5 +1,7 @@
-package src.appointment;
+package src.repository;
 
+import src.model.Appointment;
+import src.model.AppointmentStatus;
 import src.utils.AppointmentIDGenerator;
 
 import java.time.LocalDate;
@@ -60,7 +62,7 @@ public class AppointmentRepository implements IAppointmentRepository {
         try {
             for (String appointmentID : appointments.keySet()) {
                 Appointment appointment = appointments.get(appointmentID);
-                if (appointment.getPatientID().equals(patientID) && appointment.getStatus().equals("Confirmed")) {
+                if (appointment.getPatientID().equals(patientID) && appointment.getStatus().equals(AppointmentStatus.CONFIRMED)) {
                     patientScheduledAppointments.put(appointmentID, appointment);
                 }
             }
@@ -93,7 +95,7 @@ public class AppointmentRepository implements IAppointmentRepository {
         try {
             for (Appointment appointment : appointments.values()) {
                 if (appointment.getDoctorID().equals(doctorID) && appointment.getAppointmentDate().equals(date)) {
-                    if (!appointment.getStatus().equals("Cancelled") && !appointment.getStatus().equals("Pending")) {
+                    if (!appointment.getStatus().equals(AppointmentStatus.CANCELLED) && !appointment.getStatus().equals(AppointmentStatus.PENDING)) {
                         if (startTime.isBefore(appointment.getAppointmentEndTime()) && endTime.isAfter(appointment.getAppointmentStartTime())) {
                             return false;
                         }
@@ -138,7 +140,7 @@ public class AppointmentRepository implements IAppointmentRepository {
         try {
             for (String appointmentID : appointments.keySet()) {
                 Appointment appointment = appointments.get(appointmentID);
-                if (appointment.getDoctorID().equals(doctorID) && appointment.getStatus().equals("Pending")) {
+                if (appointment.getDoctorID().equals(doctorID) && appointment.getStatus().equals(AppointmentStatus.PENDING)) {
                     doctorPendingAppointments.put(appointmentID, appointment);
                 }
             }
@@ -154,7 +156,7 @@ public class AppointmentRepository implements IAppointmentRepository {
         try {
             for (String appointmentID : appointments.keySet()) {
                 Appointment appointment = appointments.get(appointmentID);
-                if (appointment.getDoctorID().equals(doctorID) && appointment.getStatus().equals("Confirmed")) {
+                if (appointment.getDoctorID().equals(doctorID) && appointment.getStatus().equals(AppointmentStatus.CONFIRMED)) {
                     doctorPendingAppointments.put(appointmentID, appointment);
                 }
             }
@@ -184,7 +186,7 @@ public class AppointmentRepository implements IAppointmentRepository {
         try {
             for (String appointmentID : appointments.keySet()) {
                 Appointment appointment = appointments.get(appointmentID);
-                if (appointment.getStatus().equals("Completed")) {
+                if (appointment.getStatus().equals(AppointmentStatus.COMPLETED)) {
                     doctorPendingAppointments.put(appointmentID, appointment);
                 }
             }

@@ -3,9 +3,9 @@ package src.model;
 public class PrescribeMedications {
     private String medicineName;
     private int quantity;
-    private String status;
+    private PrescribeMedicationsStatus status;
 
-    public PrescribeMedications(String medicineName, int quantity, String status) {
+    public PrescribeMedications(String medicineName, int quantity, PrescribeMedicationsStatus status) {
         this.medicineName = medicineName;
         this.quantity = quantity;
         this.status = status;
@@ -19,11 +19,11 @@ public class PrescribeMedications {
         this.medicineName = medicineName;
     }
 
-    public String getStatus() {
+    public PrescribeMedicationsStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(PrescribeMedicationsStatus status) {
         this.status = status;
     }
 

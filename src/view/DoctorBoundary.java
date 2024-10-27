@@ -1,6 +1,6 @@
 package src.view;
 
-import src.appointment.Appointment;
+import src.model.Appointment;
 import src.controller.DoctorController;
 import src.model.*;
 
@@ -213,7 +213,7 @@ public class DoctorBoundary {
             String medicationName = scanner.nextLine();
             System.out.println("Enter Dosage: ");
             int dosage = parseInt(scanner.nextLine());
-            newPrescribeMedications.add(new PrescribeMedications(medicationName, dosage, "not dispensed"));
+            newPrescribeMedications.add(new PrescribeMedications(medicationName, dosage, PrescribeMedicationsStatus.NOT_DISPENSED));
 
             System.out.println("Do you want to add another medication? (yes/no)");
             addMore = scanner.nextLine();
