@@ -1,7 +1,7 @@
 package src;
 
-import src.appointment.AppointmentRepository;
-import src.appointment.IAppointmentRepository;
+import src.repository.AppointmentRepository;
+import src.repository.IAppointmentRepository;
 import src.controller.*;
 import src.repository.MedicalRecordRepository;
 import src.repository.MedicineRepository;
@@ -10,7 +10,6 @@ import src.view.MainMenuBoundary;
 import src.controller.MedicineController;
 import src.controller.AuthenticationController;
 import src.controller.LoginController;
-import src.controller.MedicineController;
 import src.controller.AdminController;
 import src.controller.PatientController;
 import src.model.User;
@@ -38,7 +37,7 @@ public class Main {
             IAppointmentRepository appointmentRepo = new AppointmentRepository();
 
             AdminController adminController = new AdminController(adminRepo, appointmentRepo);
-            PatientController patientController = new PatientController(patientRepo, medicalRecordRepo);
+            PatientController patientController = new PatientController(patientRepo, medicalRecordRepo, adminRepo, appointmentRepo);
             MedicineController medicineController = new MedicineController(medicineRepository, medicalRecordRepo, appointmentRepo);
             DoctorController doctorController = new DoctorController(appointmentRepo, adminRepo, medicalRecordRepo, patientRepo);
             UserController userController = new UserController(userRepository);

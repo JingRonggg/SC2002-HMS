@@ -1,13 +1,12 @@
 package src.controller;
 
-import src.appointment.Appointment;
-import src.appointment.IAppointmentRepository;
+import src.model.PrescribeMedicationsStatus;
+import src.repository.IAppointmentRepository;
 import src.model.MedicalRecord;
 import src.model.MedicationStorage;
 import src.model.PrescribeMedications;
 import src.repository.IMedicalRecordRepository;
 import src.repository.IMedicineRepository;
-import src.repository.MedicineRepository;
 import src.utils.MedicationLoader;
 
 import java.util.*;
@@ -48,7 +47,7 @@ public class MedicineController {
             medicineRepo.getAllMedicines().forEach((name, medicine) -> {
                 int stock = medicineRepo.getStock(name);
                 int lowStockAlert = medicineRepo.getStockAlert(name);
-                String status = medicine.getStatus();
+                String status = medicine.getStatus().name();
                 
                 System.out.printf("%-20s %-10d %-20d %-10s%n", name, stock, lowStockAlert, status);
             });
@@ -68,7 +67,7 @@ public class MedicineController {
             int stock = medicineRepo.getStock(medicineName);
             int lowStockAlert = medicineRepo.getStockAlert(medicineName);
             if (stock < lowStockAlert) {
-                medicineRepo.updateStatus(medicineName, "requested");
+                medicineRepo.updateStatus(medicineName, "REQUESTED");
                 System.out.println("Requesting replenishment for " + medicineName + "!\n");
             } else {
                 System.out.println(medicineName + " has sufficient stock.");
@@ -84,11 +83,12 @@ public class MedicineController {
         String medicineName = sc.nextLine();
         MedicationStorage medication = medicineRepo.getMedicine(medicineName);
         if (medication != null) {
-            if ("replenish".equals(medication.getStatus())) {
+            if ("REQUESTED".equals(medication.getStatus().name())) {
                 System.out.print("Enter the quantity to add: ");
                 int quantity = sc.nextInt();
                 int newStock = medicineRepo.getStock(medicineName) + quantity;
                 medicineRepo.setStock(medicineName, newStock);
+                medicineRepo.updateStatus(medicineName, "AVAILABLE");
                 System.out.println("Accepted replenishment for " + medicineName +
                                    ". New stock: " + newStock + " units. Status: " + medication.getStatus());
             } else {
@@ -184,21 +184,21 @@ public class MedicineController {
                 MedicationStorage medication = medicineRepo.getMedicine(medicineName);
                 if (medication == null) {
                     undispensedMedicines.append(medicineName).append(" (not available in inventory); ");
-                    prescribedMed.setStatus("not dispensed");
+                    prescribedMed.setStatus(PrescribeMedicationsStatus.NOT_DISPENSED);
                     continue;
                 }
 
                 int availableStock = medicineRepo.getStock(medicineName);
                 if (availableStock < requiredQuantity) {
                     if (availableStock > 0) {
-                        prescribedMed.setStatus("not dispensed");
+                        prescribedMed.setStatus(PrescribeMedicationsStatus.NOT_DISPENSED);
                         System.out.println("Dispensed " + availableStock + " of " + medicineName + ".");
                     }
                     undispensedMedicines.append(medicineName).append(" (not enough stock, please come back later); ");
                 } else {
                     // Fully dispense the required quantity
                     medicineRepo.setStock(medicineName, availableStock - requiredQuantity);
-                    prescribedMed.setStatus("Dispensed");
+                    prescribedMed.setStatus(PrescribeMedicationsStatus.DISPENSED);
                     System.out.println("Dispensed " + requiredQuantity + " of " + medicineName + ".");
                 }
             }
