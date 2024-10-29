@@ -81,18 +81,23 @@ public class PatientBoundary {
                 case 5:
                     System.out.println("Enter the appointment ID that you want to reschedule: ");
                     appointmentID = scanner.nextLine();
-                    System.out.print("Enter a new date (yyyy-MM-dd): ");
-                    date = scanner.nextLine();
-                    System.out.println("Enter a new time (HH:mm): ");
-                    time = scanner.nextLine();
-                    try{
-                        LocalDate localDate = LocalDate.parse(date, formatter);
-                        LocalTime startTime = LocalTime.parse(time);
-                        patientController.rescheduleAppointment(appointmentID, localDate, startTime);
-                    } catch (DateTimeParseException e){
-                        System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+                    if (!patientController.appointmentExists(appointmentID)){
+                        System.out.println("Appointment does not exist.");
+                        break;
+                    } else {
+                        System.out.print("Enter a new date (yyyy-MM-dd): ");
+                        date = scanner.nextLine();
+                        System.out.println("Enter a new time (HH:mm): ");
+                        time = scanner.nextLine();
+                        try{
+                            LocalDate localDate = LocalDate.parse(date, formatter);
+                            LocalTime startTime = LocalTime.parse(time);
+                            patientController.rescheduleAppointment(appointmentID, localDate, startTime);
+                        } catch (DateTimeParseException e){
+                            System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+                        }
+                        break;
                     }
-                    break;
                 case 6:
                     System.out.println("Enter the appointment ID that you want to cancel: ");
                     appointmentID = scanner.nextLine();
