@@ -52,6 +52,7 @@ public class PatientBoundary {
                     break;
                 case 2:
                     patientController.updatePatientInformation(hospitalID);
+                    break;
                 case 3:
                     System.out.print("Enter a date (yyyy-MM-dd): ");
                     date = scanner.nextLine();
