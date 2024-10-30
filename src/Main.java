@@ -6,6 +6,7 @@ import src.controller.*;
 import src.repository.MedicalRecordRepository;
 import src.repository.MedicineRepository;
 import src.repository.UserRepository;
+import src.utils.AppointmentLoader;
 import src.view.MainMenuBoundary;
 import src.controller.MedicineController;
 import src.controller.AuthenticationController;
@@ -25,6 +26,7 @@ public class Main {
     static UserRepository userRepository = new UserRepository();
     static MedicalRecordRepository medicalRecordRepository = new MedicalRecordRepository();
     static MedicineRepository medicineRepository = new MedicineRepository();
+    static AppointmentRepository appointmentRepo = new AppointmentRepository();
 
     private static final AuthenticationController authController = new AuthenticationController(userRepository);
     private static final LoginController loginController = new LoginController(authController);
@@ -34,13 +36,13 @@ public class Main {
             IAdminRepository adminRepo = new AdminRepository();
             IPatientRepository patientRepo = new PatientRepository();
             IMedicalRecordRepository medicalRecordRepo = new MedicalRecordRepository();
-            IAppointmentRepository appointmentRepo = new AppointmentRepository();
 
             AdminController adminController = new AdminController(adminRepo, appointmentRepo);
             PatientController patientController = new PatientController(patientRepo, medicalRecordRepo, adminRepo, appointmentRepo);
             MedicineController medicineController = new MedicineController(medicineRepository, medicalRecordRepo, appointmentRepo);
             DoctorController doctorController = new DoctorController(appointmentRepo, adminRepo, medicalRecordRepo, patientRepo);
             UserController userController = new UserController(userRepository);
+            AppointmentController appointmentController = new AppointmentController(appointmentRepo);
 
             Scanner scanner = new Scanner(System.in);
 
@@ -61,6 +63,7 @@ public class Main {
                     String response = scanner.nextLine();
                     if (!response.equalsIgnoreCase("yes")) {
                         System.out.println("Exiting the application.");
+                        appointmentRepo.saveAllToCsv();
                         break;
                     }
                 }

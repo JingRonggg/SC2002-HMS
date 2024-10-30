@@ -9,7 +9,7 @@ import java.util.HashMap;
 public interface IAppointmentRepository {
     //create
     void saveAppointment(Appointment appointment);
-
+    void addAppointment(String appointmentID, Appointment appointment);
     //read
     public Appointment getSpecificAppointment(String appointmentID);
     HashMap<String, Appointment> getAllPatientAppointment(String patientID);
@@ -28,4 +28,6 @@ public interface IAppointmentRepository {
 
     //delete
     void deleteAppointment(String appointmentID);
+
+    void saveAllToCsv();
 }
