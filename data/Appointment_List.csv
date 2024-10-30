@@ -1,2 +1,2 @@
 AppointmentID,PatientID,DoctorID,DoctorName,AppointmentDate,AppointmentStartTime,AppointmentEndTime,Status
-0,P1001,D001,John Smith,2012-12-12,12:00,12:30,PENDING
+0,P1001,D001,John Smith,2012-12-12,12:00,12:30,COMPLETED
