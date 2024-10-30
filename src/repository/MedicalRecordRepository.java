@@ -1,5 +1,6 @@
 package src.repository;
 
+import src.enums.PrescribeMedicationsStatus;
 import src.model.MedicalRecord;
 import src.model.PastDiagnosis;
 import src.model.PrescribeMedications;
@@ -42,6 +43,65 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
             System.out.println("An error occurred while getting the Medical Record: " + e.getMessage());
         }
         return medicalRecords;
+    }
+
+    @Override
+    public HashMap<String, MedicalRecord> readUndispensedMedicalRecord(String patientID, String doctorID) {
+        HashMap<String, MedicalRecord> medicalRecords = new HashMap<>();
+        try {
+            for (String medicalRecordID : medicalRecordData.keySet()) {
+                MedicalRecord medicalRecord = medicalRecordData.get(medicalRecordID);
+                if (medicalRecord.getPatientID().equals(patientID) && medicalRecord.getDoctorID().equals(doctorID)) {
+
+                    boolean hasUndispensedMedications = medicalRecord.getPrescribeMedications().stream().anyMatch(med -> med.getStatus() == PrescribeMedicationsStatus.NOT_DISPENSED);
+
+                    if(hasUndispensedMedications) {
+                        medicalRecords.put(medicalRecordID, medicalRecord);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while getting the Medical Record: " + e.getMessage());
+        }
+        return medicalRecords;
+    }
+
+    @Override
+    public HashMap<String, MedicalRecord> getAllUndispensedMedicalRecord() {
+        HashMap<String, MedicalRecord> medicalRecords = new HashMap<>();
+        try {
+            for (String medicalRecordID : medicalRecordData.keySet()) {
+                MedicalRecord medicalRecord = medicalRecordData.get(medicalRecordID);
+                boolean hasUndispensedMedications = medicalRecord.getPrescribeMedications().stream().anyMatch(med -> med.getStatus() == PrescribeMedicationsStatus.NOT_DISPENSED);
+
+                if(hasUndispensedMedications) {
+                    medicalRecords.put(medicalRecordID, medicalRecord);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while getting the Medical Record: " + e.getMessage());
+        }
+        return medicalRecords;
+    }
+
+    @Override
+    public boolean booleanReadUndispensedMedicalRecord(String patientID, String doctorID) {
+        try {
+            for (String medicalRecordID : medicalRecordData.keySet()) {
+                MedicalRecord medicalRecord = medicalRecordData.get(medicalRecordID);
+                if (medicalRecord.getPatientID().equals(patientID) && medicalRecord.getDoctorID().equals(doctorID)) {
+
+                    boolean hasUndispensedMedications = medicalRecord.getPrescribeMedications().stream().anyMatch(med -> med.getStatus() == PrescribeMedicationsStatus.NOT_DISPENSED);
+
+                    if(hasUndispensedMedications) {
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while getting the Medical Record: " + e.getMessage());
+        }
+        return false;
     }
 
     // Get all MedicalRecord by DoctorID (For Doctors)

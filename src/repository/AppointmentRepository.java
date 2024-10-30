@@ -88,6 +88,22 @@ public class AppointmentRepository implements IAppointmentRepository {
         return patientScheduledAppointments;
     }
 
+    @Override
+    public HashMap<String, Appointment> getPendingMedicationAppointments() {
+        HashMap<String, Appointment> patientPendingMedicationAppointments = new HashMap<>();
+        try {
+            for (String appointmentID : appointments.keySet()) {
+                Appointment appointment = appointments.get(appointmentID);
+                if (appointment.getStatus().equals(AppointmentStatus.COMPLETED)) {
+                    patientPendingMedicationAppointments.put(appointmentID, appointment);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while getting the appointment: " + e.getMessage());
+        }
+        return patientPendingMedicationAppointments;
+    }
+
     // TODO move to doctor
     @Override
     public HashMap<String, Appointment> getDoctorAppointments(String doctorID) {

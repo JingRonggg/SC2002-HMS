@@ -14,8 +14,9 @@ public interface IAppointmentRepository {
     public Appointment getSpecificAppointment(String appointmentID);
     HashMap<String, Appointment> getAllPatientAppointment(String patientID);
     HashMap<String, Appointment> getScheduledPatientAppointment(String patientID);
-    HashMap<String, Appointment> getCompletedPatientAppointment(String patientID);
     HashMap<String, Appointment> getDoctorAppointments(String doctorID);
+    HashMap<String, Appointment> getCompletedPatientAppointment(String patientID);
+    HashMap<String, Appointment> getPendingMedicationAppointments();
     boolean isSlotAvailable(String doctorID, LocalDate date, LocalTime startTime, LocalTime endTime);
     public HashMap<String, Appointment> getAllPendingAppointment(String doctorID);
     public HashMap<String, Appointment> getAllConfirmedAppointment(String doctorID);
