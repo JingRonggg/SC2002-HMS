@@ -1,5 +1,6 @@
 package src.controller;
 
+import src.enums.AppointmentStatus;
 import src.model.Appointment;
 import src.repository.IAppointmentRepository;
 import src.model.*;

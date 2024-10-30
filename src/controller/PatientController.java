@@ -1,7 +1,7 @@
 package src.controller;
 
 import src.model.Appointment;
-import src.model.AppointmentStatus;
+import src.enums.AppointmentStatus;
 import src.repository.IAppointmentRepository;
 import src.model.Doctor;
 import src.model.MedicalRecord;
@@ -176,6 +176,32 @@ public class PatientController {
             } else {
                 System.out.println("Scheduled appointments found. Here is the list");
                 for (Map.Entry<String, Appointment> entry : scheduledAppointments.entrySet()) {
+                    String appointmentID = entry.getKey();
+                    Appointment appointment = entry.getValue();
+
+                    System.out.println("----------------------------------------------------------------------------");
+                    System.out.println("Appointment ID: " + appointmentID);
+                    System.out.println("Date: " + appointment.getAppointmentDate());
+                    System.out.println("Appointment Time: " + appointment.getAppointmentStartTime());
+                    System.out.println("Doctor: " + appointment.getDoctorName());
+                    System.out.println("Status: " + appointment.getStatus());
+                    System.out.println("----------------------------------------------------------------------------");
+                }
+            }
+        }catch(Exception e){
+            System.out.println("Error in getting scheduled appointments.");
+        }
+    }
+
+    public void viewCompletedAppointments(String patientID) {
+        try{
+            HashMap<String, Appointment> completedAppointments = appointmentRepository.getCompletedPatientAppointment(patientID);
+
+            if (completedAppointments.isEmpty()) {
+                System.out.println("No scheduled appointments found.");
+            } else {
+                System.out.println("Scheduled appointments found. Here is the list");
+                for (Map.Entry<String, Appointment> entry : completedAppointments.entrySet()) {
                     String appointmentID = entry.getKey();
                     Appointment appointment = entry.getValue();
 

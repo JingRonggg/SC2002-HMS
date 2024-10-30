@@ -1,5 +1,7 @@
 package src.model;
 
+import src.enums.AppointmentStatus;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 

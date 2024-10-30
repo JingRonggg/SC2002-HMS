@@ -1,7 +1,7 @@
 package src.repository;
 
 import src.model.Appointment;
-import src.model.AppointmentStatus;
+import src.enums.AppointmentStatus;
 import src.utils.AppointmentIDGenerator;
 
 import java.time.LocalDate;
@@ -63,6 +63,22 @@ public class AppointmentRepository implements IAppointmentRepository {
             for (String appointmentID : appointments.keySet()) {
                 Appointment appointment = appointments.get(appointmentID);
                 if (appointment.getPatientID().equals(patientID) && appointment.getStatus().equals(AppointmentStatus.CONFIRMED)) {
+                    patientScheduledAppointments.put(appointmentID, appointment);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while getting the appointment: " + e.getMessage());
+        }
+        return patientScheduledAppointments;
+    }
+
+    @Override
+    public HashMap<String, Appointment> getCompletedPatientAppointment(String patientID) {
+        HashMap<String, Appointment> patientScheduledAppointments = new HashMap<>();
+        try {
+            for (String appointmentID : appointments.keySet()) {
+                Appointment appointment = appointments.get(appointmentID);
+                if (appointment.getPatientID().equals(patientID) && appointment.getStatus().equals(AppointmentStatus.COMPLETED)) {
                     patientScheduledAppointments.put(appointmentID, appointment);
                 }
             }

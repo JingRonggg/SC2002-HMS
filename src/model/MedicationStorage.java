@@ -1,5 +1,7 @@
 package src.model;
 
+import src.enums.MedicationStorageStatus;
+
 public class MedicationStorage {
     private String medicineName;
     private MedicationStorageStatus status;

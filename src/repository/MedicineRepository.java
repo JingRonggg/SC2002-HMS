@@ -3,8 +3,7 @@ package src.repository;
 import java.util.HashMap;
 
 import src.model.MedicationStorage;
-import src.model.MedicationStorageStatus;
-import src.model.PrescribeMedications;
+import src.enums.MedicationStorageStatus;
 
 public class MedicineRepository implements IMedicineRepository {
     protected static HashMap<String, MedicationStorage> medicationInventory = new HashMap<>();

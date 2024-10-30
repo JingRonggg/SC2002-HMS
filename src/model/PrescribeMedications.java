@@ -1,5 +1,7 @@
 package src.model;
 
+import src.enums.PrescribeMedicationsStatus;
+
 public class PrescribeMedications {
     private String medicineName;
     private int quantity;

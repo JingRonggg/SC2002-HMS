@@ -107,7 +107,7 @@ public class PatientBoundary {
                     patientController.viewScheduledAppointments(hospitalID);
                     break;
                 case 8:
-                    System.out.println("Insert view past appointment function");
+                    patientController.viewCompletedAppointments(hospitalID);
                     break;
                 case 9:
                     System.out.println("Logging out...");

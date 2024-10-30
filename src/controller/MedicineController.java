@@ -1,6 +1,6 @@
 package src.controller;
 
-import src.model.PrescribeMedicationsStatus;
+import src.enums.PrescribeMedicationsStatus;
 import src.repository.IAppointmentRepository;
 import src.model.MedicalRecord;
 import src.model.MedicationStorage;
