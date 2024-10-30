@@ -65,11 +65,14 @@ public class AdminController {
     public void removeStaff() {
         System.out.print("Enter staff ID to remove: ");
         String id = scanner.nextLine();
-
-        if (staffRepo.removeStaff(id)) {
-            System.out.println("Staff removed successfully.");
-        } else {
-            System.out.println("Staff not found.");
+        if (!staffRepo.adminExists(id)) {
+            if (staffRepo.removeStaff(id)) {
+                System.out.println("Staff removed successfully.");
+            } else {
+                System.out.println("Staff not found.");
+            }
+        }else{
+            System.out.println("Cannot remove Admin Staff.");
         }
     }
 

@@ -156,13 +156,15 @@ public class PatientController {
     public String cancelAppointment(String appointmentID) {
         try{
             if (appointmentRepository.getSpecificAppointment(appointmentID) == null) {
+                System.out.println("Appointment not found.");
                 return "Appointment not found.";
             }
             appointmentRepository.deleteAppointment(appointmentID);
+            return "Appointment canceled successfully!";
         } catch (Exception e) {
             System.out.println("Error in deleting appointment.");
+            return "Error in deleting appointment.";
         }
-        return "Appointment canceled successfully!";
     }
 
     public void viewScheduledAppointments(String patientID) {
@@ -197,5 +199,12 @@ public class PatientController {
 
     public HashMap<String, MedicalRecord> viewPatientMedicalRecords(String patientID) {
         return medicalRecordRepository.readMedicalRecord(patientID);
+    }
+
+    public boolean appointmentExists(String appointmentID) {
+        if (appointmentRepository.getSpecificAppointment(appointmentID) == null) {
+           return false;
+        }
+        return true;
     }
 }

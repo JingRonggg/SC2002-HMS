@@ -73,4 +73,12 @@ public class AdminRepository extends UserRepository implements IAdminRepository 
         }
         return null;
     }
+
+    public boolean adminExists(String adminID) {
+        User user = users.get(adminID);
+        if (user instanceof Administrator) {
+            return true;
+        }
+        return false;
+    }
 }
