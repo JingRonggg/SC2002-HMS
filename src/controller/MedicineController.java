@@ -1,6 +1,7 @@
 package src.controller;
 
-import src.model.PrescribeMedicationsStatus;
+import src.enums.PrescribeMedicationsStatus;
+import src.model.Appointment;
 import src.repository.IAppointmentRepository;
 import src.model.MedicalRecord;
 import src.model.MedicationStorage;
@@ -28,6 +29,43 @@ public class MedicineController {
         String medicineFilePath = "./data/Medicine_List.csv";
         MedicationLoader medicationLoader = new MedicationLoader(medicineFilePath);
         medicationLoader.loadMedication();
+    }
+
+    // Get all pending_medication status
+    public HashMap<String, Appointment> getAllPendingMedicationStatusAppointment() {
+        HashMap<String, Appointment> appointments = new HashMap<>();
+        try {
+            HashMap<String, Appointment> patientPendingMedicationAppointments = appointmentRepo.getPendingMedicationAppointments();
+
+            for (Map.Entry<String, Appointment> entry : patientPendingMedicationAppointments.entrySet()) {
+                String appointmentID = entry.getKey();
+                Appointment appointment = entry.getValue();
+                System.out.println(appointment);
+                // Extract doctorID and patientID from the appointment
+                String doctorID = appointment.getDoctorID();
+                String patientID = appointment.getPatientID();
+
+                if (medicalRecordRepo.booleanReadUndispensedMedicalRecord(patientID, doctorID)){
+                    appointments.put(appointmentID, appointment);
+                }
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        return appointments;
+    }
+
+    public HashMap<String, MedicalRecord> getAllUndispensedMedicalRecord() {
+        try{
+            return new HashMap<>(medicalRecordRepo.getAllUndispensedMedicalRecord());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // get all undispensed medication medical record
+    public HashMap<String, MedicalRecord> getAllPendingMedicalRecord(String patientID, String doctorID) {
+        return medicalRecordRepo.readUndispensedMedicalRecord(patientID, doctorID);
     }
 
     // Modified addMedicine method to handle stock and low stock alert
@@ -174,6 +212,9 @@ public class MedicineController {
 
     public void dispenseMedicine(String medicalRecordID) {
         MedicalRecord medicalRecord = medicalRecordRepo.getMedicalRecordByID(medicalRecordID);
+        String doctorID = medicalRecord.getDoctorID();
+        String patientID = medicalRecord.getPatientID();
+
         StringBuilder undispensedMedicines = new StringBuilder();
 
         if (medicalRecord != null) {

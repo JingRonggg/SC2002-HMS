@@ -1,4 +1,4 @@
-package src.model;
+package src.enums;
 
 public enum PrescribeMedicationsStatus {
     DISPENSED,

@@ -28,4 +28,7 @@ public interface IMedicalRecordRepository {
 
     // Delete a MedicalRecord by PatientID
     boolean deleteMedicalRecord(String medicalRecordID);
+    boolean booleanReadUndispensedMedicalRecord(String patientID, String doctorID);
+    HashMap<String, MedicalRecord> getAllUndispensedMedicalRecord();
+    HashMap<String, MedicalRecord> readUndispensedMedicalRecord(String patientID, String doctorID);
 }

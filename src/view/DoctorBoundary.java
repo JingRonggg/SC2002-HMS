@@ -1,5 +1,6 @@
 package src.view;
 
+import src.enums.PrescribeMedicationsStatus;
 import src.model.Appointment;
 import src.controller.DoctorController;
 import src.model.*;
@@ -119,7 +120,6 @@ public class DoctorBoundary {
                     printAppointmentDetails(doctorController.viewUpComingAppointments(doctorID));
                     break;
                 case 7:
-                    System.out.println("Insert Record Appointment Outcome function");
                     System.out.println("Which appointment do you want to record the outcome of?");
                     String appointmentID = scanner.nextLine();
                     if(doctorController.recordAppointmentOutcome(appointmentID , doctorID)) {

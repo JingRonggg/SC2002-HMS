@@ -1,22 +1,36 @@
 package src.repository;
 
 import src.model.Appointment;
-import src.model.AppointmentStatus;
+import src.enums.AppointmentStatus;
+import src.model.AppointmentWrapper;
+import src.utils.AppointmentCsvExporter;
 import src.utils.AppointmentIDGenerator;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class AppointmentRepository implements IAppointmentRepository {
-    private static HashMap<String, Appointment> appointments = new HashMap<>();
+    static HashMap<String, Appointment> appointments = new HashMap<>();
+
+
+    @Override
+    public void addAppointment(String appointmentID, Appointment appointment) {
+        try {
+            appointments.put(appointmentID, appointment);
+        } catch (Exception e) {
+            System.out.println("An error occurred while adding the appointment: " + e.getMessage());
+        }
+    }
 
     @Override
     public void saveAppointment(Appointment appointment) {
-        try{
+        try {
             String appointmentID = AppointmentIDGenerator.nextAppointmentID();
             appointments.put(appointmentID, appointment);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("An error occurred while saving appointment: " + e.getMessage());
         }
     }
@@ -70,6 +84,38 @@ public class AppointmentRepository implements IAppointmentRepository {
             System.out.println("An error occurred while getting the appointment: " + e.getMessage());
         }
         return patientScheduledAppointments;
+    }
+
+    @Override
+    public HashMap<String, Appointment> getCompletedPatientAppointment(String patientID) {
+        HashMap<String, Appointment> patientScheduledAppointments = new HashMap<>();
+        try {
+            for (String appointmentID : appointments.keySet()) {
+                Appointment appointment = appointments.get(appointmentID);
+                if (appointment.getPatientID().equals(patientID) && appointment.getStatus().equals(AppointmentStatus.COMPLETED)) {
+                    patientScheduledAppointments.put(appointmentID, appointment);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while getting the appointment: " + e.getMessage());
+        }
+        return patientScheduledAppointments;
+    }
+
+    @Override
+    public HashMap<String, Appointment> getPendingMedicationAppointments() {
+        HashMap<String, Appointment> patientPendingMedicationAppointments = new HashMap<>();
+        try {
+            for (String appointmentID : appointments.keySet()) {
+                Appointment appointment = appointments.get(appointmentID);
+                if (appointment.getStatus().equals(AppointmentStatus.COMPLETED)) {
+                    patientPendingMedicationAppointments.put(appointmentID, appointment);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while getting the appointment: " + e.getMessage());
+        }
+        return patientPendingMedicationAppointments;
     }
 
     // TODO move to doctor
@@ -194,5 +240,18 @@ public class AppointmentRepository implements IAppointmentRepository {
             System.out.println("An error occurred while getting the appointment: " + e.getMessage());
         }
         return doctorPendingAppointments;
+    }
+
+    @Override
+    public void saveAllToCsv() {
+        try {
+            for (String appointmentID : appointments.keySet()) {
+                Appointment appointment = appointments.get(appointmentID);
+                AppointmentWrapper appointmentWithID = new AppointmentWrapper(appointmentID, appointment);
+                AppointmentCsvExporter.exportAppointmentsToCsv(appointmentWithID);
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while saving appointments to CSV: " + e.getMessage());
+        }
     }
 }
