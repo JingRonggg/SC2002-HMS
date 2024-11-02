@@ -24,7 +24,7 @@ public class AppointmentController {
         try {
             // Add the appointment to the repository
             appointmentRepository.addAppointment(appointmentID, appointment);
-            System.out.println("Appointment added successfully with ID: " + appointmentID);
+            // System.out.println("Appointment added successfully with ID: " + appointmentID);
         } catch (Exception e) {
             System.out.println("An error occurred while adding the appointment: " + e.getMessage());
         }
