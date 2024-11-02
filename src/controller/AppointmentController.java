@@ -2,7 +2,7 @@ package src.controller;
 
 import src.model.Appointment;
 import src.repository.AppointmentRepository;
-import src.repository.IAppointmentRepository;
+import src.interfaces.IAppointmentRepository;
 import src.utils.AppointmentLoader;
 
 public class AppointmentController {

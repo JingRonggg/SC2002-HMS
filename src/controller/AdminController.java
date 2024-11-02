@@ -1,12 +1,12 @@
 package src.controller;
 
 import src.model.Appointment;
-import src.repository.IAppointmentRepository;
+import src.interfaces.IAppointmentRepository;
 import src.model.Administrator;
 import src.model.Doctor;
 import src.model.Pharmacist;
 import src.model.Staff;
-import src.repository.IAdminRepository;
+import src.interfaces.IAdminRepository;
 
 import java.util.Collection;
 import java.util.HashMap;

@@ -2,11 +2,11 @@ package src.controller;
 
 import src.enums.AppointmentStatus;
 import src.model.Appointment;
-import src.repository.IAppointmentRepository;
+import src.interfaces.IAppointmentRepository;
 import src.model.*;
-import src.repository.IAdminRepository;
-import src.repository.IMedicalRecordRepository;
-import src.repository.IPatientRepository;
+import src.interfaces.IAdminRepository;
+import src.interfaces.IMedicalRecordRepository;
+import src.interfaces.IPatientRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
