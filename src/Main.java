@@ -1,12 +1,10 @@
 package src;
 
 import src.repository.AppointmentRepository;
-import src.repository.IAppointmentRepository;
 import src.controller.*;
 import src.repository.MedicalRecordRepository;
 import src.repository.MedicineRepository;
 import src.repository.UserRepository;
-import src.utils.AppointmentLoader;
 import src.utils.MedicineCsvExporter;
 import src.view.MainMenuBoundary;
 import src.controller.MedicineController;
@@ -15,9 +13,9 @@ import src.controller.LoginController;
 import src.controller.AdminController;
 import src.controller.PatientController;
 import src.model.User;
-import src.repository.IAdminRepository;
-import src.repository.IPatientRepository;
-import src.repository.IMedicalRecordRepository;
+import src.interfaces.IAdminRepository;
+import src.interfaces.IPatientRepository;
+import src.interfaces.IMedicalRecordRepository;
 import src.repository.AdminRepository;
 import src.repository.PatientRepository;
 

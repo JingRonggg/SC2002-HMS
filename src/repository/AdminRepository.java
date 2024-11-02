@@ -1,5 +1,6 @@
 package src.repository;
 
+import src.interfaces.IAdminRepository;
 import src.model.*;
 
 import java.util.ArrayList;

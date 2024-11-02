@@ -2,7 +2,7 @@ package src.controller;
 
 import src.model.Appointment;
 import src.repository.AppointmentRepository;
-import src.repository.IAppointmentRepository;
+import src.interfaces.IAppointmentRepository;
 import src.utils.AppointmentLoader;
 
 public class AppointmentController {
@@ -24,7 +24,7 @@ public class AppointmentController {
         try {
             // Add the appointment to the repository
             appointmentRepository.addAppointment(appointmentID, appointment);
-            System.out.println("Appointment added successfully with ID: " + appointmentID);
+            // System.out.println("Appointment added successfully with ID: " + appointmentID);
         } catch (Exception e) {
             System.out.println("An error occurred while adding the appointment: " + e.getMessage());
         }

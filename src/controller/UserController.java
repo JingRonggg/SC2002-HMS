@@ -1,7 +1,7 @@
 package src.controller;
 
 import src.model.User;
-import src.repository.IUserRepository;
+import src.interfaces.IUserRepository;
 import src.repository.UserRepository;
 import src.utils.PatientLoader;
 import src.utils.StaffLoader;

@@ -2,6 +2,7 @@ package src.repository;
 
 import java.util.HashMap;
 
+import src.interfaces.IMedicineRepository;
 import src.model.MedicationStorage;
 import src.enums.MedicationStorageStatus;
 

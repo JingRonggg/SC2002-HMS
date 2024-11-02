@@ -19,7 +19,9 @@ public class LoginController {
     }
 
     public User login() {
+        System.out.println("-----------------------------------------");
         System.out.println("Welcome to the Hospital Management System");
+        System.out.println("-----------------------------------------");
         System.out.println("Enter your hospital ID: ");
         String hospitalID = scanner.nextLine();
 

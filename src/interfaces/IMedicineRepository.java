@@ -1,9 +1,8 @@
-package src.repository;
+package src.interfaces;
 
 import java.util.HashMap;
 
 import src.model.MedicationStorage;
-import src.model.PrescribeMedications;
 
 public interface IMedicineRepository {
     

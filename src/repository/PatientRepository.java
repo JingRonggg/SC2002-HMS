@@ -1,6 +1,6 @@
 package src.repository;
 
-import src.model.Doctor;
+import src.interfaces.IPatientRepository;
 import src.model.Patient;
 import src.model.User;
 

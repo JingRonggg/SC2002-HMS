@@ -1,13 +1,13 @@
 package src.repository;
 
 import src.enums.PrescribeMedicationsStatus;
+import src.interfaces.IMedicalRecordRepository;
 import src.model.MedicalRecord;
 import src.model.PastDiagnosis;
 import src.model.PrescribeMedications;
 import src.model.Treatments;
 import src.utils.AppointmentIDGenerator;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 

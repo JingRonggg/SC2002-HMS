@@ -2,12 +2,12 @@ package src.controller;
 
 import src.enums.PrescribeMedicationsStatus;
 import src.model.Appointment;
-import src.repository.IAppointmentRepository;
+import src.interfaces.IAppointmentRepository;
 import src.model.MedicalRecord;
 import src.model.MedicationStorage;
 import src.model.PrescribeMedications;
-import src.repository.IMedicalRecordRepository;
-import src.repository.IMedicineRepository;
+import src.interfaces.IMedicalRecordRepository;
+import src.interfaces.IMedicineRepository;
 import src.utils.MedicationLoader;
 
 import java.util.*;

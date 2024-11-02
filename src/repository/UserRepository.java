@@ -1,5 +1,6 @@
 package src.repository;
 
+import src.interfaces.IUserRepository;
 import src.model.User;
 
 import java.util.Collection;

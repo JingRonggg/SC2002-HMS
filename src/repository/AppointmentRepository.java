@@ -1,5 +1,6 @@
 package src.repository;
 
+import src.interfaces.IAppointmentRepository;
 import src.model.Appointment;
 import src.enums.AppointmentStatus;
 import src.model.AppointmentWrapper;
@@ -8,13 +9,34 @@ import src.utils.AppointmentIDGenerator;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class AppointmentRepository implements IAppointmentRepository {
     static HashMap<String, Appointment> appointments = new HashMap<>();
 
+    @FunctionalInterface
+    private interface AppointmentFilter {
+        boolean test(Appointment appointment);
+    }
+
+    private void handleException(String operation, Exception e) {
+        System.out.println("An error occurred while " + operation + " the appointment: " + e.getMessage());
+    }
+
+
+    private HashMap<String, Appointment> filterAppointments(AppointmentFilter filter) {
+        HashMap<String, Appointment> filteredAppointments = new HashMap<>();
+        try {
+            appointments.forEach((appointmentID, appointment) -> {
+                if (filter.test(appointment)) {
+                    filteredAppointments.put(appointmentID, appointment);
+                }
+            });
+        } catch (Exception e) {
+            handleException("getting", e);
+        }
+        return filteredAppointments;
+    }
 
     @Override
     public void addAppointment(String appointmentID, Appointment appointment) {
@@ -49,57 +71,62 @@ public class AppointmentRepository implements IAppointmentRepository {
         return null;
     }
 
-    // TODO move to patient
-    //get all method for patientID
     @Override
     public HashMap<String, Appointment> getAllPatientAppointment(String patientID) {
-        HashMap<String, Appointment> patientAppointments = new HashMap<>();
-        try {
-            for (String appointmentID : appointments.keySet()) {
-                Appointment appointment = appointments.get(appointmentID);
-                if (appointment.getPatientID().equals(patientID)) {
-                    patientAppointments.put(appointmentID, appointment);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("An error occurred while getting the appointment: " + e.getMessage());
-        }
-        return patientAppointments;
+        return filterAppointments(appointment -> appointment.getPatientID().equals(patientID));
     }
-
-    //TODO move to patient
-    //get all schedule appointments for patient
 
     @Override
     public HashMap<String, Appointment> getScheduledPatientAppointment(String patientID) {
-        HashMap<String, Appointment> patientScheduledAppointments = new HashMap<>();
-        try {
-            for (String appointmentID : appointments.keySet()) {
-                Appointment appointment = appointments.get(appointmentID);
-                if (appointment.getPatientID().equals(patientID) && appointment.getStatus().equals(AppointmentStatus.CONFIRMED)) {
-                    patientScheduledAppointments.put(appointmentID, appointment);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("An error occurred while getting the appointment: " + e.getMessage());
-        }
-        return patientScheduledAppointments;
+        return filterAppointments(appointment ->
+                appointment.getPatientID().equals(patientID) &&
+                        appointment.getStatus().equals(AppointmentStatus.CONFIRMED));
     }
 
     @Override
     public HashMap<String, Appointment> getCompletedPatientAppointment(String patientID) {
-        HashMap<String, Appointment> patientScheduledAppointments = new HashMap<>();
+        return filterAppointments(appointment ->
+                appointment.getPatientID().equals(patientID) &&
+                        appointment.getStatus().equals(AppointmentStatus.COMPLETED));
+    }
+
+    @Override
+    public HashMap<String, Appointment> getDoctorAppointments(String doctorID) {
+        return filterAppointments(appointment -> appointment.getDoctorID().equals(doctorID));
+    }
+
+    @Override
+    public HashMap<String, Appointment> getAllPendingAppointment(String doctorID) {
+        return filterAppointments(appointment ->
+                appointment.getDoctorID().equals(doctorID) &&
+                        appointment.getStatus().equals(AppointmentStatus.PENDING));
+    }
+
+    @Override
+    public HashMap<String, Appointment> getAllConfirmedAppointment(String doctorID) {
+        return filterAppointments(appointment ->
+                appointment.getDoctorID().equals(doctorID) &&
+                        appointment.getStatus().equals(AppointmentStatus.CONFIRMED));
+    }
+
+    @Override
+    public HashMap<String, Appointment> getAllCompletedAppointment() {
+        return filterAppointments(appointment ->
+                appointment.getStatus().equals(AppointmentStatus.COMPLETED));
+    }
+
+    @Override
+    public HashMap<String, Appointment> getAllAppointment() {
+        HashMap<String, Appointment> allAppointments = new HashMap<>();
         try {
             for (String appointmentID : appointments.keySet()) {
                 Appointment appointment = appointments.get(appointmentID);
-                if (appointment.getPatientID().equals(patientID) && appointment.getStatus().equals(AppointmentStatus.COMPLETED)) {
-                    patientScheduledAppointments.put(appointmentID, appointment);
-                }
+                allAppointments.put(appointmentID, appointment);
             }
         } catch (Exception e) {
             System.out.println("An error occurred while getting the appointment: " + e.getMessage());
         }
-        return patientScheduledAppointments;
+        return allAppointments;
     }
 
     @Override
@@ -117,24 +144,6 @@ public class AppointmentRepository implements IAppointmentRepository {
         }
         return patientPendingMedicationAppointments;
     }
-
-    // TODO move to doctor
-    @Override
-    public HashMap<String, Appointment> getDoctorAppointments(String doctorID) {
-        HashMap<String, Appointment> doctorAppointments = new HashMap<>();
-        try {
-            for (String appointmentID : appointments.keySet()) {
-                Appointment appointment = appointments.get(appointmentID);
-                if (appointment.getDoctorID().equals(doctorID)) {
-                    doctorAppointments.put(appointmentID, appointment);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("An error occurred while getting the appointment: " + e.getMessage());
-        }
-        return doctorAppointments;
-    }
-
 
     @Override
     public boolean isSlotAvailable(String doctorID, LocalDate date, LocalTime startTime, LocalTime endTime) {
@@ -180,67 +189,6 @@ public class AppointmentRepository implements IAppointmentRepository {
         }
     }
 
-    @Override
-    public HashMap<String, Appointment> getAllPendingAppointment(String doctorID) {
-        HashMap<String, Appointment> doctorPendingAppointments = new HashMap<>();
-        try {
-            for (String appointmentID : appointments.keySet()) {
-                Appointment appointment = appointments.get(appointmentID);
-                if (appointment.getDoctorID().equals(doctorID) && appointment.getStatus().equals(AppointmentStatus.PENDING)) {
-                    doctorPendingAppointments.put(appointmentID, appointment);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("An error occurred while getting the appointment: " + e.getMessage());
-        }
-        return doctorPendingAppointments;
-    }
-
-    @Override
-    public HashMap<String, Appointment> getAllConfirmedAppointment(String doctorID) {
-        HashMap<String, Appointment> doctorPendingAppointments = new HashMap<>();
-        try {
-            for (String appointmentID : appointments.keySet()) {
-                Appointment appointment = appointments.get(appointmentID);
-                if (appointment.getDoctorID().equals(doctorID) && appointment.getStatus().equals(AppointmentStatus.CONFIRMED)) {
-                    doctorPendingAppointments.put(appointmentID, appointment);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("An error occurred while getting the appointment: " + e.getMessage());
-        }
-        return doctorPendingAppointments;
-    }
-
-    @Override
-    public HashMap<String, Appointment> getAllAppointment() {
-        HashMap<String, Appointment> allAppointments = new HashMap<>();
-        try {
-            for (String appointmentID : appointments.keySet()) {
-                Appointment appointment = appointments.get(appointmentID);
-                allAppointments.put(appointmentID, appointment);
-                }
-        } catch (Exception e) {
-            System.out.println("An error occurred while getting the appointment: " + e.getMessage());
-        }
-        return allAppointments;
-    }
-
-    @Override
-    public HashMap<String, Appointment> getAllCompletedAppointment() {
-        HashMap<String, Appointment> doctorPendingAppointments = new HashMap<>();
-        try {
-            for (String appointmentID : appointments.keySet()) {
-                Appointment appointment = appointments.get(appointmentID);
-                if (appointment.getStatus().equals(AppointmentStatus.COMPLETED)) {
-                    doctorPendingAppointments.put(appointmentID, appointment);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("An error occurred while getting the appointment: " + e.getMessage());
-        }
-        return doctorPendingAppointments;
-    }
 
     @Override
     public void saveAllToCsv() {

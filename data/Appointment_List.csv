@@ -1,2 +1,4 @@
 AppointmentID,PatientID,DoctorID,DoctorName,AppointmentDate,AppointmentStartTime,AppointmentEndTime,Status
 0,P1001,D001,John Smith,2012-12-12,12:00,12:30,COMPLETED
+1,null,D001,John Smith,2012-12-12,00:00,00:00,NOT_AVAILABLE
+2,null,D001,John Smith,2012-12-12,16:00,16:01,NOT_AVAILABLE
