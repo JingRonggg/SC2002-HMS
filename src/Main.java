@@ -7,11 +7,6 @@ import src.repository.MedicineRepository;
 import src.repository.UserRepository;
 import src.utils.MedicineCsvExporter;
 import src.view.MainMenuBoundary;
-import src.controller.MedicineController;
-import src.controller.AuthenticationController;
-import src.controller.LoginController;
-import src.controller.AdminController;
-import src.controller.PatientController;
 import src.model.User;
 import src.interfaces.IAdminRepository;
 import src.interfaces.IPatientRepository;
@@ -62,8 +57,7 @@ public class Main {
                     String response = scanner.nextLine();
                     if (!response.equalsIgnoreCase("yes")) {
                         System.out.println("Exiting the application.");
-                        appointmentRepo.saveAllToCsv();
-                        MedicineCsvExporter.exportAllMedicinesToCsv(medicineRepository);
+                        saveAndExit();
                         break;
                     }
                 }
@@ -72,5 +66,11 @@ public class Main {
         } catch (Exception e) {
             System.err.println("An error occurred during initialization: " + e.getMessage());
         }
+    }
+
+    public static void saveAndExit() {
+        appointmentRepo.saveAllToCsv();
+        MedicineCsvExporter.exportAllMedicinesToCsv(medicineRepository);
+        System.exit(0);
     }
 }
