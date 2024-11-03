@@ -1,6 +1,7 @@
 package src.controller;
 
 import src.model.User;
+import src.Main;
 
 import java.util.Scanner;
 
@@ -22,8 +23,12 @@ public class LoginController {
         System.out.println("-----------------------------------------");
         System.out.println("Welcome to the Hospital Management System");
         System.out.println("-----------------------------------------");
-        System.out.println("Enter your hospital ID: ");
+        System.out.println("Enter your hospital ID: (enter 'exit' to quit)");
         String hospitalID = scanner.nextLine();
+
+        if (hospitalID.equalsIgnoreCase("exit")) {
+            Main.saveAndExit();
+        }
 
         if (!authController.existenceCheck(hospitalID)) {
             System.out.println("Invalid hospital ID");

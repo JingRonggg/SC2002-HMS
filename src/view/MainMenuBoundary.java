@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class MainMenuBoundary {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static boolean displayMenu(User user, AdminController adminController, PatientController patientController, MedicineController medicineController, DoctorController doctorController) {
+    public static boolean displayMenu(User user, AdminController adminController, PatientController patientController, MedicineController medicineController, DoctorController doctorController, NurseController nurseController) {
         String role = user.getRole();
         String hospitalID = user.getHospitalID();
 
@@ -30,6 +30,10 @@ public class MainMenuBoundary {
             case "PHARMACIST":
                 PharmacistBoundary pharmacistBoundary = new PharmacistBoundary(medicineController);
                 pharmacistBoundary.displayPharmacistMenu(scanner);
+                break;
+            case "NURSE":
+                NurseBoundary nurseBoundary = new NurseBoundary(nurseController);
+                nurseBoundary.displayNurseMenu(scanner);
                 break;
             default:
                 System.out.println("Invalid role");

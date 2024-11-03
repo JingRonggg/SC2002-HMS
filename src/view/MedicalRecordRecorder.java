@@ -78,7 +78,6 @@ public class MedicalRecordRecorder {
             System.out.println("Do you want to add another medication? (yes/no)");
             addMore = scanner.nextLine();
         } while (addMore.equalsIgnoreCase("yes"));
-        scanner.close();
         return new MedicalRecord(null, null, null, newDiagnosis, newTreatment, newPrescribeMedications);
     }
 }
