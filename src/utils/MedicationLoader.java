@@ -15,7 +15,6 @@ public class MedicationLoader {
         this.filePath = filePath;
     }
 
-    // Method to load the CSV file into the medication inventory
     public void loadMedication() {
         String line;
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

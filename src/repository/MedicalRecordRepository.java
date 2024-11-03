@@ -184,4 +184,9 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
             System.out.println("Past Diagnosis: " + medicalRecord.getPastDiagnosis());
         }
     }
+
+    @Override
+    public void addMedicalRecord(String medicalRecordID, MedicalRecord medicalRecord) {
+        medicalRecordData.put(medicalRecordID, medicalRecord); 
+    }
 }

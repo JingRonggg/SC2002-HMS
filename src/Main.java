@@ -12,6 +12,7 @@ import src.controller.AuthenticationController;
 import src.controller.LoginController;
 import src.controller.AdminController;
 import src.controller.PatientController;
+
 import src.model.User;
 import src.interfaces.IAdminRepository;
 import src.interfaces.IPatientRepository;
@@ -42,6 +43,7 @@ public class Main {
             DoctorController doctorController = new DoctorController(appointmentRepo, adminRepo, medicalRecordRepo, patientRepo);
             UserController userController = new UserController(userRepository);
             AppointmentController appointmentController = new AppointmentController(appointmentRepo);
+            MedicalRecordController medicalRecordController = new MedicalRecordController(medicalRecordRepo);
 
             Scanner scanner = new Scanner(System.in);
 

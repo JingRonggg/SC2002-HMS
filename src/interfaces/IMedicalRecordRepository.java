@@ -31,4 +31,5 @@ public interface IMedicalRecordRepository {
     boolean booleanReadUndispensedMedicalRecord(String patientID, String doctorID);
     HashMap<String, MedicalRecord> getAllUndispensedMedicalRecord();
     HashMap<String, MedicalRecord> readUndispensedMedicalRecord(String patientID, String doctorID);
+    void addMedicalRecord(String medicalRecordID, MedicalRecord medicalRecord);
 }

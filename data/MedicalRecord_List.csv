@@ -1,0 +1,3 @@
+MedicalRecordID,PatientID,DoctorID,conditionName,diagnosisDate,Status,Treatments,treatmentDate,treatmentDetails,medicineName,quantity,Status
+10,P1001,D001,cancer,2012-12-12,RESOLVE,none,2012-12-13,cured,Paracetamol,1,DISPENSED
+01,P1002,D002,diarrhea,2024-12-12,ACTIVE,none,2024-12-12,minor,Amoxcillin,2,DISPENSED
