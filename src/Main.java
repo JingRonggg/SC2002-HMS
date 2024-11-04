@@ -19,7 +19,7 @@ import src.interfaces.IPatientRepository;
 import src.interfaces.IMedicalRecordRepository;
 import src.repository.AdminRepository;
 import src.repository.PatientRepository;
-
+import src.repository.NurseRepository;
 import java.util.Scanner;
 
 public class Main {
@@ -27,7 +27,7 @@ public class Main {
     static MedicalRecordRepository medicalRecordRepository = new MedicalRecordRepository();
     static MedicineRepository medicineRepository = new MedicineRepository();
     static AppointmentRepository appointmentRepo = new AppointmentRepository();
-
+    static NurseRepository nurseRepo = new NurseRepository();
     private static final AuthenticationController authController = new AuthenticationController(userRepository);
     private static final LoginController loginController = new LoginController(authController);
 
@@ -45,6 +45,7 @@ public class Main {
             AppointmentController appointmentController = new AppointmentController(appointmentRepo);
             MedicalRecordController medicalRecordController = new MedicalRecordController(medicalRecordRepo);
 
+            NurseController nurseController = new NurseController(nurseRepo, appointmentRepo);
             Scanner scanner = new Scanner(System.in);
 
             while (true) {
@@ -56,7 +57,7 @@ public class Main {
 
                     // Session loop for the logged-in user
                     while (continueSession) {
-                        continueSession = MainMenuBoundary.displayMenu(loggedInUser, adminController, patientController, medicineController, doctorController);
+                        continueSession = MainMenuBoundary.displayMenu(loggedInUser, adminController, patientController, medicineController, doctorController, nurseController);
                         appointmentRepo.saveAllToCsv();
                         medicalRecordRepo.storeIntoCsv();
                         MedicineCsvExporter.exportAllMedicinesToCsv(medicineRepository);
@@ -67,6 +68,7 @@ public class Main {
                     String response = scanner.nextLine();
                     if (!response.equalsIgnoreCase("yes")) {
                         System.out.println("Exiting the application.");
+                        saveAndExit();
                         break;
                     }
                 }
@@ -75,5 +77,11 @@ public class Main {
         } catch (Exception e) {
             System.err.println("An error occurred during initialization: " + e.getMessage());
         }
+    }
+
+    public static void saveAndExit() {
+        appointmentRepo.saveAllToCsv();
+        MedicineCsvExporter.exportAllMedicinesToCsv(medicineRepository);
+        System.exit(0);
     }
 }

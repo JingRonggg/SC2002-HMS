@@ -3,6 +3,7 @@ package src.utils;
 import src.controller.UserController;
 import src.model.Administrator;
 import src.model.Doctor;
+import src.model.Nurse;
 import src.model.Pharmacist;
 
 import java.io.BufferedReader;
@@ -37,6 +38,9 @@ public class StaffLoader {
                         break;
                     case "PHARMACIST":
                         UserController.addUser(new Pharmacist(staffID, staffName, staffRole, gender, age));
+                        break;
+                    case "NURSE":
+                        UserController.addUser(new Nurse(staffID, staffName, staffRole, gender, age));
                         break;
                     default:
                         System.out.println("Invalid staff role: " + staffRole);
