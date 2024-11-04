@@ -57,6 +57,9 @@ public class Main {
                     // Session loop for the logged-in user
                     while (continueSession) {
                         continueSession = MainMenuBoundary.displayMenu(loggedInUser, adminController, patientController, medicineController, doctorController);
+                        appointmentRepo.saveAllToCsv();
+                        medicalRecordRepo.storeIntoCsv();
+                        MedicineCsvExporter.exportAllMedicinesToCsv(medicineRepository);
                     }
                 } else {
                     System.out.println("Login failed. Please try again.");
@@ -64,8 +67,6 @@ public class Main {
                     String response = scanner.nextLine();
                     if (!response.equalsIgnoreCase("yes")) {
                         System.out.println("Exiting the application.");
-                        appointmentRepo.saveAllToCsv();
-                        MedicineCsvExporter.exportAllMedicinesToCsv(medicineRepository);
                         break;
                     }
                 }

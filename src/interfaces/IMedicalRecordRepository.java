@@ -32,4 +32,5 @@ public interface IMedicalRecordRepository {
     HashMap<String, MedicalRecord> getAllUndispensedMedicalRecord();
     HashMap<String, MedicalRecord> readUndispensedMedicalRecord(String patientID, String doctorID);
     void addMedicalRecord(String medicalRecordID, MedicalRecord medicalRecord);
+    void storeIntoCsv() ;
 }

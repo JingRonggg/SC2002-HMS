@@ -17,17 +17,12 @@ import java.util.List;
 import java.util.Set;
 
 public class MedicalRecordLoader {
-    private String filepath;
-
-    public MedicalRecordLoader(String filepath) {
-        this.filepath = filepath;
-    }
 
     public void loadMedicalRecords() {
         Set<String> existingIDs = new HashSet<>();
 
         // First pass: Collect existing medical record IDs
-        try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(MedicalRecordCsvExporter.CSV_FILE_PATH))) {
             String line;
             // Skip header
             reader.readLine();
@@ -46,7 +41,7 @@ public class MedicalRecordLoader {
         MedicalRecordIDGenerator.initializeWithExistingIDs(existingIDs);
 
         // Second pass: Load medical records
-        try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(MedicalRecordCsvExporter.CSV_FILE_PATH))) {
             String line;
             // Skip header
             reader.readLine();
@@ -54,32 +49,31 @@ public class MedicalRecordLoader {
                 String[] fields = line.split(",");
                 if (fields.length >= 12) { // Ensure the line has enough fields
                     String medicalRecordID = fields[0];
-                    String patientID = fields[1];
-                    String doctorID = fields[2];
-                    
+                    String doctorID = fields[1];
+                    String patientID = fields[2];
+                
                     // Parsing PastDiagnosis
                     String conditionName = fields[3];
                     LocalDate diagnosisDate = LocalDate.parse(fields[4]); // Parse the date
-                    String status = fields[5]; // Status can be "ACTIVE", "RESOLVED", etc.
-                    PastDiagnosis pastDiagnosis = new PastDiagnosis(conditionName, diagnosisDate, status);
+                    PastDiagnosis pastDiagnosis = new PastDiagnosis(conditionName, diagnosisDate);
                     
                     // Parsing Treatments
-                    String treatmentName = fields[6]; // Treatment name
-                    LocalDate treatmentDate = LocalDate.parse(fields[7]); // Parse the treatment date
-                    String treatmentDetails = fields[8]; // Treatment details
+                    String treatmentName = fields[5]; // Treatment name
+                    LocalDate treatmentDate = LocalDate.parse(fields[6]); // Parse the treatment date
+                    String treatmentDetails = fields[7]; // Treatment details
                     Treatments treatments = new Treatments(treatmentName, treatmentDate, treatmentDetails);
                     
                     // Parsing PrescribedMedications
                     List<PrescribeMedications> prescribedMedications = new ArrayList<>();
-                    String medicineName = fields[9];
-                    int quantity = Integer.parseInt(fields[10]); // Parse quantity
+                    String medicineName = fields[8];
+                    int quantity = Integer.parseInt(fields[9]); // Parse quantity
                     PrescribeMedicationsStatus medicineStatus = PrescribeMedicationsStatus.valueOf(fields[11].toUpperCase()); 
                     prescribedMedications.add(new PrescribeMedications(medicineName, quantity, medicineStatus));
 
                     // Create and add MedicalRecord to the controller
                     MedicalRecord medicalRecord = new MedicalRecord(medicalRecordID, doctorID, patientID, pastDiagnosis, treatments, prescribedMedications);
                     MedicalRecordController.addMedicalRecord(medicalRecordID, medicalRecord);
-
+                    
                 }
             }
         } catch (IOException e) {

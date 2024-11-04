@@ -16,15 +16,18 @@ public class MedicalRecordController {
     }
 
     private void loadMedicalRecords() {
-        String medicalRecordFile = "./data/MedicalRecord_List.csv";
-        MedicalRecordLoader medicalRecordLoader= new MedicalRecordLoader(medicalRecordFile);
+        MedicalRecordLoader medicalRecordLoader= new MedicalRecordLoader();
         medicalRecordLoader.loadMedicalRecords();
     }
 
     // Adds a medical record to the repository with a specific ID
     public static void addMedicalRecord(String medicalRecordID, MedicalRecord medicalRecord) {
         // Directly using the repository to store the medical record
-        medicalRecordRepository.addMedicalRecord(medicalRecordID, medicalRecord);
+        try {
+            medicalRecordRepository.addMedicalRecord(medicalRecordID, medicalRecord);
+        } catch (Exception e) {
+            System.out.println("An error occurred while adding the appointment: " + e.getMessage());
+        }
     }
     
 

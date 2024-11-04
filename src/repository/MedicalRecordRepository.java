@@ -3,10 +3,12 @@ package src.repository;
 import src.enums.PrescribeMedicationsStatus;
 import src.interfaces.IMedicalRecordRepository;
 import src.model.MedicalRecord;
+import src.model.MedicalRecordWrapper;
 import src.model.PastDiagnosis;
 import src.model.PrescribeMedications;
 import src.model.Treatments;
 import src.utils.AppointmentIDGenerator;
+import src.utils.MedicalRecordCsvExporter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -188,5 +190,18 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
     @Override
     public void addMedicalRecord(String medicalRecordID, MedicalRecord medicalRecord) {
         medicalRecordData.put(medicalRecordID, medicalRecord); 
+    }
+
+    @Override
+    public void storeIntoCsv() {
+        try {
+            for (String medicalRecordID : medicalRecordData.keySet()) {
+                MedicalRecord medicalRecord = medicalRecordData.get(medicalRecordID);
+                MedicalRecordWrapper medicalRecordWithID = new MedicalRecordWrapper(medicalRecordID,medicalRecord);
+                MedicalRecordCsvExporter.exportMedicalRecordToCsv(medicalRecordWithID);
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while saving appointments to CSV: " + e.getMessage());
+        }
     }
 }
