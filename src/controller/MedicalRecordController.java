@@ -16,8 +16,8 @@ public class MedicalRecordController {
     }
 
     private void loadMedicalRecords() {
-        MedicalRecordLoader medicalRecordLoader= new MedicalRecordLoader();
-        medicalRecordLoader.loadMedicalRecords();
+        MedicalRecordLoader.loadMedicalRecords();
+        System.out.println("added");
     }
 
     // Adds a medical record to the repository with a specific ID

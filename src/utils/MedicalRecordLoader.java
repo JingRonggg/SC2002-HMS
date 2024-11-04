@@ -18,7 +18,7 @@ import java.util.Set;
 
 public class MedicalRecordLoader {
 
-    public void loadMedicalRecords() {
+    public static void loadMedicalRecords() {
         Set<String> existingIDs = new HashSet<>();
 
         // First pass: Collect existing medical record IDs
@@ -36,7 +36,7 @@ public class MedicalRecordLoader {
         } catch (IOException e) {
             System.out.println("An error occurred while loading medical record IDs from CSV: " + e.getMessage());
         }
-
+        // System.out.println("hello");
         // Initialize the generator with the collected IDs
         MedicalRecordIDGenerator.initializeWithExistingIDs(existingIDs);
 
@@ -47,7 +47,8 @@ public class MedicalRecordLoader {
             reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
-                if (fields.length >= 12) { // Ensure the line has enough fields
+                System.out.println("fields");
+                if (fields.length >= 11) { // Ensure the line has enough fields
                     String medicalRecordID = fields[0];
                     String doctorID = fields[1];
                     String patientID = fields[2];
@@ -57,22 +58,26 @@ public class MedicalRecordLoader {
                     LocalDate diagnosisDate = LocalDate.parse(fields[4]); // Parse the date
                     PastDiagnosis pastDiagnosis = new PastDiagnosis(conditionName, diagnosisDate);
                     
+                    System.out.println("diagnosis");
                     // Parsing Treatments
                     String treatmentName = fields[5]; // Treatment name
                     LocalDate treatmentDate = LocalDate.parse(fields[6]); // Parse the treatment date
                     String treatmentDetails = fields[7]; // Treatment details
                     Treatments treatments = new Treatments(treatmentName, treatmentDate, treatmentDetails);
+                    System.out.println("quack");
                     
                     // Parsing PrescribedMedications
                     List<PrescribeMedications> prescribedMedications = new ArrayList<>();
                     String medicineName = fields[8];
                     int quantity = Integer.parseInt(fields[9]); // Parse quantity
-                    PrescribeMedicationsStatus medicineStatus = PrescribeMedicationsStatus.valueOf(fields[11].toUpperCase()); 
+                    PrescribeMedicationsStatus medicineStatus = PrescribeMedicationsStatus.valueOf(fields[10].toUpperCase()); 
                     prescribedMedications.add(new PrescribeMedications(medicineName, quantity, medicineStatus));
+                    System.out.println("quack quack");
 
                     // Create and add MedicalRecord to the controller
                     MedicalRecord medicalRecord = new MedicalRecord(medicalRecordID, doctorID, patientID, pastDiagnosis, treatments, prescribedMedications);
                     MedicalRecordController.addMedicalRecord(medicalRecordID, medicalRecord);
+                    System.out.println("LAODED");
                     
                 }
             }

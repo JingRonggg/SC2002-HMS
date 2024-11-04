@@ -30,6 +30,7 @@ public class MedicationLoader {
 
                 // Add medication using MedicineController, passing stock and alert info separately
                 MedicineController.addMedicine(medicationStorage, stock, lowStockAlert);
+                
             }
         } catch (IOException e) {
             System.out.println("Error reading the file: " + e.getMessage());

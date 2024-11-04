@@ -51,6 +51,7 @@ public class AppointmentLoader {
 
                     Appointment appointment = new Appointment(doctorID, patientID, doctorName, appointmentDate, appointmentStartTime, appointmentEndTime, status);
                     AppointmentController.addAppointment(appointmentID, appointment);
+                    
                 }
             }
         } catch (IOException e) {
