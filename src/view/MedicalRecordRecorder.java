@@ -71,7 +71,7 @@ public class MedicalRecordRecorder {
                 }
             }
             
-            newPrescribeMedications.add(new PrescribeMedications(medicationName, dosage, PrescribeMedicationsStatus.NOT_DISPENSED));
+            newPrescribeMedications.add(new PrescribeMedications(medicationName, dosage, PrescribeMedicationsStatus.PENDING));
     
             System.out.println("Do you want to add another medication? (yes/no)");
             addMore = scanner.nextLine();

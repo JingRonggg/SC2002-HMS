@@ -63,7 +63,7 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
                 MedicalRecord medicalRecord = medicalRecordData.get(medicalRecordID);
                 if (medicalRecord.getPatientID().equals(patientID) && medicalRecord.getDoctorID().equals(doctorID)) {
 
-                    boolean hasUndispensedMedications = medicalRecord.getPrescribeMedications().stream().anyMatch(med -> med.getStatus() == PrescribeMedicationsStatus.NOT_DISPENSED);
+                    boolean hasUndispensedMedications = medicalRecord.getPrescribeMedications().stream().anyMatch(med -> med.getStatus() == PrescribeMedicationsStatus.PENDING);
 
                     if(hasUndispensedMedications) {
                         medicalRecords.put(medicalRecordID, medicalRecord);
@@ -82,7 +82,7 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
         try {
             for (String medicalRecordID : medicalRecordData.keySet()) {
                 MedicalRecord medicalRecord = medicalRecordData.get(medicalRecordID);
-                boolean hasUndispensedMedications = medicalRecord.getPrescribeMedications().stream().anyMatch(med -> med.getStatus() == PrescribeMedicationsStatus.NOT_DISPENSED);
+                boolean hasUndispensedMedications = medicalRecord.getPrescribeMedications().stream().anyMatch(med -> med.getStatus() == PrescribeMedicationsStatus.PENDING);
 
                 if(hasUndispensedMedications) {
                     medicalRecords.put(medicalRecordID, medicalRecord);
@@ -101,7 +101,7 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
                 MedicalRecord medicalRecord = medicalRecordData.get(medicalRecordID);
                 if (medicalRecord.getPatientID().equals(patientID) && medicalRecord.getDoctorID().equals(doctorID)) {
 
-                    boolean hasUndispensedMedications = medicalRecord.getPrescribeMedications().stream().anyMatch(med -> med.getStatus() == PrescribeMedicationsStatus.NOT_DISPENSED);
+                    boolean hasUndispensedMedications = medicalRecord.getPrescribeMedications().stream().anyMatch(med -> med.getStatus() == PrescribeMedicationsStatus.PENDING);
 
                     if(hasUndispensedMedications) {
                         return true;

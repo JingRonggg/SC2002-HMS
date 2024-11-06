@@ -39,7 +39,7 @@ public class AppointmentLoader {
             reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
-                if (fields.length == 8) {
+                if (fields.length == 9) {
                     String appointmentID = fields[0];
                     String patientID = fields[1];
                     String doctorID = fields[2];
@@ -48,8 +48,9 @@ public class AppointmentLoader {
                     LocalTime appointmentStartTime = LocalTime.parse(fields[5]);
                     LocalTime appointmentEndTime = LocalTime.parse(fields[6]);
                     AppointmentStatus status = AppointmentStatus.valueOf(fields[7]);
+                    String consultationNotes = fields[8];
 
-                    Appointment appointment = new Appointment(doctorID, patientID, doctorName, appointmentDate, appointmentStartTime, appointmentEndTime, status);
+                    Appointment appointment = new Appointment(doctorID, patientID, doctorName, appointmentDate, appointmentStartTime, appointmentEndTime, status, consultationNotes);
                     AppointmentController.addAppointment(appointmentID, appointment);
                     
                 }

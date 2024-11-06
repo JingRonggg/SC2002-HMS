@@ -71,7 +71,8 @@ public class AppointmentCsvExporter {
                 "AppointmentDate",
                 "AppointmentStartTime",
                 "AppointmentEndTime",
-                "Status");
+                "Status",
+                "Consultation Notes");
         lines.add(headers);
     }
 
@@ -85,7 +86,8 @@ public class AppointmentCsvExporter {
                 appointment.getAppointmentDate().toString(),
                 appointment.getAppointmentStartTime().toString(),
                 appointment.getAppointmentEndTime().toString(),
-                appointment.getStatus().toString()
+                appointment.getStatus().toString(),
+                appointment.getConsultationNotes()
         );
     }
 }

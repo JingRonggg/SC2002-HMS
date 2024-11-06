@@ -87,7 +87,7 @@ public class DoctorController {
             while (currentTime.isBefore(endTime)) {
                 LocalTime nextTime = currentTime.plusMinutes(30);
                 if (appointmentRepository.isSlotAvailable(doctorID, date, currentTime, nextTime)) {
-                    availableSlots.add(new Appointment(doctorID, null, null, date, currentTime, nextTime, AppointmentStatus.AVAILABLE));
+                    availableSlots.add(new Appointment(doctorID, null, null, date, currentTime, nextTime, AppointmentStatus.AVAILABLE, null));
                 }
                 currentTime = currentTime.plusMinutes(30);
             }
@@ -107,7 +107,7 @@ public class DoctorController {
             } else if (!appointmentRepository.isSlotAvailable(doctorID, date, startTime, endTime)) {
                 System.out.println("You have an appointment at this time!");
             } else {
-                Appointment appointment = new Appointment(doctorID, null, doctorName, date, startTime, endTime, AppointmentStatus.NOT_AVAILABLE);
+                Appointment appointment = new Appointment(doctorID, null, doctorName, date, startTime, endTime, AppointmentStatus.NOT_AVAILABLE, null);
                 appointmentRepository.saveAppointment(appointment);
             }
         } catch (Exception e) {
@@ -152,7 +152,7 @@ public class DoctorController {
         }
     }
 
-    public boolean recordAppointmentOutcome(String appointmentID, String doctorID) {
+    public boolean recordAppointmentOutcome(String appointmentID, String doctorID, String consultationNotes) {
         try {
             Appointment appointment = appointmentRepository.getSpecificAppointment(appointmentID);
             if (appointment == null) {
@@ -164,6 +164,9 @@ public class DoctorController {
                     return false;
                 } else {
                     appointment.setStatus(AppointmentStatus.COMPLETED);
+                    if (consultationNotes != null){
+                        appointment.setConsultationNotes(consultationNotes);
+                    }
                     return true;
                 }
             }

@@ -6,9 +6,9 @@ import src.model.MedicalRecord;
 
 
 public class NewMedicalRecord {
-    public static void newMedicalRecord(DoctorController doctorController, String doctorID, String appointmentID) {
+    public static void newMedicalRecord(DoctorController doctorController, String doctorID, String appointmentID, String consultationNotes) {
         try{
-            if(doctorController.recordAppointmentOutcome(appointmentID , doctorID)) {
+            if(doctorController.recordAppointmentOutcome(appointmentID , doctorID, consultationNotes)) {
                 Appointment appointment = doctorController.findAppointment(appointmentID);
                 MedicalRecord medicalRecord = MedicalRecordRecorder.askingForMedicalRecordDetails();
                 doctorController.createNewMedicalRecord(doctorID, appointment.getPatientID(), 

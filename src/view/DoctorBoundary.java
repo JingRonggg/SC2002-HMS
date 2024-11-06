@@ -62,7 +62,7 @@ public class DoctorBoundary {
                         try {
                             System.out.println("Which appointment do you want to update the medical record? (Insert appointmentID)");
                             String appointmentID = scanner.nextLine();
-                            NewMedicalRecord.newMedicalRecord(doctorController, doctorID, appointmentID);
+                            NewMedicalRecord.newMedicalRecord(doctorController, doctorID, appointmentID, null);
                         } catch (IllegalArgumentException e) {
                             System.out.println("Error updating Medical Record: " + e.getMessage());
                         }
@@ -127,7 +127,9 @@ public class DoctorBoundary {
                         try {
                             System.out.println("Which appointment do you want to record the outcome of?");
                             String appointmentID = scanner.nextLine();
-                            NewMedicalRecord.newMedicalRecord(doctorController, doctorID, appointmentID);
+                            System.out.println("Enter consultation notes: ");
+                            String consultationNotes = scanner.nextLine();
+                            NewMedicalRecord.newMedicalRecord(doctorController, doctorID, appointmentID,consultationNotes);
                         } catch (IllegalArgumentException e) {
                             System.out.println("Error recording appointment outcome: " + e.getMessage());
                         }

@@ -89,7 +89,7 @@ public class PatientController {
                 LocalTime nextTime = currentTime.plusMinutes(30);
                 if (appointmentRepository.isSlotAvailable(doctorID, date, currentTime, nextTime)) {
                     doctorSlots.put(currentTime.toString(),
-                            new Appointment(doctorID, null, doctorName, date, currentTime, nextTime, AppointmentStatus.AVAILABLE));
+                            new Appointment(doctorID, null, doctorName, date, currentTime, nextTime, AppointmentStatus.AVAILABLE, null));
                 }
                 currentTime = currentTime.plusMinutes(30);
             }
@@ -122,7 +122,7 @@ public class PatientController {
         } else if (!appointmentRepository.isSlotAvailable(doctorID, date, startTime, endTime)) {
             System.out.println("Doctor is unavailable at this time.");
         } else{
-            Appointment newappointment = new Appointment(doctorID, patientID, doctorName, date, startTime, endTime, AppointmentStatus.PENDING);
+            Appointment newappointment = new Appointment(doctorID, patientID, doctorName, date, startTime, endTime, AppointmentStatus.PENDING,null);
             appointmentRepository.saveAppointment(newappointment);
             System.out.println("Appointment requested successfully.");
         }
