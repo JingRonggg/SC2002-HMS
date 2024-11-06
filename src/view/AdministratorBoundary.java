@@ -32,7 +32,7 @@ public class AdministratorBoundary {
                     ManageStaffBoundary.displayMenu(adminController, scanner);
                     break;
                 case 2:
-                    adminController.viewAllAppointments();
+                    AppointmentPrinter.printAppointmentDetails(adminController.viewAllAppointments());
                     break;
                 case 3:
                     medicineController.displayAllMedicines();
