@@ -68,7 +68,8 @@ public class DoctorBoundary {
                         date = scanner.nextLine();
                         try {
                             LocalDate localDate = LocalDate.parse(date, formatter);
-                            doctorController.viewPersonalSchedule(doctorID, localDate);
+                            ArrayList<Appointment> availableSlots = doctorController.viewPersonalSchedule(doctorID, localDate);
+                            AppointmentPrinter.printAvailableSlots(availableSlots, doctorID, localDate);
                         } catch (DateTimeParseException e) {
                             System.out.println("Invalid date format");
                         }

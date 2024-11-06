@@ -81,7 +81,6 @@ public class PharmacistBoundary {
                         }
                         break;
                     case 4:
-                        System.out.println("Insert Submit Replenishment Request function");
                         try{
                             medicineController.reqMedicine();
                         } catch (Exception e) {

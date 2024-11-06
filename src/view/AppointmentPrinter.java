@@ -1,6 +1,8 @@
 package src.view;
 
 import src.model.Appointment;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +21,20 @@ public class AppointmentPrinter {
             System.out.println("Start Time: " + appointment.getAppointmentStartTime());
             System.out.println("End Time: " + appointment.getAppointmentEndTime());
             System.out.println("------------------------------------------");
+        }
+    }
+
+    public static void printAvailableSlots(ArrayList<Appointment> availableSlots, String doctorID, LocalDate date){
+        // Print available slots
+        if (availableSlots.isEmpty()) {
+            System.out.println("No available slots for " + doctorID + " on " + date + ".");
+        } else {
+            System.out.println("Available slots for " + doctorID + " on " + date + ":");
+            System.out.println("-----------------------------------------------------------------------------");
+
+            for (Appointment slot : availableSlots) {
+                System.out.printf("From %s to %s%n", slot.getAppointmentStartTime(), slot.getAppointmentEndTime());
+            }
         }
     }
 }
