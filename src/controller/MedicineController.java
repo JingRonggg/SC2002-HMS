@@ -225,14 +225,14 @@ public class MedicineController {
                 MedicationStorage medication = medicineRepo.getMedicine(medicineName);
                 if (medication == null) {
                     undispensedMedicines.append(medicineName).append(" (not available in inventory); ");
-                    prescribedMed.setStatus(PrescribeMedicationsStatus.NOT_DISPENSED);
+                    prescribedMed.setStatus(PrescribeMedicationsStatus.PENDING);
                     continue;
                 }
 
                 int availableStock = medicineRepo.getStock(medicineName);
                 if (availableStock < requiredQuantity) {
                     if (availableStock > 0) {
-                        prescribedMed.setStatus(PrescribeMedicationsStatus.NOT_DISPENSED);
+                        prescribedMed.setStatus(PrescribeMedicationsStatus.PENDING);
                         System.out.println("Dispensed " + availableStock + " of " + medicineName + ".");
                     }
                     undispensedMedicines.append(medicineName).append(" (not enough stock, please come back later); ");

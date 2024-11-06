@@ -13,10 +13,11 @@ public class Appointment {
     private LocalTime appointmentStartTime;
     private LocalTime appointmentEndTime;
     private AppointmentStatus status;
+    private String consultationNotes;
 
     public Appointment(String doctorID, String patientID, String doctorName,
                        LocalDate appointmentDate, LocalTime appointmentStartTime, LocalTime appointmentEndTime,
-                       AppointmentStatus status) {
+                       AppointmentStatus status, String consultationNotes) {
         this.doctorID = doctorID;
         this.patientID = patientID;
         this.doctorName = doctorName;
@@ -24,6 +25,15 @@ public class Appointment {
         setAppointmentStartTime(appointmentStartTime);
         setAppointmentEndTime(appointmentEndTime);
         this.status = status;
+        this.consultationNotes = consultationNotes;
+    }
+
+    public String getConsultationNotes() {
+        return consultationNotes;
+    }
+
+    public void setConsultationNotes(String consultationNotes) {
+        this.consultationNotes = consultationNotes;
     }
 
     public String getDoctorID() {

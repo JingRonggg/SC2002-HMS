@@ -52,6 +52,7 @@ public class PharmacistBoundary {
                                 System.out.println("Appointment Time: " + appointment.getAppointmentStartTime());
                                 System.out.println("Doctor: " + appointment.getDoctorName());
                                 System.out.println("Status: " + appointment.getStatus());
+                                System.out.println("Consultation Notes:" + appointment.getConsultationNotes());
                                 MedicalRecordPrinter.printMedicalRecordDetails(medicineController.getAllPendingMedicalRecord(patientID, doctorID));
                                 System.out.println("----------------------------------------------------------------------------");
                             }
@@ -81,7 +82,6 @@ public class PharmacistBoundary {
                         }
                         break;
                     case 4:
-                        System.out.println("Insert Submit Replenishment Request function");
                         try{
                             medicineController.reqMedicine();
                         } catch (Exception e) {

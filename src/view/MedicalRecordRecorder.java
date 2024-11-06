@@ -32,9 +32,7 @@ public class MedicalRecordRecorder {
             }
         }
         
-        System.out.println("New Diagnosis Details: ");
-        String newDiagnosisDetails = scanner.nextLine();
-        PastDiagnosis newDiagnosis = new PastDiagnosis(newDiagnosisName, newDiagnosisDate, newDiagnosisDetails);
+        PastDiagnosis newDiagnosis = new PastDiagnosis(newDiagnosisName, newDiagnosisDate);
     
         // Get new treatment details
         System.out.println("New Treatment Name: ");
@@ -73,7 +71,7 @@ public class MedicalRecordRecorder {
                 }
             }
             
-            newPrescribeMedications.add(new PrescribeMedications(medicationName, dosage, PrescribeMedicationsStatus.NOT_DISPENSED));
+            newPrescribeMedications.add(new PrescribeMedications(medicationName, dosage, PrescribeMedicationsStatus.PENDING));
     
             System.out.println("Do you want to add another medication? (yes/no)");
             addMore = scanner.nextLine();

@@ -12,6 +12,7 @@ import java.io.IOException;
 
 public class StaffLoader {
     private String filePath;
+    
     public StaffLoader(String filePath) {
         this.filePath = filePath;
     }

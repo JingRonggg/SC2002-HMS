@@ -12,7 +12,7 @@ public class AdminRepository extends UserRepository implements IAdminRepository 
     @Override
     public Collection<Staff> getAllStaff() {
         Collection<Staff> Staffs = new ArrayList<>();
-        System.out.println(users);
+        // System.out.println(users);
         for (User user : users.values()) {
             if (user instanceof Staff) {
                 Staffs.add((Staff) user);

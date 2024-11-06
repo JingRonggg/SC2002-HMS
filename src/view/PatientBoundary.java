@@ -1,15 +1,13 @@
 package src.view;
 
 import src.controller.PatientController;
-import src.model.MedicalRecord;
-import src.model.PastDiagnosis;
-import src.model.PrescribeMedications;
-import src.model.Treatments;
+import src.model.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -49,7 +47,7 @@ public class PatientBoundary {
                 switch (choice) {
                     case 1:
                         try {
-                            patientController.getPatientInformation(hospitalID);
+                            PatientInfoPrinter.printPatientInfo(patientController.getPatientInformation(hospitalID));
                             MedicalRecordPrinter.printMedicalRecordDetails(patientController.viewPatientMedicalRecords(hospitalID));
                         } catch (Exception e) {
                             System.out.println("Error accessing medical records: " + e.getMessage());
@@ -123,14 +121,18 @@ public class PatientBoundary {
                         break;
                     case 7:
                         try {
-                            patientController.viewScheduledAppointments(hospitalID);
+                            HashMap<String, Appointment> scheduledAppointments =patientController.viewScheduledAppointments(hospitalID);
+                            System.out.println("Scheduled appointments found. Here is the list");
+                            AppointmentPrinter.printScheduledAppointments(scheduledAppointments);
                         } catch (Exception e) {
                             System.out.println("Error viewing scheduled appointments: " + e.getMessage());
                         }
                         break;
                     case 8:
                         try {
-                            patientController.viewCompletedAppointments(hospitalID);
+                            System.out.println("Completed appointments found. Here is the list");
+                            HashMap<String, Appointment> completedAppointments = patientController.viewCompletedAppointments(hospitalID);
+                            AppointmentPrinter.printScheduledAppointments(completedAppointments);
                         } catch (Exception e) {
                             System.out.println("Error viewing completed appointments: " + e.getMessage());
                         }

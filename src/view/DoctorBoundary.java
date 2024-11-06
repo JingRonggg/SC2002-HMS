@@ -47,26 +47,24 @@ public class DoctorBoundary {
                             PatientPrinter.patientPrinter(patients);
                             System.out.println("Which patient's medical record do you want to view? Enter their hospital ID");
                             patientID = scanner.nextLine();
-                            Map<String, MedicalRecord> records = doctorController.viewPatientMedicalRecords(patientID);
-                            MedicalRecordPrinter.printMedicalRecordDetails(records);
+                            Map<String, MedicalRecord> records = doctorController.viewMedicalRecordsUnderDoctor(doctorID, patientID);
+                            if (records.isEmpty()) {
+                                System.out.println("No medical records found for this patient.");
+                            } else {
+                                MedicalRecordPrinter.printMedicalRecordDetails(records);
+                            }
                         } catch (IllegalArgumentException e) {
                             System.out.println("Error: " + e.getMessage());
                         }
                         break;
                     case 2:
+                    //TODO display all appointment
                         try {
-                            System.out.println("Enter the ID of the Medical Record that you would like to update");
-                            String medicalRecordID = scanner.nextLine();
-    
-                            if (!doctorController.medicalRecordExists(medicalRecordID)) {
-                                System.out.println("Medical Record not found. Cannot proceed with the update.");
-                                break;
-                            }
-                            medicalRecord = MedicalRecordRecorder.askingForMedicalRecordDetails();
-                            doctorController.updatePatientMedicalRecords(medicalRecordID, medicalRecord.getPastDiagnosis(), 
-                                medicalRecord.getTreatments(), medicalRecord.getPrescribeMedications());
+                            System.out.println("Which appointment do you want to update the medical record? (Insert appointmentID)");
+                            String appointmentID = scanner.nextLine();
+                            NewMedicalRecord.newMedicalRecord(doctorController, doctorID, appointmentID, null);
                         } catch (IllegalArgumentException e) {
-                            System.out.println("Error updating medical record: " + e.getMessage());
+                            System.out.println("Error updating Medical Record: " + e.getMessage());
                         }
                         break;
                     case 3:
@@ -74,7 +72,8 @@ public class DoctorBoundary {
                         date = scanner.nextLine();
                         try {
                             LocalDate localDate = LocalDate.parse(date, formatter);
-                            doctorController.viewPersonalSchedule(doctorID, localDate);
+                            ArrayList<Appointment> availableSlots = doctorController.viewPersonalSchedule(doctorID, localDate);
+                            AppointmentPrinter.printAvailableSlots(availableSlots, doctorID, localDate);
                         } catch (DateTimeParseException e) {
                             System.out.println("Invalid date format");
                         }
@@ -95,7 +94,7 @@ public class DoctorBoundary {
                                 if (startTimeParse.isAfter(endTimeParse)) {
                                     throw new IllegalArgumentException("Start time cannot be after end time");
                                 }
-                                
+
                                 doctorController.setAvailabilityForAppointments(doctorID, localDate, startTimeParse, endTimeParse);
                             } catch (DateTimeParseException e) {
                                 System.out.println("Invalid date or time format");
@@ -128,13 +127,9 @@ public class DoctorBoundary {
                         try {
                             System.out.println("Which appointment do you want to record the outcome of?");
                             String appointmentID = scanner.nextLine();
-                            if(doctorController.recordAppointmentOutcome(appointmentID , doctorID)) {
-                                Appointment appointment = doctorController.findAppointment(appointmentID);
-                                medicalRecord = MedicalRecordRecorder.askingForMedicalRecordDetails();
-                                doctorController.createNewMedicalRecord(doctorID, appointment.getPatientID(), 
-                                    medicalRecord.getPastDiagnosis(), medicalRecord.getTreatments(), 
-                                    medicalRecord.getPrescribeMedications());
-                            }
+                            System.out.println("Enter consultation notes: ");
+                            String consultationNotes = scanner.nextLine();
+                            NewMedicalRecord.newMedicalRecord(doctorController, doctorID, appointmentID,consultationNotes);
                         } catch (IllegalArgumentException e) {
                             System.out.println("Error recording appointment outcome: " + e.getMessage());
                         }

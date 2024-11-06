@@ -7,6 +7,12 @@ import src.repository.MedicineRepository;
 import src.repository.UserRepository;
 import src.utils.MedicineCsvExporter;
 import src.view.MainMenuBoundary;
+import src.controller.MedicineController;
+import src.controller.AuthenticationController;
+import src.controller.LoginController;
+import src.controller.AdminController;
+import src.controller.PatientController;
+
 import src.model.User;
 import src.interfaces.IAdminRepository;
 import src.interfaces.IPatientRepository;
@@ -37,6 +43,8 @@ public class Main {
             DoctorController doctorController = new DoctorController(appointmentRepo, adminRepo, medicalRecordRepo, patientRepo);
             UserController userController = new UserController(userRepository);
             AppointmentController appointmentController = new AppointmentController(appointmentRepo);
+            MedicalRecordController medicalRecordController = new MedicalRecordController(medicalRecordRepo);
+
             NurseController nurseController = new NurseController(nurseRepo, appointmentRepo);
             Scanner scanner = new Scanner(System.in);
 
@@ -50,6 +58,9 @@ public class Main {
                     // Session loop for the logged-in user
                     while (continueSession) {
                         continueSession = MainMenuBoundary.displayMenu(loggedInUser, adminController, patientController, medicineController, doctorController, nurseController);
+                        appointmentRepo.saveAllToCsv();
+                        medicalRecordRepo.storeIntoCsv();
+                        MedicineCsvExporter.exportAllMedicinesToCsv(medicineRepository);
                     }
                 } else {
                     System.out.println("Login failed. Please try again.");
