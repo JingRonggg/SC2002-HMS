@@ -27,19 +27,8 @@ public class PatientController {
         this.appointmentRepository = appointmentRepository;
     }
 
-    public void getPatientInformation(String hospitalID) {
-        Patient patient = patientRepository.getPatientInfo(hospitalID);
-        if (patient != null) {
-            System.out.println("Patient Information:");
-            System.out.println("Name: " + patient.getName());
-            System.out.println("Hospital ID: " + patient.getHospitalID());
-            System.out.println("Date of Birth: " + patient.getDateOfBirth());
-            System.out.println("Gender: " + patient.getGender());
-            System.out.println("Blood Type: " + patient.getBloodType());
-            System.out.println("Email Address: " + patient.getEmailAddress());
-        } else {
-            System.out.println("Could not retrieve patient information.");
-        }
+    public Patient getPatientInformation(String hospitalID) {
+        return patientRepository.getPatientInfo(hospitalID);
     }
 
     public void updatePatientInformation(String hospitalID) {

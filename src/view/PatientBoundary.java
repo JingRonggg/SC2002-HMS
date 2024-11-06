@@ -47,7 +47,7 @@ public class PatientBoundary {
                 switch (choice) {
                     case 1:
                         try {
-                            patientController.getPatientInformation(hospitalID);
+                            PatientInfoPrinter.printPatientInfo(patientController.getPatientInformation(hospitalID));
                             MedicalRecordPrinter.printMedicalRecordDetails(patientController.viewPatientMedicalRecords(hospitalID));
                         } catch (Exception e) {
                             System.out.println("Error accessing medical records: " + e.getMessage());
