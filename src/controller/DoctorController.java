@@ -31,9 +31,9 @@ public class DoctorController {
         System.out.println("An error occurred while " + operation + e.getMessage());
     }
 
-    public HashMap<String, MedicalRecord> viewPatientMedicalRecords(String patientID) {
+    public HashMap<String, MedicalRecord> viewMedicalRecordsUnderDoctor(String doctorID, String patientID) {
         try {
-            return medicalRecordRepository.readMedicalRecord(patientID);
+            return medicalRecordRepository.getMedicalRecordsByDoctorAndPatientID(doctorID,patientID);
         } catch (Exception e) {
             handleException("viewing Medical Records", e);
             return new HashMap<>();

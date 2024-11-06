@@ -167,55 +167,28 @@ public class PatientController {
         }
     }
 
-    public void viewScheduledAppointments(String patientID) {
-        try{
-            HashMap<String, Appointment> scheduledAppointments = appointmentRepository.getScheduledPatientAppointment(patientID);
-
-            if (scheduledAppointments.isEmpty()) {
-                System.out.println("No scheduled appointments found.");
-            } else {
-                System.out.println("Scheduled appointments found. Here is the list");
-                for (Map.Entry<String, Appointment> entry : scheduledAppointments.entrySet()) {
-                    String appointmentID = entry.getKey();
-                    Appointment appointment = entry.getValue();
-
-                    System.out.println("----------------------------------------------------------------------------");
-                    System.out.println("Appointment ID: " + appointmentID);
-                    System.out.println("Date: " + appointment.getAppointmentDate());
-                    System.out.println("Appointment Time: " + appointment.getAppointmentStartTime());
-                    System.out.println("Doctor: " + appointment.getDoctorName());
-                    System.out.println("Status: " + appointment.getStatus());
-                    System.out.println("----------------------------------------------------------------------------");
-                }
-            }
-        }catch(Exception e){
+    public HashMap<String, Appointment> viewScheduledAppointments(String patientID) {
+        try {
+            return appointmentRepository.getScheduledPatientAppointment(patientID);
+        } catch(Exception e) {
             System.out.println("Error in getting scheduled appointments.");
+            return new HashMap<>();
         }
     }
 
-    public void viewCompletedAppointments(String patientID) {
+    public HashMap<String, Appointment> viewCompletedAppointments(String patientID) {
         try{
             HashMap<String, Appointment> completedAppointments = appointmentRepository.getCompletedPatientAppointment(patientID);
 
             if (completedAppointments.isEmpty()) {
                 System.out.println("No scheduled appointments found.");
+                return new HashMap<>();
             } else {
-                System.out.println("Scheduled appointments found. Here is the list");
-                for (Map.Entry<String, Appointment> entry : completedAppointments.entrySet()) {
-                    String appointmentID = entry.getKey();
-                    Appointment appointment = entry.getValue();
-
-                    System.out.println("----------------------------------------------------------------------------");
-                    System.out.println("Appointment ID: " + appointmentID);
-                    System.out.println("Date: " + appointment.getAppointmentDate());
-                    System.out.println("Appointment Time: " + appointment.getAppointmentStartTime());
-                    System.out.println("Doctor: " + appointment.getDoctorName());
-                    System.out.println("Status: " + appointment.getStatus());
-                    System.out.println("----------------------------------------------------------------------------");
-                }
+                return completedAppointments;
             }
         }catch(Exception e){
             System.out.println("Error in getting scheduled appointments.");
+            return new HashMap<>();
         }
     }
 

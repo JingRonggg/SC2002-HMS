@@ -4,6 +4,7 @@ import src.model.Appointment;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AppointmentPrinter {
@@ -35,6 +36,38 @@ public class AppointmentPrinter {
             for (Appointment slot : availableSlots) {
                 System.out.printf("From %s to %s%n", slot.getAppointmentStartTime(), slot.getAppointmentEndTime());
             }
+        }
+    }
+
+    public static void printScheduledAppointments(HashMap<String, Appointment> appointments) {
+        // Convert map entries to list for sorting
+        List<Map.Entry<String, Appointment>> sortedAppointments = new ArrayList<>(appointments.entrySet());
+
+        // Sort by appointment status
+        sortedAppointments.sort((a1, a2) ->
+                a1.getValue().getStatus().compareTo(a2.getValue().getStatus()));
+
+        // Track previous status
+        String previousStatus = null;
+
+        // Print sorted appointments
+        for (Map.Entry<String, Appointment> entry : sortedAppointments) {
+            String appointmentID = entry.getKey();
+            Appointment appointment = entry.getValue();
+
+            // Only print status header if it's different from previous
+            if (previousStatus == null || !previousStatus.equals(appointment.getStatus().toString())) {
+                System.out.println("----------------------------------------------------------------------------");
+                System.out.println(appointment.getStatus() + " Appointments: ");
+                System.out.println("----------------------------------------------------------------------------");
+                previousStatus = appointment.getStatus().toString();
+            }
+            System.out.println("Appointment ID: " + appointmentID);
+            System.out.println("Date: " + appointment.getAppointmentDate());
+            System.out.println("Appointment Time: " + appointment.getAppointmentStartTime());
+            System.out.println("Doctor: " + appointment.getDoctorName());
+            System.out.println("Status: " + appointment.getStatus());
+            System.out.println("----------------------------------------------------------------------------");
         }
     }
 }

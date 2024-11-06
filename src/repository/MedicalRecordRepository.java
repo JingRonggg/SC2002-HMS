@@ -115,12 +115,13 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
     }
 
     // Get all MedicalRecord by DoctorID (For Doctors)
-    public HashMap<String, MedicalRecord> getAllMedicalRecords(String doctorID) {
+    public HashMap<String, MedicalRecord> getMedicalRecordsByDoctorAndPatientID(String doctorID, String patientID) {
         HashMap<String, MedicalRecord> medicalRecords = new HashMap<>();
         try {
             for (String medicalRecordID : medicalRecordData.keySet()) {
                 MedicalRecord medicalRecord = medicalRecordData.get(medicalRecordID);
-                if (medicalRecord.getDoctorID().equals(doctorID)) {
+                if (medicalRecord.getDoctorID().equals(doctorID) &&
+                        medicalRecord.getPatientID().equals(patientID)) {
                     medicalRecords.put(medicalRecordID, medicalRecord);
                 }
             }

@@ -47,8 +47,12 @@ public class DoctorBoundary {
                             PatientPrinter.patientPrinter(patients);
                             System.out.println("Which patient's medical record do you want to view? Enter their hospital ID");
                             patientID = scanner.nextLine();
-                            Map<String, MedicalRecord> records = doctorController.viewPatientMedicalRecords(patientID);
-                            MedicalRecordPrinter.printMedicalRecordDetails(records);
+                            Map<String, MedicalRecord> records = doctorController.viewMedicalRecordsUnderDoctor(doctorID, patientID);
+                            if (records.isEmpty()) {
+                                System.out.println("No medical records found for this patient.");
+                            } else {
+                                MedicalRecordPrinter.printMedicalRecordDetails(records);
+                            }
                         } catch (IllegalArgumentException e) {
                             System.out.println("Error: " + e.getMessage());
                         }
@@ -90,7 +94,7 @@ public class DoctorBoundary {
                                 if (startTimeParse.isAfter(endTimeParse)) {
                                     throw new IllegalArgumentException("Start time cannot be after end time");
                                 }
-                                
+
                                 doctorController.setAvailabilityForAppointments(doctorID, localDate, startTimeParse, endTimeParse);
                             } catch (DateTimeParseException e) {
                                 System.out.println("Invalid date or time format");
