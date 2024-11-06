@@ -52,6 +52,7 @@ public class PharmacistBoundary {
                                 System.out.println("Appointment Time: " + appointment.getAppointmentStartTime());
                                 System.out.println("Doctor: " + appointment.getDoctorName());
                                 System.out.println("Status: " + appointment.getStatus());
+                                System.out.println("Consultation Notes:" + appointment.getConsultationNotes());
                                 MedicalRecordPrinter.printMedicalRecordDetails(medicineController.getAllPendingMedicalRecord(patientID, doctorID));
                                 System.out.println("----------------------------------------------------------------------------");
                             }

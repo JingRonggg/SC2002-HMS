@@ -140,6 +140,7 @@ public class AdminController {
                 System.out.println("Start time: " + appointment.getAppointmentStartTime());
                 System.out.println("End time: " + appointment.getAppointmentEndTime());
                 System.out.println("Status: " + appointment.getStatus());
+                System.out.println("Consultation notes: " + appointment.getConsultationNotes());
 
             }
         } catch (Exception e) {

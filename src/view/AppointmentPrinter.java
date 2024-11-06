@@ -21,6 +21,7 @@ public class AppointmentPrinter {
             System.out.println("Date: " + appointment.getAppointmentDate());
             System.out.println("Start Time: " + appointment.getAppointmentStartTime());
             System.out.println("End Time: " + appointment.getAppointmentEndTime());
+            System.out.println("Consultation notes: " + appointment.getConsultationNotes());
             System.out.println("------------------------------------------");
         }
     }
@@ -67,6 +68,7 @@ public class AppointmentPrinter {
             System.out.println("Appointment Time: " + appointment.getAppointmentStartTime());
             System.out.println("Doctor: " + appointment.getDoctorName());
             System.out.println("Status: " + appointment.getStatus());
+            System.out.println("Consultation notes: " + appointment.getConsultationNotes());
             System.out.println("----------------------------------------------------------------------------");
         }
     }
