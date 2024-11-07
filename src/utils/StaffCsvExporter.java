@@ -1,6 +1,7 @@
 package src.utils;
 
 import src.model.User;
+import src.model.Staff;
 import src.repository.UserRepository;
 
 import java.io.*;
@@ -134,12 +135,13 @@ public class StaffCsvExporter {
     }
 
     private static String formatUserToCsv(User user) {
+        String age = (user instanceof Staff) ? ((Staff) user).getAge() : "";
         return String.format("%s,%s,%s,%s,%s,%s",
             user.getHospitalID(),
             escapeSpecialCharacters(user.getName()),
             user.getRole(),
             user.getGender(),
-            "0", // Age placeholder
+            age,
             user.getPassword()
         );
     }
