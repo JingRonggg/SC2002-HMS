@@ -21,7 +21,7 @@ public class AuthenticationController {
     public User authenticate(String hospitalID, String password) {
         try {
             User user = userRepository.getUserByHospitalID(hospitalID);
-            if (user != null && user.getPassword().equals(password)) {
+            if (user != null && user.verifyPassword(password)) {
                 return user;  // Successful login
             }
             return null;  // Invalid credentials
@@ -69,7 +69,7 @@ public class AuthenticationController {
 
     public boolean isPasswordCorrect(User user, String password) {
         try {
-            return user.getPassword().equals(password);
+            return user.verifyPassword(password);
         } catch (Exception e) {
             System.out.println("Error verifying password: " + e.getMessage());
             return false;

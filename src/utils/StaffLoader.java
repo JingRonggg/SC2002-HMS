@@ -21,7 +21,7 @@ public class StaffLoader {
     public void loadStaff() {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
-            br.readLine();
+            br.readLine(); // Skip header
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 String staffID = values[0];
@@ -30,6 +30,7 @@ public class StaffLoader {
                 String gender = values[3];
                 String age = values[4];
                 String password = values[5];
+                String hashedPassword = values[6];
 
                 User user = null;
                 switch (staffRole.toUpperCase()) {
@@ -50,7 +51,7 @@ public class StaffLoader {
                 }
 
                 if (user != null) {
-                    user.setPassword(password);
+                    user.setHashedPassword(hashedPassword, password);
                     UserController.addUser(user);
                 }
             }

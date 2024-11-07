@@ -11,9 +11,10 @@ import java.util.*;
 public class StaffCsvExporter {
     protected static final String CSV_FILE_PATH = "./data/Staff_List.csv";
     private static final String[] HEADERS = {
-        "Staff ID", "Name", "Role", "Gender", "Age", "Password"
+        "Staff ID", "Name", "Role", "Gender", "Age", "Password", "Hashed Password"
     };
 
+    // Single Export in case we want to implement immediate export
     public static void exportStaffToCsv(User user) {
         // Skip if this is a patient
         if ("Patient".equals(user.getRole())) {
@@ -70,7 +71,6 @@ public class StaffCsvExporter {
         }
     }
 
-    // Handle bulk export while preserving existing records
     public static void exportAllStaffToCsv(UserRepository userRepository) {
         // Get all users from repository and convert to map for efficient lookup
         Collection<User> users = userRepository.getAllUsers();
@@ -136,13 +136,14 @@ public class StaffCsvExporter {
 
     private static String formatUserToCsv(User user) {
         String age = (user instanceof Staff) ? ((Staff) user).getAge() : "";
-        return String.format("%s,%s,%s,%s,%s,%s",
+        return String.format("%s,%s,%s,%s,%s,%s,%s",
             user.getHospitalID(),
             escapeSpecialCharacters(user.getName()),
             user.getRole(),
             user.getGender(),
             age,
-            user.getPassword()
+            escapeSpecialCharacters(user.getPassword()),
+            escapeSpecialCharacters(user.getHashedPassword())
         );
     }
 

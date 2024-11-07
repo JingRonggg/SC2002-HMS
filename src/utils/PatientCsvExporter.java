@@ -11,9 +11,10 @@ import java.util.*;
 public class PatientCsvExporter {
     protected static final String CSV_FILE_PATH = "./data/Patient_List.csv";
     private static final String[] HEADERS = {
-        "Patient ID", "Name", "Date of Birth", "Gender", "Blood Type", "Contact Information", "Password"
+        "Patient ID", "Name", "Date of Birth", "Gender", "Blood Type", "Contact Information", "Password", "Hashed Password"
     };
 
+    // Single Export in case we want to implement immediate export
     public static void exportPatientToCsv(Patient patient) {
         // Skip if this is not a patient
         if (!"Patient".equals(patient.getRole())) {
@@ -134,14 +135,15 @@ public class PatientCsvExporter {
     }
 
     private static String formatPatientToCsv(Patient patient) {
-        return String.format("%s,%s,%s,%s,%s,%s,%s",
+        return String.format("%s,%s,%s,%s,%s,%s,%s,%s",
             patient.getHospitalID(),
             escapeSpecialCharacters(patient.getName()),
             patient.getDateOfBirth(),
             patient.getGender(),
             patient.getBloodType(),
             escapeSpecialCharacters(patient.getEmailAddress()),
-            patient.getPassword()
+            escapeSpecialCharacters(patient.getPassword()),
+            escapeSpecialCharacters(patient.getHashedPassword())
         );
     }
 

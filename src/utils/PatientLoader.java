@@ -18,7 +18,7 @@ public class PatientLoader {
     public void loadPatients() {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
-            br.readLine();
+            br.readLine(); // Skip header
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 String patientID = values[0];
@@ -28,11 +28,12 @@ public class PatientLoader {
                 String bloodType = values[4];
                 String contactInformation = values[5];
                 String password = values[6];
+                String hashedPassword = values[7];
 
                 User user = new Patient(patientID, patientName, dateOfBirth, gender, bloodType, contactInformation);
                 
                 if (user != null) {
-                    user.setPassword(password);
+                    user.setHashedPassword(hashedPassword, password);
                     UserController.addUser(user);
                 }
             }
