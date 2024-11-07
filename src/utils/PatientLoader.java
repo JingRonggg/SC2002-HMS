@@ -2,6 +2,7 @@ package src.utils;
 
 import src.controller.UserController;
 import src.model.Patient;
+import src.model.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -26,8 +27,14 @@ public class PatientLoader {
                 String gender = values[3];
                 String bloodType = values[4];
                 String contactInformation = values[5];
+                String password = values[6];
 
-                UserController.addUser(new Patient(patientID, patientName, dateOfBirth, gender, bloodType, contactInformation));
+                User user = new Patient(patientID, patientName, dateOfBirth, gender, bloodType, contactInformation);
+                
+                if (user != null) {
+                    user.setPassword(password);
+                    UserController.addUser(user);
+                }
             }
         } catch (IOException e) {
             System.out.println("Error reading the file: " + e.getMessage());

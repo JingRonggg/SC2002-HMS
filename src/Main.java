@@ -6,6 +6,8 @@ import src.repository.MedicalRecordRepository;
 import src.repository.MedicineRepository;
 import src.repository.UserRepository;
 import src.utils.MedicineCsvExporter;
+import src.utils.PatientCsvExporter;
+import src.utils.StaffCsvExporter;
 import src.view.MainMenuBoundary;
 import src.controller.MedicineController;
 import src.controller.AuthenticationController;
@@ -82,6 +84,9 @@ public class Main {
     public static void saveAndExit() {
         appointmentRepo.saveAllToCsv();
         MedicineCsvExporter.exportAllMedicinesToCsv(medicineRepository);
+        StaffCsvExporter.exportAllStaffToCsv(userRepository);
+        PatientCsvExporter.exportAllPatientsToCsv(userRepository);
+
         System.exit(0);
     }
 }

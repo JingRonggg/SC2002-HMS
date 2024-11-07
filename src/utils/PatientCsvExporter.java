@@ -1,21 +1,22 @@
 package src.utils;
 
+import src.model.Patient;
 import src.model.User;
 import src.repository.UserRepository;
 
 import java.io.*;
 import java.nio.file.*;
-import java.util.*;
+import java.util.*; 
 
-public class StaffCsvExporter {
-    protected static final String CSV_FILE_PATH = "./data/Staff_List.csv";
+public class PatientCsvExporter {
+    protected static final String CSV_FILE_PATH = "./data/Patient_List.csv";
     private static final String[] HEADERS = {
-        "Staff ID", "Name", "Role", "Gender", "Age", "Password"
+        "Patient ID", "Name", "Date of Birth", "Gender", "Blood Type", "Contact Information", "Password"
     };
 
-    public static void exportStaffToCsv(User user) {
-        // Skip if this is a patient
-        if ("Patient".equals(user.getRole())) {
+    public static void exportPatientToCsv(Patient patient) {
+        // Skip if this is not a patient
+        if (!"Patient".equals(patient.getRole())) {
             return;
         }
 
@@ -32,15 +33,15 @@ public class StaffCsvExporter {
                         String[] fields = line.split(",");
                         
                         // Add headers if present
-                        if (fields[0].equals("Staff ID")) {
+                        if (fields[0].equals("Patient ID")) {
                             lines.add(line);
                             continue;
                         }
 
-                        // Check if this Staff ID matches the current user's ID
-                        if (fields[0].equals(user.getHospitalID())) {
+                        // Check if this Patient ID matches the current patient's ID
+                        if (fields[0].equals(patient.getHospitalID())) {
                             // Update the existing record
-                            lines.add(formatUserToCsv(user));
+                            lines.add(formatPatientToCsv(patient));
                             recordExists = true;
                             continue;
                         }
@@ -52,9 +53,9 @@ public class StaffCsvExporter {
                 lines.add(String.join(",", HEADERS));
             }
 
-            // If user doesn't exist, add them
+            // If patient doesn't exist, add them
             if (!recordExists) {
-                lines.add(formatUserToCsv(user));
+                lines.add(formatPatientToCsv(patient));
             }
 
             // Write all lines back to CSV
@@ -65,19 +66,18 @@ public class StaffCsvExporter {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error processing staff CSV file: " + e.getMessage());
+            System.out.println("Error processing patient CSV file: " + e.getMessage());
         }
     }
 
-    // Handle bulk export while preserving existing records
-    public static void exportAllStaffToCsv(UserRepository userRepository) {
+    public static void exportAllPatientsToCsv(UserRepository userRepository) {
         // Get all users from repository and convert to map for efficient lookup
         Collection<User> users = userRepository.getAllUsers();
-        Map<String, User> userMap = new HashMap<>();
+        Map<String, Patient> patientMap = new HashMap<>();
         for (User user : users) {
-            // Only include non-patient users
-            if (!"Patient".equals(user.getRole())) {
-                userMap.put(user.getHospitalID(), user);
+            // Only include actual patients
+            if ("Patient".equals(user.getRole()) && user instanceof Patient) {
+                patientMap.put(user.getHospitalID(), (Patient) user);
             }
         }
 
@@ -93,16 +93,16 @@ public class StaffCsvExporter {
                         String[] fields = line.split(",");
                         
                         // Preserve headers
-                        if (fields[0].equals("Staff ID")) {
+                        if (fields[0].equals("Patient ID")) {
                             lines.add(line);
                             continue;
                         }
 
-                        String staffId = fields[0];
-                        // If we have an updated version of this user, use it
-                        if (userMap.containsKey(staffId)) {
-                            lines.add(formatUserToCsv(userMap.get(staffId)));
-                            processedIds.add(staffId);
+                        String patientId = fields[0];
+                        // If we have an updated version of this patient, use it
+                        if (patientMap.containsKey(patientId)) {
+                            lines.add(formatPatientToCsv(patientMap.get(patientId)));
+                            processedIds.add(patientId);
                         } else {
                             // Keep existing record if no update available
                             lines.add(line);
@@ -114,10 +114,10 @@ public class StaffCsvExporter {
                 lines.add(String.join(",", HEADERS));
             }
 
-            // Add any new users that weren't in the original file
+            // Add any new patients that weren't in the original file
             for (User user : users) {
-                if (!"Patient".equals(user.getRole()) && !processedIds.contains(user.getHospitalID())) {
-                    lines.add(formatUserToCsv(user));
+                if ("Patient".equals(user.getRole()) && user instanceof Patient && !processedIds.contains(user.getHospitalID())) {
+                    lines.add(formatPatientToCsv((Patient) user));
                 }
             }
 
@@ -129,18 +129,19 @@ public class StaffCsvExporter {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error processing staff CSV file: " + e.getMessage());
+            System.out.println("Error processing patient CSV file: " + e.getMessage());
         }
     }
 
-    private static String formatUserToCsv(User user) {
-        return String.format("%s,%s,%s,%s,%s,%s",
-            user.getHospitalID(),
-            escapeSpecialCharacters(user.getName()),
-            user.getRole(),
-            user.getGender(),
-            "0", // Age placeholder
-            user.getPassword()
+    private static String formatPatientToCsv(Patient patient) {
+        return String.format("%s,%s,%s,%s,%s,%s,%s",
+            patient.getHospitalID(),
+            escapeSpecialCharacters(patient.getName()),
+            patient.getDateOfBirth(),
+            patient.getGender(),
+            patient.getBloodType(),
+            escapeSpecialCharacters(patient.getEmailAddress()),
+            patient.getPassword()
         );
     }
 
