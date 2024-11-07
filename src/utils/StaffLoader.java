@@ -30,7 +30,7 @@ public class StaffLoader {
                 String gender = values[3];
                 String age = values[4];
                 String password = values[5];
-                String hashedPassword = values[6];
+                String hashedPassword = values.length > 6 ? values[6] : PasswordHasher.hashPassword(password);
 
                 User user = null;
                 switch (staffRole.toUpperCase()) {

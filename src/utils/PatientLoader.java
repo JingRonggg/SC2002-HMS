@@ -28,7 +28,7 @@ public class PatientLoader {
                 String bloodType = values[4];
                 String contactInformation = values[5];
                 String password = values[6];
-                String hashedPassword = values[7];
+                String hashedPassword = values.length > 7 ? values[7] : PasswordHasher.hashPassword(password);
 
                 User user = new Patient(patientID, patientName, dateOfBirth, gender, bloodType, contactInformation);
                 
