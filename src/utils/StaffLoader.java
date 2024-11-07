@@ -5,6 +5,7 @@ import src.model.Administrator;
 import src.model.Doctor;
 import src.model.Nurse;
 import src.model.Pharmacist;
+import src.model.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -28,22 +29,29 @@ public class StaffLoader {
                 String staffRole = values[2];
                 String gender = values[3];
                 String age = values[4];
+                String password = values[5];
 
+                User user = null;
                 switch (staffRole.toUpperCase()) {
                     case "ADMINISTRATOR":
-                        UserController.addUser(new Administrator(staffID, staffName, staffRole, gender, age));
+                        user = new Administrator(staffID, staffName, staffRole, gender, age);
                         break;
                     case "DOCTOR":
-                        UserController.addUser(new Doctor(staffID, staffName, staffRole, gender, age));
+                        user = new Doctor(staffID, staffName, staffRole, gender, age);
                         break;
                     case "PHARMACIST":
-                        UserController.addUser(new Pharmacist(staffID, staffName, staffRole, gender, age));
+                        user = new Pharmacist(staffID, staffName, staffRole, gender, age);
                         break;
                     case "NURSE":
-                        UserController.addUser(new Nurse(staffID, staffName, staffRole, gender, age));
+                        user = new Nurse(staffID, staffName, staffRole, gender, age);
                         break;
                     default:
                         System.out.println("Invalid staff role: " + staffRole);
+                }
+
+                if (user != null) {
+                    user.setPassword(password);
+                    UserController.addUser(user);
                 }
             }
         } catch (IOException e) {

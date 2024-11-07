@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public class UserRepository implements IUserRepository {
-     static HashMap<String, User> users = new HashMap<>(); // Changed to static
+    static HashMap<String, User> users = new HashMap<>(); // Changed to static
 
     public UserRepository() {}
 
