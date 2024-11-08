@@ -25,16 +25,16 @@ import src.repository.NurseRepository;
 import java.util.Scanner;
 
 public class Main {
-    static UserRepository userRepository = new UserRepository();
-    static MedicalRecordRepository medicalRecordRepository = new MedicalRecordRepository();
-    static MedicineRepository medicineRepository = new MedicineRepository();
-    static AppointmentRepository appointmentRepo = new AppointmentRepository();
-    static NurseRepository nurseRepo = new NurseRepository();
-    private static final AuthenticationController authController = new AuthenticationController(userRepository);
-    private static final LoginController loginController = new LoginController(authController);
-
+    
     public static void main(String[] args) {
         try {
+            UserRepository userRepository = new UserRepository();
+            MedicalRecordRepository medicalRecordRepository = new MedicalRecordRepository();
+            MedicineRepository medicineRepository = new MedicineRepository();
+            AppointmentRepository appointmentRepo = new AppointmentRepository();
+            NurseRepository nurseRepo = new NurseRepository();
+            AuthenticationController authController = new AuthenticationController(userRepository);
+            LoginController loginController = new LoginController(authController);
             IAdminRepository adminRepo = new AdminRepository();
             IPatientRepository patientRepo = new PatientRepository();
             IMedicalRecordRepository medicalRecordRepo = new MedicalRecordRepository();
@@ -82,6 +82,9 @@ public class Main {
     }
 
     public static void saveAndExit() {
+        AppointmentRepository appointmentRepo = new AppointmentRepository();
+        MedicineRepository medicineRepository = new MedicineRepository();
+        UserRepository userRepository = new UserRepository();
         appointmentRepo.saveAllToCsv();
         MedicineCsvExporter.exportAllMedicinesToCsv(medicineRepository);
         StaffCsvExporter.exportAllStaffToCsv(userRepository);
