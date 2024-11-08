@@ -1,6 +1,6 @@
-﻿Staff ID,Name,Role,Gender,Age
-D001,John Smith,Doctor,Male,45
-D002,Emily Clarke,Doctor,Female,38
-P001,Mark Lee,Pharmacist,Male,29
-A001,Sarah Lee,Administrator,Female,40
-N001,Michael Brown,Nurse,Male,25
+﻿Staff ID,Name,Role,Gender,Age,Password,Hashed Password
+D001,John Smith,Doctor,Male,45,happy,ddc43uNaQ1u/ugsaypN/4vNjQqQqK93CjoDx2ZSLwRc=
+D002,Emily Clarke,Doctor,Female,38,password,aPG4tEjTgkjZo+nBvOs3aZJP7GyEZiNEXsx0gxSNlH8=
+P001,Mark Lee,Pharmacist,Male,29,password,aPG4tEjTgkjZo+nBvOs3aZJP7GyEZiNEXsx0gxSNlH8=
+A001,Sarah Lee,Administrator,Female,40,password,aPG4tEjTgkjZo+nBvOs3aZJP7GyEZiNEXsx0gxSNlH8=
+N001,Michael Brown,Nurse,Male,25,password,aPG4tEjTgkjZo+nBvOs3aZJP7GyEZiNEXsx0gxSNlH8=

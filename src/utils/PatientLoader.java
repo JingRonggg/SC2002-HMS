@@ -2,6 +2,7 @@ package src.utils;
 
 import src.controller.UserController;
 import src.model.Patient;
+import src.model.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,7 +18,7 @@ public class PatientLoader {
     public void loadPatients() {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
-            br.readLine();
+            br.readLine(); // Skip header
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 String patientID = values[0];
@@ -26,8 +27,15 @@ public class PatientLoader {
                 String gender = values[3];
                 String bloodType = values[4];
                 String contactInformation = values[5];
+                String password = values[6];
+                String hashedPassword = values.length > 7 ? values[7] : PasswordHasher.hashPassword(password);
 
-                UserController.addUser(new Patient(patientID, patientName, dateOfBirth, gender, bloodType, contactInformation));
+                User user = new Patient(patientID, patientName, dateOfBirth, gender, bloodType, contactInformation);
+                
+                if (user != null) {
+                    user.setHashedPassword(hashedPassword, password);
+                    UserController.addUser(user);
+                }
             }
         } catch (IOException e) {
             System.out.println("Error reading the file: " + e.getMessage());
