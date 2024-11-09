@@ -7,15 +7,40 @@ import src.utils.PatientIDGenerator;
 
 import java.util.Scanner;
 
+/**
+ * Boundary class that handles the patient registration interface and operations.
+ * This class provides functionality for nurses to register new patients in the system.
+ */
 public class PatientRegistrationBoundary {
+    /** The controller handling nurse-related operations */
     private final NurseController nurseController;
+    
+    /** Scanner object for reading user input */
     private final Scanner scanner;
 
+    /**
+     * Constructs a new PatientRegistrationBoundary with the specified nurse controller.
+     *
+     * @param nurseController The controller handling nurse operations
+     */
     public PatientRegistrationBoundary(NurseController nurseController) {
         this.nurseController = nurseController;
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Handles the registration process for a new patient.
+     * Collects patient information including:
+     * <ul>
+     *   <li>Full name</li>
+     *   <li>Date of birth</li>
+     *   <li>Gender</li>
+     *   <li>Blood type</li>
+     *   <li>Email address</li>
+     * </ul>
+     * Validates all inputs and generates a unique patient ID.
+     * If any validation fails, the registration process is terminated.
+     */
     public void registerNewPatient() {
         System.out.println("\n=== Register New Patient ===");
 

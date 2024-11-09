@@ -12,15 +12,40 @@ import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
+/**
+ * Boundary class that handles the user interface for doctor-related operations
+ */
 public class DoctorBoundary {
+    /** The controller that handles doctor business logic */
     private final DoctorController doctorController;
+    
+    /** The ID of the doctor currently logged in */
     private final String doctorID;
 
+    /**
+     * Constructs a new DoctorBoundary
+     * @param doctorController The controller that handles doctor business logic
+     * @param doctorID The ID of the doctor currently logged in
+     */
     public DoctorBoundary(DoctorController doctorController, String doctorID) {
         this.doctorController = doctorController;
         this.doctorID = doctorID;
     }
 
+    /**
+     * Displays the main menu for doctor operations and handles user input
+     * Menu options include:
+     * 1. View Patient Medical Records
+     * 2. Update Patient Medical Records 
+     * 3. View Personal Schedule
+     * 4. Set Availability for Appointments
+     * 5. Accept or Decline Appointment Requests
+     * 6. View Upcoming Appointments
+     * 7. Record Appointment Outcome
+     * 8. Logout
+     *
+     * @param scanner Scanner object to read user input
+     */
     public void displayDoctorMenu(Scanner scanner) {
         while (true) {
             try{
@@ -148,5 +173,3 @@ public class DoctorBoundary {
         }
     }
 }
-
-

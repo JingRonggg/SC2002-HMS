@@ -7,7 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A utility class for printing appointment-related information.
+ */
 public class AppointmentPrinter {
+    /**
+     * Prints detailed information for all appointments in the given HashMap.
+     * 
+     * @param appointments HashMap containing appointment IDs mapped to Appointment objects
+     */
     public static void printAppointmentDetails(HashMap<String, Appointment> appointments) {
         System.out.println("------------------------------------------");
 
@@ -26,6 +34,13 @@ public class AppointmentPrinter {
         }
     }
 
+    /**
+     * Prints available appointment slots for a specific doctor on a given date.
+     * 
+     * @param availableSlots ArrayList of available Appointment slots
+     * @param doctorID ID of the doctor
+     * @param date Date to check for available slots
+     */
     public static void printAvailableSlots(ArrayList<Appointment> availableSlots, String doctorID, LocalDate date){
         // Print available slots
         if (availableSlots.isEmpty()) {
@@ -40,6 +55,12 @@ public class AppointmentPrinter {
         }
     }
 
+    /**
+     * Prints scheduled appointments sorted by their status.
+     * Appointments are grouped by status and displayed with relevant details.
+     * 
+     * @param appointments HashMap containing appointment IDs mapped to Appointment objects
+     */
     public static void printScheduledAppointments(HashMap<String, Appointment> appointments) {
         // Convert map entries to list for sorting
         List<Map.Entry<String, Appointment>> sortedAppointments = new ArrayList<>(appointments.entrySet());

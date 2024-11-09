@@ -14,8 +14,18 @@ import src.model.Treatments;
 
 import static java.lang.Integer.parseInt;
 
+/**
+ * A class responsible for recording medical record details through user input.
+ */
 public class MedicalRecordRecorder {
-        public static MedicalRecord askingForMedicalRecordDetails (){
+    /**
+     * Prompts the user to enter details for a new medical record including diagnosis,
+     * treatment, and prescribed medications.
+     *
+     * @return A new MedicalRecord object containing the entered information
+     *         with null values for patient-specific fields
+     */
+    public static MedicalRecord askingForMedicalRecordDetails (){
         // Get new diagnosis details
         Scanner scanner = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

@@ -3,8 +3,18 @@ import java.util.Scanner;
 import java.util.InputMismatchException;
 import src.controller.MedicineController;
 
+/**
+ * Boundary class for handling medicine inventory operations through a command-line interface.
+ */
 public class MedicineInventoryBoundary {
 
+    /**
+     * Displays an interactive menu for medicine inventory management.
+     * Allows users to add, remove, and update medicines in the inventory.
+     *
+     * @param medicineController The controller handling medicine-related operations
+     * @param scanner Scanner object for reading user input
+     */
     public static void displayMedicineInventory(MedicineController medicineController, Scanner scanner) {
         while (true) {
             System.out.println("Options to edit the Medicine Inventory");

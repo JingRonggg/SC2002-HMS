@@ -14,16 +14,40 @@ import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
+/**
+ * Boundary class that handles all patient-related user interface interactions.
+ * This class provides a menu-driven interface for patients to interact with the system.
+ */
 public class PatientBoundary {
+    /** The controller handling patient-related business logic */
     private final PatientController patientController;
+    
+    /** The unique identifier for the hospital */
     private final String hospitalID;
     
-
+    /**
+     * Constructs a new PatientBoundary with the specified controller and hospital ID.
+     *
+     * @param patientController The controller handling patient-related operations
+     * @param hospitalID The unique identifier for the hospital
+     */
     public PatientBoundary(PatientController patientController, String hospitalID) {
         this.patientController = patientController;
         this.hospitalID = hospitalID;
     }
 
+    /**
+     * Displays and handles the main patient menu interface.
+     * Provides options for:
+     * <ul>
+     *   <li>Viewing medical records</li>
+     *   <li>Updating personal information</li>
+     *   <li>Managing appointments (view, schedule, reschedule, cancel)</li>
+     *   <li>Viewing appointment history</li>
+     * </ul>
+     *
+     * @param scanner Scanner object for reading user input
+     */
     public void displayPatientMenu(Scanner scanner) {
         while (true) {
             try{

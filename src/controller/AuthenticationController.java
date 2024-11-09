@@ -6,9 +6,19 @@ import src.repository.UserRepository;
 
 import java.util.Scanner;
 
+/**
+ * Controller class that handles user authentication operations including login, password management and user verification.
+ * This class serves as the main interface between the application and user authentication.
+ */
 public class AuthenticationController {
+    /** Repository interface for managing user data storage and retrieval */
     private static IUserRepository userRepository;
 
+    /**
+     * Constructs a new AuthenticationController with the specified repository.
+     * 
+     * @param userRepo The repository implementation for managing user data
+     */
     public AuthenticationController(UserRepository userRepo) {
         try {
             this.userRepository = userRepo;
@@ -18,6 +28,13 @@ public class AuthenticationController {
         }
     }
 
+    /**
+     * Authenticates a user based on hospital ID and password.
+     * 
+     * @param hospitalID The unique hospital identifier for the user
+     * @param password The password to verify
+     * @return User object if authentication successful, null otherwise
+     */
     public User authenticate(String hospitalID, String password) {
         try {
             User user = userRepository.getUserByHospitalID(hospitalID);
@@ -31,6 +48,12 @@ public class AuthenticationController {
         }
     }
 
+    /**
+     * Checks if a user exists in the system based on hospital ID.
+     * 
+     * @param hospitalID The hospital ID to check
+     * @return true if user exists, false otherwise
+     */
     public boolean existenceCheck(String hospitalID) {
         try {
             return userRepository.userExists(hospitalID);
@@ -40,6 +63,13 @@ public class AuthenticationController {
         }
     }
 
+    /**
+     * Allows a user to change their password through interactive console input.
+     * Validates password requirements and updates the user's password in the repository.
+     * 
+     * @param user The user whose password is being changed
+     * @param scanner Scanner object for reading user input
+     */
     public void changePassword(User user, Scanner scanner) {
         try {
             String newPassword = "";
@@ -67,6 +97,13 @@ public class AuthenticationController {
         }
     }
 
+    /**
+     * Verifies if a given password matches a user's stored password.
+     * 
+     * @param user The user whose password is being verified
+     * @param password The password to verify
+     * @return true if password matches, false otherwise
+     */
     public boolean isPasswordCorrect(User user, String password) {
         try {
             return user.verifyPassword(password);

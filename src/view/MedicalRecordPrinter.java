@@ -8,7 +8,19 @@ import src.model.Treatments;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A utility class for printing medical record details in a formatted manner.
+ */
 public class MedicalRecordPrinter {
+    
+    /**
+     * Prints the details of all medical records in a formatted layout.
+     * The method displays information including medical record ID, patient ID, doctor ID,
+     * past diagnoses, treatments, and prescribed medications for each medical record.
+     *
+     * @param medicalRecords A map containing medical records with their IDs as keys
+     *                       and MedicalRecord objects as values
+     */
     public static void printMedicalRecordDetails(Map<String, MedicalRecord> medicalRecords) {
         System.out.println("==========================================");
         System.out.println("               Medical Records            ");

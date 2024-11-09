@@ -8,6 +8,13 @@ import src.model.Treatments;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Interface for managing medical record repository operations.
+ * Extends basic medical record operations, doctor operations, and medicine operations.
+ */
 public interface IMedicalRecordRepository extends IMedicalRecordBasicOperations, IMedicalRecordDoctorOperations,IMedicalRecordMedicineOperations{
-    void storeIntoCsv() ;
+    /**
+     * Stores the medical records data into a CSV file.
+     */
+    void storeIntoCsv();
 }

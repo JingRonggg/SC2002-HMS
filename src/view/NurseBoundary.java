@@ -6,17 +6,30 @@ import src.utils.PatientIDGenerator;
 
 import java.util.Scanner;
 
+/**
+ * Boundary class that handles the nurse interface and operations
+ */
 public class NurseBoundary {
     private final NurseController nurseController;
     private final Scanner scanner;
     private final PatientRegistrationBoundary patientRegistrationBoundary;
 
+    /**
+     * Constructs a new NurseBoundary with the specified controller
+     *
+     * @param nurseController The controller handling nurse operations
+     */
     public NurseBoundary(NurseController nurseController) {
         this.nurseController = nurseController;
         this.scanner = new Scanner(System.in);
         this.patientRegistrationBoundary = new PatientRegistrationBoundary(nurseController);
     }
 
+    /**
+     * Displays the nurse menu and handles user input for nurse operations
+     * 
+     * @param scanner Scanner object to read user input
+     */
     public void displayNurseMenu(Scanner scanner) {
         while (true) {
             System.out.println("\n=== Nurse Operations ===");

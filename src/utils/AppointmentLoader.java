@@ -11,8 +11,28 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * A utility class responsible for loading appointments from a CSV file into the system.
+ */
 public class AppointmentLoader {
 
+    /**
+     * Loads appointments from a CSV file into the system. This method performs two passes:
+     * 1. First pass collects all existing appointment IDs to initialize the ID generator
+     * 2. Second pass creates and adds the actual appointment objects to the system
+     * 
+     * The CSV file is expected to have the following format:
+     * appointmentID,patientID,doctorID,doctorName,appointmentDate,appointmentStartTime,appointmentEndTime,status,consultationNotes
+     * 
+     * The method handles the following tasks:
+     * - Reads and validates appointment data from CSV
+     * - Initializes the AppointmentIDGenerator with existing IDs
+     * - Creates Appointment objects from CSV data
+     * - Adds appointments to the AppointmentController
+     * 
+     * @throws IOException if there are issues reading the CSV file
+     * @throws Exception if there are issues processing the appointment data
+     */
     public void loadAppointments() {
         Set<String> existingIDs = new HashSet<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(AppointmentCsvExporter.CSV_FILE_PATH))) {

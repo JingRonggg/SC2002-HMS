@@ -13,9 +13,21 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Utility class for exporting medicine data to CSV format.
+ * Handles reading from and writing to a CSV file containing medicine information.
+ */
 public class MedicineCsvExporter {
+    /** The file path where the CSV file will be stored */
     protected static final String CSV_FILE_PATH = "./data/Medicine_List.csv";
 
+    /**
+     * Exports all medicines from the repository to a CSV file.
+     * If the file exists, it will be overwritten with updated data.
+     * If the file doesn't exist, it will be created with appropriate headers.
+     *
+     * @param repository The medicine repository containing the data to be exported
+     */
     public static void exportAllMedicinesToCsv(MedicineRepository repository) {
         Map<String, String> existingMedicines = new HashMap<>();
 
@@ -50,6 +62,10 @@ public class MedicineCsvExporter {
         }
     }
 
+    /**
+     * Writes the CSV header row to a new file.
+     * Creates the file if it doesn't exist.
+     */
     private static void writeHeaders() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(CSV_FILE_PATH, false))) {
             String headers = String.join(",",
@@ -63,6 +79,14 @@ public class MedicineCsvExporter {
         }
     }
 
+    /**
+     * Writes or updates a single medicine entry in the CSV file.
+     *
+     * @param writer The BufferedWriter to write the data
+     * @param medicineName The name of the medicine to write
+     * @param repository The repository containing the medicine data
+     * @throws IOException If an I/O error occurs while writing
+     */
     private static void writeOrUpdateMedicineLine(BufferedWriter writer, String medicineName, MedicineRepository repository) throws IOException {
         MedicationStorage medicationStorage = repository.getMedicine(medicineName);
         int initialStock = repository.getStock(medicineName);

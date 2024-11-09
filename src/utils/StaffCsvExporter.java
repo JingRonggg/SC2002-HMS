@@ -8,13 +8,27 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
+/**
+ * Utility class for exporting staff data to CSV format.
+ * Handles both single staff member exports and bulk exports of all staff.
+ */
 public class StaffCsvExporter {
+    /** Path to the CSV file where staff data will be stored */
     protected static final String CSV_FILE_PATH = "./data/Staff_List.csv";
+    
+    /** Column headers for the CSV file */
     private static final String[] HEADERS = {
         "Staff ID", "Name", "Role", "Gender", "Age", "Password", "Hashed Password"
     };
 
-    // Single Export in case we want to implement immediate export
+    /**
+     * Exports a single staff member's data to the CSV file.
+     * If the staff member already exists in the file, their record will be updated.
+     * If they don't exist, a new record will be added.
+     * Patient records are ignored.
+     *
+     * @param user The user object containing staff data to export
+     */
     public static void exportStaffToCsv(User user) {
         // Skip if this is a patient
         if ("Patient".equals(user.getRole())) {
@@ -71,6 +85,14 @@ public class StaffCsvExporter {
         }
     }
 
+    /**
+     * Exports all staff members' data to the CSV file.
+     * Updates existing records and adds new ones while preserving any records
+     * not present in the current user repository.
+     * Patient records are excluded from the export.
+     *
+     * @param userRepository The repository containing all user data
+     */
     public static void exportAllStaffToCsv(UserRepository userRepository) {
         // Get all users from repository and convert to map for efficient lookup
         Collection<User> users = userRepository.getAllUsers();
@@ -134,6 +156,13 @@ public class StaffCsvExporter {
         }
     }
 
+    /**
+     * Formats a user object into a CSV record string.
+     * Handles special characters and proper CSV formatting.
+     *
+     * @param user The user object to format
+     * @return A properly formatted CSV string representing the user
+     */
     private static String formatUserToCsv(User user) {
         String age = (user instanceof Staff) ? ((Staff) user).getAge() : "";
         return String.format("%s,%s,%s,%s,%s,%s,%s",
@@ -147,6 +176,13 @@ public class StaffCsvExporter {
         );
     }
 
+    /**
+     * Escapes special characters in a field to ensure proper CSV formatting.
+     * Wraps fields containing commas, quotes, or newlines in quotes and escapes existing quotes.
+     *
+     * @param field The field to escape
+     * @return The properly escaped field
+     */
     private static String escapeSpecialCharacters(String field) {
         if (field == null) {
             return "";

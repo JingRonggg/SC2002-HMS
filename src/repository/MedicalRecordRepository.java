@@ -13,15 +13,31 @@ import src.utils.MedicalRecordCsvExporter;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Repository class for managing medical records in the system.
+ * Implements the IMedicalRecordRepository interface to provide CRUD operations and other medical record-related functionalities.
+ */
 public class MedicalRecordRepository implements IMedicalRecordRepository {
-    // Storage of medical records (Key: MedicalRecordID)
+    /** HashMap to store medical records with medicalRecordID as key and MedicalRecord object as value */
     protected static HashMap<String, MedicalRecord> medicalRecordData = new HashMap<>();
 
+    /**
+     * Handles exceptions that occur during medical record operations
+     * @param operation The operation during which the exception occurred
+     * @param e The exception that was thrown
+     */
     private void handleException(String operation, Exception e) {
         System.out.println("An error occurred while " + operation + e.getMessage());
     }
 
-    // Create (Add) a new MedicalRecord
+    /**
+     * Creates a new medical record in the system
+     * @param doctorID The ID of the doctor creating the record
+     * @param patientID The ID of the patient the record belongs to
+     * @param pastDiagnosis The past diagnosis information
+     * @param treatments The treatments information
+     * @param newPrescribeMedications List of prescribed medications
+     */
     @Override
     public void createMedicalRecord(String doctorID, String patientID, PastDiagnosis pastDiagnosis, Treatments treatments, List<PrescribeMedications> newPrescribeMedications) {
         try {
@@ -38,7 +54,11 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
         }
     }
 
-    // Read (Retrieve) MedicalRecord by PatientID (Key)
+    /**
+     * Retrieves all medical records for a specific patient
+     * @param patientID The ID of the patient
+     * @return HashMap containing medical records for the patient
+     */
     @Override
     public HashMap<String, MedicalRecord> readMedicalRecord(String patientID) {
         HashMap<String, MedicalRecord> medicalRecords = new HashMap<>();
@@ -55,6 +75,12 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
         return medicalRecords;
     }
 
+    /**
+     * Retrieves undispensed medical records for a specific patient and doctor
+     * @param patientID The ID of the patient
+     * @param doctorID The ID of the doctor
+     * @return HashMap containing undispensed medical records
+     */
     @Override
     public HashMap<String, MedicalRecord> readUndispensedMedicalRecord(String patientID, String doctorID) {
         HashMap<String, MedicalRecord> medicalRecords = new HashMap<>();
@@ -76,6 +102,10 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
         return medicalRecords;
     }
 
+    /**
+     * Retrieves all undispensed medical records in the system
+     * @return HashMap containing all undispensed medical records
+     */
     @Override
     public HashMap<String, MedicalRecord> getAllUndispensedMedicalRecord() {
         HashMap<String, MedicalRecord> medicalRecords = new HashMap<>();
@@ -94,6 +124,12 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
         return medicalRecords;
     }
 
+    /**
+     * Checks if there are any undispensed medical records for a specific patient and doctor
+     * @param patientID The ID of the patient
+     * @param doctorID The ID of the doctor
+     * @return boolean indicating if undispensed records exist
+     */
     @Override
     public boolean booleanReadUndispensedMedicalRecord(String patientID, String doctorID) {
         try {
@@ -114,7 +150,12 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
         return false;
     }
 
-    // Get all MedicalRecord by DoctorID (For Doctors)
+    /**
+     * Retrieves medical records for a specific doctor and patient combination
+     * @param doctorID The ID of the doctor
+     * @param patientID The ID of the patient
+     * @return HashMap containing matching medical records
+     */
     public HashMap<String, MedicalRecord> getMedicalRecordsByDoctorAndPatientID(String doctorID, String patientID) {
         HashMap<String, MedicalRecord> medicalRecords = new HashMap<>();
         try {
@@ -131,7 +172,11 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
         return medicalRecords;
     }
 
-    // Get MedicalRecord by MedicalRecordID
+    /**
+     * Retrieves a specific medical record by its ID
+     * @param medicalRecordID The ID of the medical record
+     * @return The requested MedicalRecord object or null if not found
+     */
     public MedicalRecord getMedicalRecordByID(String medicalRecordID) {
         try {
             return medicalRecordData.get(medicalRecordID);
@@ -141,7 +186,14 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
         return null;
     }
 
-    // Update MedicalRecord by MedicalRecordID
+    /**
+     * Updates an existing medical record
+     * @param medicalRecordID The ID of the medical record to update
+     * @param pastDiagnosis The updated past diagnosis information
+     * @param treatments The updated treatments information
+     * @param newPrescribeMedications The updated list of prescribed medications
+     * @return boolean indicating if the update was successful
+     */
     @Override
     public boolean updateMedicalRecord(String medicalRecordID, PastDiagnosis pastDiagnosis, Treatments treatments, List<PrescribeMedications> newPrescribeMedications) {
         try {
@@ -185,7 +237,11 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
         }
     }
 
-    // Delete MedicalRecord by MedicalRecordID
+    /**
+     * Deletes a medical record from the system
+     * @param medicalRecordID The ID of the medical record to delete
+     * @return boolean indicating if the deletion was successful
+     */
     @Override
     public boolean deleteMedicalRecord(String medicalRecordID) {
         try {
@@ -196,7 +252,10 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
         }
     }
 
-    //TODO Delete later, for checking purposes
+    /**
+     * Debug method to check medical record classes
+     * TODO Delete later, for checking purposes
+     */
     public void checkMedicalRecordClasses() {
         try {
             System.out.println("Checking Medical Records in repository:");
@@ -209,6 +268,11 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
         }
     }
 
+    /**
+     * Adds a medical record with a specific ID
+     * @param medicalRecordID The ID for the medical record
+     * @param medicalRecord The medical record to add
+     */
     @Override
     public void addMedicalRecord(String medicalRecordID, MedicalRecord medicalRecord) {
         try {
@@ -218,6 +282,9 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
         }
     }
 
+    /**
+     * Stores all medical records into CSV format
+     */
     @Override
     public void storeIntoCsv() {
         try {

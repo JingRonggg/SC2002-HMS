@@ -5,10 +5,23 @@ import src.Main;
 
 import java.util.Scanner;
 
+/**
+ * Controller class that handles user login operations including authentication and password management.
+ * This class serves as the main interface between users and the login system.
+ */
 public class LoginController {
+    /** Controller for handling user authentication */
     private final AuthenticationController authController;
+    /** Scanner for reading user input */
     private final Scanner scanner;
 
+    /**
+     * Constructs a new LoginController with the specified authentication controller.
+     * Initializes the scanner for user input.
+     *
+     * @param authController The authentication controller for verifying credentials
+     * @throws RuntimeException if initialization fails
+     */
     public LoginController(AuthenticationController authController) {
         try {
             this.authController = authController;
@@ -19,6 +32,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * Checks if this is the user's first login by verifying if they are using the default password.
+     *
+     * @param user The user to check
+     * @return true if using default password, false otherwise
+     */
     private boolean isFirstLogin(User user) {
         try {
             return "password".equals(user.getPassword());
@@ -28,6 +47,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * Handles the user login process including authentication and first-time login checks.
+     * Prompts user for credentials and validates them.
+     *
+     * @return authenticated User object if login successful, null otherwise
+     */
     public User login() {
         try {
             System.out.println("-----------------------------------------");
@@ -68,6 +93,13 @@ public class LoginController {
         }
     }
 
+    /**
+     * Handles the password change process for a user.
+     * Prompts for new password and verifies the change.
+     *
+     * @param loggedInUser The user changing their password
+     * @throws RuntimeException if password change fails critically
+     */
     public void changePassword(User loggedInUser) {
         try {
             boolean isPasswordChanged = false;

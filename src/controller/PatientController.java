@@ -14,12 +14,28 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
+/**
+ * Controller class that manages patient operations including appointments and medical records.
+ * This class serves as the main interface between patients and the hospital system.
+ */
 public class PatientController {
+    /** Repository interface for managing patient data */
     private final IPatientRepository patientRepository;
+    /** Repository interface for managing medical records */
     private final IMedicalRecordRepository medicalRecordRepository;
+    /** Repository interface for managing appointments */
     private final IAppointmentRepository appointmentRepository;
+    /** Repository interface for managing admin operations */
     private final IAdminRepository adminRepository;
 
+    /**
+     * Constructs a new PatientController with the specified repositories.
+     *
+     * @param patientRepository Repository for managing patient data
+     * @param medicalRecordRepository Repository for managing medical records
+     * @param adminRepository Repository for managing admin operations
+     * @param appointmentRepository Repository for managing appointments
+     */
     public PatientController(IPatientRepository patientRepository, IMedicalRecordRepository medicalRecordRepository, IAdminRepository adminRepository, IAppointmentRepository appointmentRepository) {
         this.patientRepository = patientRepository;
         this.medicalRecordRepository = medicalRecordRepository;
@@ -27,10 +43,21 @@ public class PatientController {
         this.appointmentRepository = appointmentRepository;
     }
 
+    /**
+     * Retrieves patient information using their hospital ID.
+     *
+     * @param hospitalID The unique identifier for the patient
+     * @return Patient object containing patient information
+     */
     public Patient getPatientInformation(String hospitalID) {
         return patientRepository.getPatientInfo(hospitalID);
     }
 
+    /**
+     * Updates patient email information.
+     *
+     * @param hospitalID The unique identifier for the patient
+     */
     public void updatePatientInformation(String hospitalID) {
         Patient patient = patientRepository.getPatientInfo(hospitalID);
         if (patient != null) {
@@ -47,6 +74,11 @@ public class PatientController {
         }
     }
 
+    /**
+     * Displays medical records for a specific patient.
+     *
+     * @param patientID The unique identifier for the patient
+     */
     public void viewMedicalRecord(String patientID) {
         String patientName = patientRepository.getPatientInfo(patientID).getName();
         if (patientName != null) {
@@ -63,7 +95,11 @@ public class PatientController {
         }
     }
 
-    // return all slots with doctors
+    /**
+     * Displays available appointment slots for all doctors on a specific date.
+     *
+     * @param date The date to check for available slots
+     */
     public void viewAvailableSlots(LocalDate date) {
         HashMap<String, HashMap<String, Appointment>> allSlots = new HashMap<>();
         LocalTime startTime = LocalTime.of(8,0);
@@ -102,7 +138,14 @@ public class PatientController {
         }
     }
 
-    //creating an appointmnet
+    /**
+     * Schedules a new appointment for a patient with a doctor.
+     *
+     * @param doctorID The unique identifier for the doctor
+     * @param patientID The unique identifier for the patient
+     * @param date The date of the appointment
+     * @param startTime The start time of the appointment
+     */
     public void scheduleAppointment (String doctorID, String patientID, LocalDate date, LocalTime startTime) {
         LocalTime endTime = startTime.plusMinutes(30);
         String doctorName = adminRepository.getDoctorName(doctorID);
@@ -115,10 +158,16 @@ public class PatientController {
             appointmentRepository.saveAppointment(newappointment);
             System.out.println("Appointment requested successfully.");
         }
-
     }
 
-    // rescheduling appointment
+    /**
+     * Reschedules an existing appointment to a new date and time.
+     *
+     * @param appointmentID The unique identifier for the appointment
+     * @param newDate The new date for the appointment
+     * @param newStartTime The new start time for the appointment
+     * @return String indicating the result of the rescheduling attempt
+     */
     public String rescheduleAppointment (String appointmentID, LocalDate newDate, LocalTime newStartTime) {
         try {
             Appointment existingAppointment = appointmentRepository.getSpecificAppointment(appointmentID);
@@ -142,6 +191,12 @@ public class PatientController {
         return "Appointment requested successfully.";
     }
 
+    /**
+     * Cancels an existing appointment.
+     *
+     * @param appointmentID The unique identifier for the appointment
+     * @return String indicating the result of the cancellation attempt
+     */
     public String cancelAppointment(String appointmentID) {
         try{
             if (appointmentRepository.getSpecificAppointment(appointmentID) == null) {
@@ -156,6 +211,12 @@ public class PatientController {
         }
     }
 
+    /**
+     * Retrieves all scheduled appointments for a patient.
+     *
+     * @param patientID The unique identifier for the patient
+     * @return HashMap containing scheduled appointments
+     */
     public HashMap<String, Appointment> viewScheduledAppointments(String patientID) {
         try {
             return appointmentRepository.getScheduledPatientAppointment(patientID);
@@ -165,6 +226,12 @@ public class PatientController {
         }
     }
 
+    /**
+     * Retrieves all completed appointments for a patient.
+     *
+     * @param patientID The unique identifier for the patient
+     * @return HashMap containing completed appointments
+     */
     public HashMap<String, Appointment> viewCompletedAppointments(String patientID) {
         try{
             HashMap<String, Appointment> completedAppointments = appointmentRepository.getCompletedPatientAppointment(patientID);
@@ -181,14 +248,32 @@ public class PatientController {
         }
     }
 
+    /**
+     * Retrieves all past appointment outcomes for a patient.
+     *
+     * @param patientID The unique identifier for the patient
+     * @return HashMap containing past appointment outcomes
+     */
     public HashMap<String, Appointment> viewPastAppointmentOutcomes(String patientID) {
         return appointmentRepository.getAllPatientAppointment(patientID);
     }
 
+    /**
+     * Retrieves all medical records for a patient.
+     *
+     * @param patientID The unique identifier for the patient
+     * @return HashMap containing patient medical records
+     */
     public HashMap<String, MedicalRecord> viewPatientMedicalRecords(String patientID) {
         return medicalRecordRepository.readMedicalRecord(patientID);
     }
 
+    /**
+     * Checks if an appointment exists.
+     *
+     * @param appointmentID The unique identifier for the appointment
+     * @return boolean indicating if the appointment exists
+     */
     public boolean appointmentExists(String appointmentID) {
         if (appointmentRepository.getSpecificAppointment(appointmentID) == null) {
            return false;

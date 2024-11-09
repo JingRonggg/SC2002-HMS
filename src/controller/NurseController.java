@@ -11,11 +11,22 @@ import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * Controller class that manages nurse operations including patient registration and validation.
+ * This class serves as the main interface between nurses and patient data.
+ */
 public class NurseController {
+    /** Repository interface for managing nurse and patient data */
     private final INurseRepository nurseRepository;
+    /** Repository for managing appointment data */
     private final AppointmentRepository appointmentRepository;
 
-
+    /**
+     * Validates a patient object by checking required fields.
+     *
+     * @param patient The patient object to validate
+     * @return true if patient data is valid, false otherwise
+     */
     private boolean isValidPatient(Patient patient) {
         try {
             if (patient == null) return false;
@@ -36,6 +47,13 @@ public class NurseController {
         }
     }
 
+    /**
+     * Constructs a new NurseController with the specified repositories.
+     * Initializes default repositories if null values are provided.
+     *
+     * @param nurseRepository Repository for managing nurse and patient data
+     * @param appointmentRepository Repository for managing appointments
+     */
     public NurseController(INurseRepository nurseRepository, AppointmentRepository appointmentRepository) {
         if (nurseRepository == null || appointmentRepository == null) {
             System.out.println("Warning: Attempted to initialize NurseController with null repositories");
@@ -47,6 +65,12 @@ public class NurseController {
         this.appointmentRepository = appointmentRepository;
     }
 
+    /**
+     * Checks if a patient exists in the system using their ID.
+     *
+     * @param patientID The hospital ID of the patient to check
+     * @return true if patient exists, false otherwise
+     */
     public boolean isExistingPatient(String patientID) {
         try {
             return nurseRepository.userExists(patientID);
@@ -56,6 +80,13 @@ public class NurseController {
         }
     }
 
+    /**
+     * Registers a new patient in the system after validation.
+     * Checks for existing patients and validates patient data before registration.
+     *
+     * @param patient The patient object containing registration details
+     * @return String message indicating registration status
+     */
     public String registerNewPatient(Patient patient) {
         try {
             if (patient == null || !isValidPatient(patient)) {

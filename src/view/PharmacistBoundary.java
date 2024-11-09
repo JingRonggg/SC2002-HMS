@@ -11,14 +11,26 @@ import src.controller.AdminController;
 import src.controller.MedicineController;
 import src.model.*;
 
+/**
+ * Boundary class that handles the pharmacist interface and interactions
+ */
 public class PharmacistBoundary {
 
+    /** The controller for medicine-related operations */
     private final MedicineController medicineController;
 
-
+    /**
+     * Constructs a PharmacistBoundary with the specified medicine controller
+     * @param medicineController The controller that handles medicine-related operations
+     */
     public PharmacistBoundary(MedicineController medicineController) {
         this.medicineController = medicineController;
     }
+
+    /**
+     * Displays the main menu for pharmacist operations and handles user input
+     * @param scanner Scanner object to read user input
+     */
     public void displayPharmacistMenu(Scanner scanner) {
         while (true) {
             try{
