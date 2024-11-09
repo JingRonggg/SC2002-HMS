@@ -1,0 +1,8 @@
+src
+src.controller
+src.enums
+src.interfaces
+src.model
+src.repository
+src.utils
+src.view
