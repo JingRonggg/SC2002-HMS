@@ -12,9 +12,20 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utility class for exporting appointment data to CSV format.
+ * Handles both creating new CSV files and updating existing appointment records.
+ */
 public class AppointmentCsvExporter {
+    /** The file path where the CSV file will be stored */
     protected static final String CSV_FILE_PATH = "./data/Appointment_List.csv";
 
+    /**
+     * Exports an appointment to a CSV file. If the appointment already exists (based on AppointmentID),
+     * it will update the existing record. If the file doesn't exist, it will create a new one with headers.
+     *
+     * @param appointmentWrapper The appointment wrapper containing the appointment data to export
+     */
     public static void exportAppointmentsToCsv(AppointmentWrapper appointmentWrapper) {
         List<String> lines = new ArrayList<>();
         boolean appointmentExists = false;
@@ -62,6 +73,11 @@ public class AppointmentCsvExporter {
         }
     }
 
+    /**
+     * Writes the CSV header line to the provided list.
+     *
+     * @param lines The list to which the header line will be added
+     */
     private static void writeHeaders(List<String> lines) {
         String headers = String.join(",",
                 "AppointmentID",
@@ -76,6 +92,12 @@ public class AppointmentCsvExporter {
         lines.add(headers);
     }
 
+    /**
+     * Formats an appointment into a CSV line string.
+     *
+     * @param appointmentWrapper The appointment wrapper containing the appointment to format
+     * @return A comma-separated string containing all appointment fields
+     */
     private static String formatAppointmentToCsv(AppointmentWrapper appointmentWrapper) {
         Appointment appointment = appointmentWrapper.getAppointment();
         return String.join(",",

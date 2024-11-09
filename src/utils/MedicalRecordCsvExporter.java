@@ -11,9 +11,19 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utility class for exporting medical records to CSV format.
+ */
 public class MedicalRecordCsvExporter {
+    /** The file path where the CSV file will be stored */
     protected static final String CSV_FILE_PATH = "./data/MedicalRecord_List.csv";
 
+    /**
+     * Exports a medical record to CSV format. If the file exists, it will update an existing record
+     * or append a new one. If the file doesn't exist, it will create a new file with headers.
+     *
+     * @param medicalRecordWrapper The medical record wrapper containing the record to be exported
+     */
     public static void exportMedicalRecordToCsv(MedicalRecordWrapper medicalRecordWrapper) {
         List<String> lines = new ArrayList<>();
         boolean recordExists = false;
@@ -65,6 +75,11 @@ public class MedicalRecordCsvExporter {
         }
     }
 
+    /**
+     * Writes the CSV header row to the list of lines.
+     *
+     * @param lines The list to which the headers will be added
+     */
     private static void writeHeaders(List<String> lines) {
         String headers = String.join(",",
                 "MedicalRecordID",
@@ -81,6 +96,13 @@ public class MedicalRecordCsvExporter {
         lines.add(headers);
     }
 
+    /**
+     * Formats a medical record into CSV lines.
+     * Creates one line for each prescribed medication in the medical record.
+     *
+     * @param medicalRecordWrapper The medical record wrapper to be formatted
+     * @return A list of CSV formatted strings representing the medical record
+     */
     private static List<String> formatMedicalRecordToCsv(MedicalRecordWrapper medicalRecordWrapper) {
         List<String> lines = new ArrayList<>();
         MedicalRecord medicalRecord = medicalRecordWrapper.getMedicalRecord();

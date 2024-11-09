@@ -8,13 +8,26 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*; 
 
+/**
+ * Utility class for exporting Patient data to CSV format.
+ * Handles both single patient and bulk patient exports to a CSV file.
+ */
 public class PatientCsvExporter {
+    /** Path to the CSV file where patient data will be stored */
     protected static final String CSV_FILE_PATH = "./data/Patient_List.csv";
+    
+    /** Column headers for the CSV file */
     private static final String[] HEADERS = {
         "Patient ID", "Name", "Date of Birth", "Gender", "Blood Type", "Contact Information", "Password", "Hashed Password"
     };
 
-    // Single Export in case we want to implement immediate export
+    /**
+     * Exports a single patient's data to the CSV file.
+     * If the patient already exists in the file, their record will be updated.
+     * If the file doesn't exist, it will be created with appropriate headers.
+     *
+     * @param patient The Patient object to be exported
+     */
     public static void exportPatientToCsv(Patient patient) {
         // Skip if this is not a patient
         if (!"Patient".equals(patient.getRole())) {
@@ -71,6 +84,12 @@ public class PatientCsvExporter {
         }
     }
 
+    /**
+     * Exports all patients from the UserRepository to the CSV file.
+     * Updates existing records and adds new ones while preserving non-matching records.
+     *
+     * @param userRepository The repository containing all user data
+     */
     public static void exportAllPatientsToCsv(UserRepository userRepository) {
         // Get all users from repository and convert to map for efficient lookup
         Collection<User> users = userRepository.getAllUsers();
@@ -134,6 +153,12 @@ public class PatientCsvExporter {
         }
     }
 
+    /**
+     * Formats a Patient object into a CSV-compatible string.
+     * 
+     * @param patient The Patient object to format
+     * @return A comma-separated string containing the patient's data
+     */
     private static String formatPatientToCsv(Patient patient) {
         return String.format("%s,%s,%s,%s,%s,%s,%s,%s",
             patient.getHospitalID(),
@@ -147,6 +172,13 @@ public class PatientCsvExporter {
         );
     }
 
+    /**
+     * Escapes special characters in a field to ensure proper CSV formatting.
+     * Wraps fields containing commas, quotes, or newlines in quotes and escapes existing quotes.
+     *
+     * @param field The string field to escape
+     * @return The escaped string, or empty string if input is null
+     */
     private static String escapeSpecialCharacters(String field) {
         if (field == null) {
             return "";

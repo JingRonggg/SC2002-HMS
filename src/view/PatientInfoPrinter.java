@@ -2,7 +2,17 @@ package src.view;
 
 import src.model.Patient;
 
+/**
+ * A utility class for printing patient information to the console.
+ */
 public class PatientInfoPrinter {
+    /**
+     * Prints the detailed information of a patient to the console.
+     * If the patient is null, prints an error message instead.
+     *
+     * @param patient The patient whose information should be printed.
+     *               Can be null, in which case an error message is displayed.
+     */
     public static void printPatientInfo(Patient patient) {
         if (patient != null) {
             System.out.println("Patient Information:");

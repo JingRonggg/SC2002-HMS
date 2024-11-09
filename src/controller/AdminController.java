@@ -13,18 +13,30 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Controller class that handles administrative operations for managing staff and appointments.
+ */
 public class AdminController {
     private final IAdminRepository staffRepo;
     private final IAppointmentRepository appointmentRepo;
     private final Scanner scanner;
 
-
+    /**
+     * Constructs an AdminController with the specified repositories.
+     *
+     * @param staffRepo The repository for managing staff data
+     * @param appointmentRepo The repository for managing appointment data
+     */
     public AdminController(IAdminRepository staffRepo, IAppointmentRepository appointmentRepo) {
         this.staffRepo = staffRepo;
         this.appointmentRepo = appointmentRepo;
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Displays all staff members in the system.
+     * Prints staff details including ID, name, role, gender and age.
+     */
     public void viewAllStaff() {
         try {
             System.out.println("These are all the staff:");
@@ -41,6 +53,10 @@ public class AdminController {
         }
     }
 
+    /**
+     * Adds a new staff member to the system.
+     * Collects staff details through user input and creates appropriate staff object.
+     */
     public void addStaff() {
         try {
             System.out.println("Enter staff details:");
@@ -56,6 +72,10 @@ public class AdminController {
         }
     }
 
+    /**
+     * Updates an existing staff member's information.
+     * Allows modification of name, gender and age.
+     */
     public void updateStaff() {
         try {
             System.out.print("Enter staff ID to update: ");
@@ -74,6 +94,10 @@ public class AdminController {
         }
     }
 
+    /**
+     * Removes a staff member from the system.
+     * Prevents removal of administrative staff.
+     */
     public void removeStaff() {
         try {
             System.out.print("Enter staff ID to remove: ");
@@ -92,6 +116,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Collects details for a new staff member through user input.
+     *
+     * @return Staff object with collected details, or null if input is invalid
+     */
     private Staff collectStaffDetails() {
         try {
             System.out.print("ID: ");
@@ -131,6 +160,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Updates details for an existing staff member through user input.
+     *
+     * @param existingStaff The staff member to update
+     */
     private void collectStaffDetails(Staff existingStaff) {
         try {
             System.out.print("New Name (leave blank to keep current): ");
@@ -148,6 +182,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Retrieves and displays all appointments in the system.
+     *
+     * @return HashMap containing all appointments, with appointment IDs as keys
+     */
     public HashMap<String, Appointment> viewAllAppointments() {
         try {
             System.out.println("These are all the appointments:");

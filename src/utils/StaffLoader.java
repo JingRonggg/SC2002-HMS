@@ -9,15 +9,39 @@ import src.model.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException; 
+import java.io.IOException;
 
+/**
+ * A utility class for loading staff data from a CSV file into the system.
+ */
 public class StaffLoader {
+    /** The path to the CSV file containing staff data */
     private String filePath;
     
+    /**
+     * Constructs a new StaffLoader with the specified file path.
+     *
+     * @param filePath The path to the CSV file containing staff data
+     */
     public StaffLoader(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads staff data from the CSV file and creates corresponding User objects.
+     * The CSV file should have the following format:
+     * staffID,staffName,staffRole,gender,age,password,[hashedPassword]
+     * The first line (header) is skipped during processing.
+     * 
+     * Supported staff roles are:
+     * - ADMINISTRATOR
+     * - DOCTOR
+     * - PHARMACIST
+     * - NURSE
+     * 
+     * If a hashed password is not provided in the CSV, the password will be hashed
+     * before storing.
+     */
     public void loadStaff() {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;

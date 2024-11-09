@@ -6,13 +6,29 @@ import src.interfaces.IMedicineRepository;
 import src.model.MedicationStorage;
 import src.enums.MedicationStorageStatus;
 
+/**
+ * Repository class for managing medication inventory and stock levels.
+ * Implements the IMedicineRepository interface.
+ */
 public class MedicineRepository implements IMedicineRepository {
+    /** Map storing medication details keyed by medicine name */
     protected static HashMap<String, MedicationStorage> medicationInventory = new HashMap<>();
+    /** Map storing current stock levels keyed by medicine name */
     protected static HashMap<String, Integer> stockInventory = new HashMap<>();
+    /** Map storing low stock alert thresholds keyed by medicine name */
     protected static HashMap<String, Integer> stockAlertInventory = new HashMap<>();
 
+    /**
+     * Default constructor
+     */
     public MedicineRepository() {}
 
+    /**
+     * Adds a new medicine to the inventory with initial stock and alert levels
+     * @param medicationStorage The medication storage object containing medicine details
+     * @param stock Initial stock quantity
+     * @param lowStockAlert Threshold for low stock alerts
+     */
     public void addMedicine(MedicationStorage medicationStorage, int stock, int lowStockAlert) {
         String medicineName = medicationStorage.getMedicineName();
         medicationInventory.put(medicineName, medicationStorage);
@@ -20,18 +36,37 @@ public class MedicineRepository implements IMedicineRepository {
         stockAlertInventory.put(medicineName, lowStockAlert);
     }
 
+    /**
+     * Retrieves medication details by name
+     * @param medicineName Name of the medicine to retrieve
+     * @return MedicationStorage object if found, null otherwise
+     */
     public MedicationStorage getMedicine(String medicineName) {
         return medicationInventory.get(medicineName);
     }
 
+    /**
+     * Gets all medicines in the inventory
+     * @return HashMap containing all medication storage objects
+     */
     public HashMap<String, MedicationStorage> getAllMedicines() {
         return medicationInventory;
     }
 
+    /**
+     * Gets current stock level for a medicine
+     * @param medicineName Name of the medicine
+     * @return Current stock quantity, 0 if medicine not found
+     */
     public int getStock(String medicineName) {
         return stockInventory.getOrDefault(medicineName, 0);
     }
 
+    /**
+     * Updates stock level for a medicine
+     * @param medicineName Name of the medicine
+     * @param stock New stock quantity
+     */
     public void setStock(String medicineName, int stock) {
         if (medicationInventory.containsKey(medicineName)) {
             stockInventory.put(medicineName, stock);
@@ -41,10 +76,20 @@ public class MedicineRepository implements IMedicineRepository {
         }
     }
 
+    /**
+     * Gets low stock alert threshold for a medicine
+     * @param medicineName Name of the medicine
+     * @return Alert threshold quantity, 0 if medicine not found
+     */
     public int getStockAlert(String medicineName) {
         return stockAlertInventory.getOrDefault(medicineName, 0);
     }
 
+    /**
+     * Updates low stock alert threshold for a medicine
+     * @param medicineName Name of the medicine
+     * @param lowStockAlert New alert threshold quantity
+     */
     public void setStockAlert(String medicineName, int lowStockAlert) {
         if (medicationInventory.containsKey(medicineName)) {
             stockAlertInventory.put(medicineName, lowStockAlert);
@@ -54,6 +99,10 @@ public class MedicineRepository implements IMedicineRepository {
         }
     }
 
+    /**
+     * Checks inventory for medicines below their low stock threshold
+     * Prints alerts for medicines with stock below their alert threshold
+     */
     public void checkLowStock() {
         boolean alertGenerated = false;  
         for (String medicineName : medicationInventory.keySet()) {
@@ -69,6 +118,11 @@ public class MedicineRepository implements IMedicineRepository {
         if (alertGenerated){System.out.println("====================================================\n");}
     }
 
+    /**
+     * Updates the status of a medicine
+     * @param medicineName Name of the medicine
+     * @param status New status to set
+     */
     public void updateStatus(String medicineName, String status){
         MedicationStorage medication = medicationInventory.get(medicineName);
         if (medication != null) {
@@ -79,6 +133,10 @@ public class MedicineRepository implements IMedicineRepository {
         }
     }
 
+    /**
+     * Checks and prints medicines that need replenishment
+     * Identifies medicines with REQUESTED status
+     */
     public void checkReplenishReq() {
         for (MedicationStorage medication : medicationInventory.values()) {
             if (MedicationStorageStatus.REQUESTED == medication.getStatus()) {
@@ -87,6 +145,10 @@ public class MedicineRepository implements IMedicineRepository {
         }
     }
 
+    /**
+     * Removes a medicine from the inventory
+     * @param medicineName Name of the medicine to delete
+     */
     public void deleteMedicine(String medicineName){
         if (medicationInventory.containsKey(medicineName)) {
             // Remove medicine from all related inventories
@@ -99,6 +161,12 @@ public class MedicineRepository implements IMedicineRepository {
         }
     }
 
+    /**
+     * Updates stock and alert levels for an existing medicine
+     * @param medicineName Name of the medicine to update
+     * @param stock New stock quantity
+     * @param lowStockAlert New low stock alert threshold
+     */
     public void updateMedicine(String medicineName, int stock, int lowStockAlert) {
         
         if (medicationInventory.containsKey(medicineName)) {
@@ -111,4 +179,3 @@ public class MedicineRepository implements IMedicineRepository {
     }
 
 }
-

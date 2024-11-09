@@ -24,8 +24,20 @@ import src.repository.PatientRepository;
 import src.repository.NurseRepository;
 import java.util.Scanner;
 
+/**
+ * Main class that serves as the entry point for the Hospital Management System.
+ * This class initializes all necessary controllers and repositories, manages user authentication,
+ * and handles the main application loop.
+ */
 public class Main {
     
+    /**
+     * The main method that starts the application.
+     * It initializes all required repositories and controllers, manages the login process,
+     * and maintains the main application loop.
+     *
+     * @param args Command line arguments (not used)
+     */
     public static void main(String[] args) {
         try {
             UserRepository userRepository = new UserRepository();
@@ -81,6 +93,11 @@ public class Main {
         }
     }
 
+    /**
+     * Saves all current data to CSV files and exits the application.
+     * This method ensures that all data is properly persisted before the application closes.
+     * It saves appointments, medicines, staff information, and patient records.
+     */
     public static void saveAndExit() {
         AppointmentRepository appointmentRepo = new AppointmentRepository();
         MedicineRepository medicineRepository = new MedicineRepository();

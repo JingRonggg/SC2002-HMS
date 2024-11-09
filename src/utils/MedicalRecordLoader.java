@@ -16,8 +16,33 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Utility class for loading medical records from a CSV file.
+ */
 public class MedicalRecordLoader {
 
+    /**
+     * Loads medical records from a CSV file and initializes them in the system.
+     * This method performs two passes over the CSV file:
+     * 1. First pass collects existing medical record IDs to initialize the ID generator
+     * 2. Second pass creates and loads the actual medical record objects
+     * 
+     * The CSV file is expected to have the following format:
+     * medicalRecordID,doctorID,patientID,conditionName,diagnosisDate,treatmentName,
+     * treatmentDate,treatmentDetails,medicineName,quantity,medicineStatus
+     * 
+     * Each medical record entry must contain at least 11 fields to be processed successfully.
+     * 
+     * The method handles:
+     * - Loading and parsing of CSV data
+     * - Creation of PastDiagnosis objects
+     * - Creation of Treatments objects
+     * - Creation of PrescribeMedications objects
+     * - Assembly of complete MedicalRecord objects
+     * - Adding records to the MedicalRecordController
+     * 
+     * Any errors during file reading or data processing are caught and logged to System.out.
+     */
     public static void loadMedicalRecords() {
         Set<String> existingIDs = new HashSet<>();
 

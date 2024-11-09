@@ -7,15 +7,37 @@ import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
+/**
+ * Boundary class that handles the administrator interface and menu options
+ */
 public class AdministratorBoundary {
+    /** Controller for administrator-related operations */
     private final AdminController adminController;
+    
+    /** Controller for medicine-related operations */
     private final MedicineController medicineController;
 
+    /**
+     * Constructs an AdministratorBoundary with the specified controllers
+     * @param adminController The controller handling administrator operations
+     * @param medicineController The controller handling medicine operations
+     */
     public AdministratorBoundary(AdminController adminController, MedicineController medicineController) {
         this.adminController = adminController;
         this.medicineController = medicineController;
     }
 
+    /**
+     * Displays the administrator menu and handles user input for various administrative operations
+     * Available options include:
+     * 1. Managing hospital staff
+     * 2. Viewing appointment details
+     * 3. Managing medication inventory
+     * 4. Approving replenishment requests
+     * 5. Logging out
+     * 
+     * @param scanner Scanner object for reading user input
+     */
     public void displayAdministratorMenu(Scanner scanner) {
         while (true) {
             System.out.println("Administrator Menu:");

@@ -14,12 +14,28 @@ import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
+/**
+ * Controller class that handles doctor operations including managing appointments, medical records and patient data.
+ * This class serves as the main interface between doctors and the hospital system.
+ */
 public class DoctorController {
+    /** Repository interface for managing appointment data */
     private final IAppointmentRepository appointmentRepository;
+    /** Repository interface for managing admin/staff data */
     private final IAdminRepository adminRepository;
+    /** Repository interface for managing medical records */
     private final IMedicalRecordRepository medicalRecordRepository;
+    /** Repository interface for managing patient data */
     private final IPatientRepository patientRepository;
 
+    /**
+     * Constructs a new DoctorController with the specified repositories.
+     *
+     * @param appointmentRepository Repository for managing appointments
+     * @param adminRepository Repository for managing admin data
+     * @param medicalRecordRepository Repository for managing medical records
+     * @param patientRepository Repository for managing patient data
+     */
     public DoctorController(IAppointmentRepository appointmentRepository, IAdminRepository adminRepository, IMedicalRecordRepository medicalRecordRepository, IPatientRepository patientRepository) {
         this.appointmentRepository = appointmentRepository;
         this.adminRepository = adminRepository;
@@ -27,10 +43,23 @@ public class DoctorController {
         this.patientRepository = patientRepository;
     }
 
+    /**
+     * Handles exceptions by printing an error message.
+     *
+     * @param operation Description of the operation that failed
+     * @param e The exception that occurred
+     */
     private void handleException(String operation, Exception e) {
         System.out.println("An error occurred while " + operation + e.getMessage());
     }
 
+    /**
+     * Retrieves medical records for a specific doctor and patient.
+     *
+     * @param doctorID The ID of the doctor
+     * @param patientID The ID of the patient
+     * @return HashMap containing medical records
+     */
     public HashMap<String, MedicalRecord> viewMedicalRecordsUnderDoctor(String doctorID, String patientID) {
         try {
             return medicalRecordRepository.getMedicalRecordsByDoctorAndPatientID(doctorID,patientID);
@@ -40,6 +69,11 @@ public class DoctorController {
         }
     }
 
+    /**
+     * Retrieves all patients in the system.
+     *
+     * @return Collection of all patients
+     */
     public Collection<Patient> viewAllPatients() {
         try {
             return patientRepository.getAllPatients();
@@ -49,6 +83,14 @@ public class DoctorController {
         }
     }
 
+    /**
+     * Updates an existing medical record with new information.
+     *
+     * @param medicalRecordID ID of the medical record to update
+     * @param newDiagnosis New diagnosis information
+     * @param newTreatment New treatment information
+     * @param newPrescribeMedications List of new prescribed medications
+     */
     public void updatePatientMedicalRecords(String medicalRecordID, PastDiagnosis newDiagnosis, Treatments newTreatment, List<PrescribeMedications> newPrescribeMedications) {
         try {
             MedicalRecord medicalRecord = medicalRecordRepository.getMedicalRecordByID(medicalRecordID);
@@ -67,6 +109,12 @@ public class DoctorController {
         }
     }
 
+    /**
+     * Checks if a medical record exists.
+     *
+     * @param medicalRecordID ID of the medical record to check
+     * @return true if record exists, false otherwise
+     */
     public boolean medicalRecordExists(String medicalRecordID) {
         try {
             return medicalRecordRepository.getMedicalRecordByID(medicalRecordID) != null;
@@ -76,6 +124,13 @@ public class DoctorController {
         }
     }
 
+    /**
+     * Views a doctor's schedule for a specific date.
+     *
+     * @param doctorID ID of the doctor
+     * @param date Date to check schedule for
+     * @return ArrayList of available appointment slots
+     */
     public ArrayList<Appointment> viewPersonalSchedule(String doctorID, LocalDate date) {
         try {
             viewUpComingAppointments(doctorID);
@@ -99,6 +154,14 @@ public class DoctorController {
         return null;
     }
 
+    /**
+     * Sets a doctor's availability for appointments.
+     *
+     * @param doctorID ID of the doctor
+     * @param date Date to set availability for
+     * @param startTime Start time of availability
+     * @param endTime End time of availability
+     */
     public void setAvailabilityForAppointments(String doctorID, LocalDate date, LocalTime startTime, LocalTime endTime) {
         try {
             String doctorName = adminRepository.getDoctorName(doctorID);
@@ -115,6 +178,12 @@ public class DoctorController {
         }
     }
 
+    /**
+     * Processes the outcome of an appointment request.
+     *
+     * @param appointmentID ID of the appointment
+     * @param status New status for the appointment
+     */
     public void appointmentRequestOutcome(String appointmentID, String status) {
         try {
             Appointment appointment = appointmentRepository.getSpecificAppointment(appointmentID);
@@ -143,6 +212,12 @@ public class DoctorController {
         }
     }
 
+    /**
+     * Retrieves all upcoming confirmed appointments for a doctor.
+     *
+     * @param doctorID ID of the doctor
+     * @return HashMap of confirmed appointments
+     */
     public HashMap<String, Appointment> viewUpComingAppointments(String doctorID) {
         try {
             return appointmentRepository.getAllConfirmedAppointment(doctorID);
@@ -152,6 +227,14 @@ public class DoctorController {
         }
     }
 
+    /**
+     * Records the outcome of an appointment.
+     *
+     * @param appointmentID ID of the appointment
+     * @param doctorID ID of the doctor
+     * @param consultationNotes Notes from the consultation
+     * @return true if recording successful, false otherwise
+     */
     public boolean recordAppointmentOutcome(String appointmentID, String doctorID, String consultationNotes) {
         try {
             Appointment appointment = appointmentRepository.getSpecificAppointment(appointmentID);
@@ -176,6 +259,15 @@ public class DoctorController {
         }
     }
 
+    /**
+     * Creates a new medical record.
+     *
+     * @param doctorID ID of the doctor creating the record
+     * @param patientID ID of the patient
+     * @param pastDiagnosis Past diagnosis information
+     * @param treatments Treatment information
+     * @param newPrescribeMedications List of prescribed medications
+     */
     public void createNewMedicalRecord (String doctorID, String patientID, PastDiagnosis pastDiagnosis, Treatments treatments, List<PrescribeMedications> newPrescribeMedications) {
         try {
             medicalRecordRepository.createMedicalRecord(doctorID, patientID, pastDiagnosis, treatments, newPrescribeMedications);
@@ -184,6 +276,12 @@ public class DoctorController {
         }
     }
 
+    /**
+     * Retrieves all pending appointments for a doctor.
+     *
+     * @param doctorID ID of the doctor
+     * @return HashMap of pending appointments
+     */
     public HashMap<String, Appointment> viewPendingAppointments(String doctorID) {
         try {
             return appointmentRepository.getAllPendingAppointment(doctorID);
@@ -193,6 +291,12 @@ public class DoctorController {
         }
     }
 
+    /**
+     * Finds a specific appointment by ID.
+     *
+     * @param appointmentID ID of the appointment to find
+     * @return Appointment object if found, null otherwise
+     */
     public Appointment findAppointment(String appointmentID) {
         try {
             return appointmentRepository.getSpecificAppointment(appointmentID);

@@ -12,12 +12,26 @@ import src.utils.MedicationLoader;
 
 import java.util.*;
 
-
+/**
+ * Controller class that manages medicine and pharmacy operations including inventory management and medication dispensing.
+ * This class serves as the main interface between the pharmacy system and medicine data.
+ */
 public class MedicineController {
+    /** Repository interface for managing medicine inventory */
     private static IMedicineRepository medicineRepo;
+    /** Repository interface for managing medical records */
     private static IMedicalRecordRepository medicalRecordRepo;
+    /** Repository interface for managing appointments */
     private static IAppointmentRepository appointmentRepo;
 
+    /**
+     * Constructs a new MedicineController with the specified repositories.
+     * Initializes the controller and loads existing medications.
+     *
+     * @param medicineRepo Repository for managing medicine inventory
+     * @param medicalRecordRepo Repository for managing medical records
+     * @param appointmentRepo Repository for managing appointments
+     */
     public MedicineController (IMedicineRepository medicineRepo, IMedicalRecordRepository medicalRecordRepo, IAppointmentRepository appointmentRepo) {
         this.medicineRepo = medicineRepo;
         loadMedications();
@@ -25,13 +39,20 @@ public class MedicineController {
         this.appointmentRepo = appointmentRepo;
     }
 
+    /**
+     * Loads existing medications from a CSV file into the medicine repository.
+     */
     private void loadMedications() {
         String medicineFilePath = "./data/Medicine_List.csv";
         MedicationLoader medicationLoader = new MedicationLoader(medicineFilePath);
         medicationLoader.loadMedication();
     }
 
-    // Get all pending_medication status
+    /**
+     * Retrieves all appointments with pending medication status.
+     *
+     * @return HashMap containing appointments with pending medication status
+     */
     public HashMap<String, Appointment> getAllPendingMedicationStatusAppointment() {
         HashMap<String, Appointment> appointments = new HashMap<>();
         try {
@@ -55,6 +76,11 @@ public class MedicineController {
         return appointments;
     }
 
+    /**
+     * Retrieves all medical records with undispensed medications.
+     *
+     * @return HashMap containing medical records with undispensed medications
+     */
     public HashMap<String, MedicalRecord> getAllUndispensedMedicalRecord() {
         try{
             return new HashMap<>(medicalRecordRepo.getAllUndispensedMedicalRecord());
@@ -63,16 +89,31 @@ public class MedicineController {
         }
     }
 
-    // get all undispensed medication medical record
+    /**
+     * Retrieves all pending medical records for a specific patient and doctor.
+     *
+     * @param patientID The ID of the patient
+     * @param doctorID The ID of the doctor
+     * @return HashMap containing pending medical records
+     */
     public HashMap<String, MedicalRecord> getAllPendingMedicalRecord(String patientID, String doctorID) {
         return medicalRecordRepo.readUndispensedMedicalRecord(patientID, doctorID);
     }
 
-    // Modified addMedicine method to handle stock and low stock alert
+    /**
+     * Adds a new medicine to the inventory with specified stock levels and alerts.
+     *
+     * @param medicationStorage The medication to add
+     * @param stock Initial stock quantity
+     * @param lowStockAlert Threshold for low stock warning
+     */
     public static void addMedicine(MedicationStorage medicationStorage, int stock, int lowStockAlert) {
         medicineRepo.addMedicine(medicationStorage, stock, lowStockAlert);
     }
 
+    /**
+     * Displays all medicines in the inventory with their current stock levels and status.
+     */
     public void displayAllMedicines() {
         System.out.println("Medication Inventory:");
         System.out.println("===============================================================");
@@ -94,6 +135,9 @@ public class MedicineController {
         medicineRepo.checkLowStock();
     }
 
+    /**
+     * Handles medicine replenishment requests when stock is low.
+     */
     public void reqMedicine() {
         System.out.print("Enter the medicine name you would like to replenish: ");
         Scanner sc = new Scanner(System.in);
@@ -113,6 +157,9 @@ public class MedicineController {
         }
     }
 
+    /**
+     * Processes medicine replenishment by updating stock levels.
+     */
     public void replenishMedicine() {
         // Check for any replenishment requests 
         medicineRepo.checkReplenishReq();
@@ -137,6 +184,9 @@ public class MedicineController {
         }
     }
 
+    /**
+     * Adds a new medicine to the inventory with user input for details.
+     */
     public void addNewMedicine(){
         Scanner sc = new Scanner(System.in);
         System.out.print("Input medicine name to add: ");
@@ -161,10 +211,12 @@ public class MedicineController {
             } else {
                 System.out.println(medicineName + " is already in inventory!\n");
             }
-}
-
+        }
     }
 
+    /**
+     * Removes a medicine from the inventory.
+     */
     public void removeMedicine(){
         if (medicineRepo.getAllMedicines().isEmpty()) {
             System.out.println("Inventory is empty. Cannot remove any medicine.\n");
@@ -181,6 +233,9 @@ public class MedicineController {
         }
     }
 
+    /**
+     * Updates stock levels and alerts for an existing medicine.
+     */
     public void updateMedicine(){
         if (medicineRepo.getAllMedicines().isEmpty()) {
             System.out.println("Inventory is empty. Cannot update status.\n");
@@ -210,6 +265,11 @@ public class MedicineController {
         }
     }
 
+    /**
+     * Dispenses medications for a specific medical record, updating stock levels and prescription status.
+     *
+     * @param medicalRecordID The ID of the medical record containing prescriptions to dispense
+     */
     public void dispenseMedicine(String medicalRecordID) {
         MedicalRecord medicalRecord = medicalRecordRepo.getMedicalRecordByID(medicalRecordID);
         String doctorID = medicalRecord.getDoctorID();

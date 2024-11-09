@@ -4,7 +4,17 @@ import src.model.Patient;
 
 import java.util.Collection;
 
+/**
+ * A utility class for printing patient information to the console.
+ */
 public class PatientPrinter {
+    /**
+     * Prints details of a collection of patients to the console in a formatted manner.
+     * Each patient's information is displayed with a numbered header and includes:
+     * name, hospital ID, date of birth, gender, and blood type.
+     *
+     * @param patient A collection of Patient objects to be printed
+     */
     public static void patientPrinter(Collection<Patient> patient) {
         int count = 1;
         for (Patient patients : patient) {
@@ -19,4 +29,4 @@ public class PatientPrinter {
             System.out.println("====================================================");
         }
     }
-    }
+}

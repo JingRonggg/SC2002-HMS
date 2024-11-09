@@ -4,7 +4,16 @@ import src.controller.AdminController;
 
 import java.util.Scanner;
 
+/**
+ * Boundary class that handles the staff management user interface
+ */
 public class ManageStaffBoundary {
+    /**
+     * Displays the staff management menu and handles user input
+     * 
+     * @param adminController The controller handling admin operations
+     * @param scanner Scanner object for reading user input
+     */
     public static void displayMenu(AdminController adminController, Scanner scanner) {
         while (true) {
             System.out.println("\n--- Manage Staff ---");
