@@ -29,9 +29,9 @@ public class AppointmentLoader {
      * - Initializes the AppointmentIDGenerator with existing IDs
      * - Creates Appointment objects from CSV data
      * - Adds appointments to the AppointmentController
-     * 
-     * @throws IOException if there are issues reading the CSV file
-     * @throws Exception if there are issues processing the appointment data
+     *
+     * If any errors occur during file reading or data processing, appropriate error messages
+     * are printed to the console.
      */
     public void loadAppointments() {
         Set<String> existingIDs = new HashSet<>();
