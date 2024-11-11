@@ -134,24 +134,28 @@ public class DoctorBoundary {
                             AppointmentPrinter.printAppointmentDetails(doctorController.viewPendingAppointments(doctorID));
                             System.out.println("Which Appointment do you want to accept/decline?");
                             String appointmentID = scanner.nextLine();
-                            System.out.println("Press 1 to accept, Press 2 to decline");
-                            String outcome = scanner.nextLine();
-                            if (outcome.equals("1")) {
-                                doctorController.appointmentRequestOutcome(appointmentID, "Confirmed");
-                                System.out.println("Appointment accepted!");
-                                Appointment appointment = doctorController.findAppointment(appointmentID);
-                                HashMap<String, Appointment> appointmentMap = new HashMap<>();
-                                appointmentMap.put(appointmentID, appointment);
-                                AppointmentPrinter.printAppointmentDetails(appointmentMap);
-                            } else if (outcome.equals("2")) {
-                                doctorController.appointmentRequestOutcome(appointmentID, "Cancelled");
-                                System.out.println("Appointment declined!");
-                                Appointment appointment = doctorController.findAppointment(appointmentID);
-                                HashMap<String, Appointment> appointmentMap = new HashMap<>();
-                                appointmentMap.put(appointmentID, appointment);
-                                AppointmentPrinter.printAppointmentDetails(appointmentMap);
+                            if(doctorController.findAppointment(appointmentID).getDoctorID().equals(doctorID)){
+                                System.out.println("Press 1 to accept, Press 2 to decline");
+                                String outcome = scanner.nextLine();
+                                if (outcome.equals("1")) {
+                                    doctorController.appointmentRequestOutcome(appointmentID, "Confirmed");
+                                    System.out.println("Appointment accepted!");
+                                    Appointment appointment = doctorController.findAppointment(appointmentID);
+                                    HashMap<String, Appointment> appointmentMap = new HashMap<>();
+                                    appointmentMap.put(appointmentID, appointment);
+                                    AppointmentPrinter.printAppointmentDetails(appointmentMap);
+                                } else if (outcome.equals("2")) {
+                                    doctorController.appointmentRequestOutcome(appointmentID, "Cancelled");
+                                    System.out.println("Appointment declined!");
+                                    Appointment appointment = doctorController.findAppointment(appointmentID);
+                                    HashMap<String, Appointment> appointmentMap = new HashMap<>();
+                                    appointmentMap.put(appointmentID, appointment);
+                                    AppointmentPrinter.printAppointmentDetails(appointmentMap);
+                                } else {
+                                    System.out.println("Invalid outcome");
+                                }
                             } else {
-                                System.out.println("Invalid outcome");
+                                System.out.println("This is not your appointment");
                             }
                         }
                         break;

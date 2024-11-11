@@ -280,4 +280,8 @@ public class PatientController {
         }
         return true;
     }
+
+    public Appointment getAppointment(String appointmentID) {
+        return appointmentRepository.getSpecificAppointment(appointmentID);
+    }
 }

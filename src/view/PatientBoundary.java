@@ -118,14 +118,18 @@ public class PatientBoundary {
                                 System.out.println("Appointment does not exist.");
                                 break;
                             }
-                            System.out.print("Enter a new date (yyyy-MM-dd): ");
-                            date = scanner.nextLine();
-                            System.out.println("Enter a new time (HH:mm): ");
-                            time = scanner.nextLine();
-                            
-                            LocalDate localDate = LocalDate.parse(date, formatter);
-                            LocalTime startTime = LocalTime.parse(time);
-                            patientController.rescheduleAppointment(appointmentID, localDate, startTime);
+                            if(patientController.getAppointment(appointmentID).getPatientID().equals(hospitalID)){
+                                System.out.print("Enter a new date (yyyy-MM-dd): ");
+                                date = scanner.nextLine();
+                                System.out.println("Enter a new time (HH:mm): ");
+                                time = scanner.nextLine();
+                                
+                                LocalDate localDate = LocalDate.parse(date, formatter);
+                                LocalTime startTime = LocalTime.parse(time);
+                                patientController.rescheduleAppointment(appointmentID, localDate, startTime);
+                            } else {
+                                System.out.println("This is not your appointment");
+                            }
                         } catch (DateTimeParseException e) {
                             System.out.println("Invalid date or time format. Please use yyyy-MM-dd for date and HH:mm for time.");
                         } catch (Exception e) {
@@ -136,7 +140,11 @@ public class PatientBoundary {
                         try {
                             System.out.println("Enter the appointment ID that you want to cancel: ");
                             appointmentID = scanner.nextLine();
-                            patientController.cancelAppointment(appointmentID);
+                            if(patientController.getAppointment(appointmentID).getPatientID().equals(hospitalID)){
+                                patientController.cancelAppointment(appointmentID);
+                            } else {
+                                System.out.println("This is not your appointment");
+                            }
                         } catch (Exception e) {
                             System.out.println("Error canceling appointment: " + e.getMessage());
                         }
