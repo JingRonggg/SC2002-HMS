@@ -64,7 +64,6 @@ public class MedicineController {
             for (Map.Entry<String, Appointment> entry : patientPendingMedicationAppointments.entrySet()) {
                 String appointmentID = entry.getKey();
                 Appointment appointment = entry.getValue();
-                System.out.println(appointment);
                 // Extract doctorID and patientID from the appointment
                 String doctorID = appointment.getDoctorID();
                 String patientID = appointment.getPatientID();

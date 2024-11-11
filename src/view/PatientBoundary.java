@@ -126,7 +126,7 @@ public class PatientBoundary {
                                 
                                 LocalDate localDate = LocalDate.parse(date, formatter);
                                 LocalTime startTime = LocalTime.parse(time);
-                                patientController.rescheduleAppointment(appointmentID, localDate, startTime);
+                                System.out.println(patientController.rescheduleAppointment(appointmentID, localDate, startTime));
                             } else {
                                 System.out.println("This is not your appointment");
                             }
@@ -140,9 +140,10 @@ public class PatientBoundary {
                         try {
                             System.out.println("Enter the appointment ID that you want to cancel: ");
                             appointmentID = scanner.nextLine();
-                            if(patientController.getAppointment(appointmentID).getPatientID().equals(hospitalID)){
-                                patientController.cancelAppointment(appointmentID);
-                            } else {
+                            if (patientController.getAppointment(appointmentID) != null && patientController.getAppointment(appointmentID).getPatientID() != null && patientController.getAppointment(appointmentID).getPatientID().equals(hospitalID)) {
+                                System.out.println(patientController.cancelAppointment(appointmentID));
+                            }
+                            else {
                                 System.out.println("This is not your appointment");
                             }
                         } catch (Exception e) {
