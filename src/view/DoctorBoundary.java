@@ -9,10 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
@@ -141,8 +138,18 @@ public class DoctorBoundary {
                             String outcome = scanner.nextLine();
                             if (outcome.equals("1")) {
                                 doctorController.appointmentRequestOutcome(appointmentID, "Confirmed");
+                                System.out.println("Appointment accepted!");
+                                Appointment appointment = doctorController.findAppointment(appointmentID);
+                                HashMap<String, Appointment> appointmentMap = new HashMap<>();
+                                appointmentMap.put(appointmentID, appointment);
+                                AppointmentPrinter.printAppointmentDetails(appointmentMap);
                             } else if (outcome.equals("2")) {
                                 doctorController.appointmentRequestOutcome(appointmentID, "Cancelled");
+                                System.out.println("Appointment declined!");
+                                Appointment appointment = doctorController.findAppointment(appointmentID);
+                                HashMap<String, Appointment> appointmentMap = new HashMap<>();
+                                appointmentMap.put(appointmentID, appointment);
+                                AppointmentPrinter.printAppointmentDetails(appointmentMap);
                             } else {
                                 System.out.println("Invalid outcome");
                             }
