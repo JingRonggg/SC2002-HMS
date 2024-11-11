@@ -1,8 +1,8 @@
 package src.controller;
 
+import src.interfaces.IAppointmentRepository;
 import src.model.Appointment;
 import src.repository.AppointmentRepository;
-import src.interfaces.IAppointmentRepository;
 import src.utils.AppointmentLoader;
 
 /**

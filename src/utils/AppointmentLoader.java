@@ -1,8 +1,9 @@
 package src.utils;
 
+import src.controller.AppointmentController;
 import src.enums.AppointmentStatus;
 import src.model.Appointment;
-import src.controller.AppointmentController; // Assuming you have this package
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

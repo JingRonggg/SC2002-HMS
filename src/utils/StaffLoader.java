@@ -1,11 +1,7 @@
 package src.utils;
 
 import src.controller.UserController;
-import src.model.Administrator;
-import src.model.Doctor;
-import src.model.Nurse;
-import src.model.Pharmacist;
-import src.model.User;
+import src.model.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

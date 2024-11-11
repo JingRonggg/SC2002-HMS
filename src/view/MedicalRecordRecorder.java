@@ -1,16 +1,16 @@
 package src.view;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 import src.enums.PrescribeMedicationsStatus;
 import src.model.MedicalRecord;
 import src.model.PastDiagnosis;
 import src.model.PrescribeMedications;
 import src.model.Treatments;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 

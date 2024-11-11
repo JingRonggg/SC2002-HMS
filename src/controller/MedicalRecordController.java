@@ -1,11 +1,8 @@
 package src.controller;
 
 import src.interfaces.IMedicalRecordRepository;
-import src.repository.MedicalRecordRepository;
 import src.model.MedicalRecord;
-import src.utils.AppointmentLoader;
 import src.utils.MedicalRecordLoader;
-import java.util.HashMap;
 
 /**
  * Controller class that manages medical record operations including loading and adding records.

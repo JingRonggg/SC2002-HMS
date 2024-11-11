@@ -1,8 +1,6 @@
 package src.view;
 
 import src.controller.NurseController;
-import src.utils.InputValidator;
-import src.utils.PatientIDGenerator;
 
 import java.util.Scanner;
 

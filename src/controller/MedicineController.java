@@ -1,16 +1,19 @@
 package src.controller;
 
 import src.enums.PrescribeMedicationsStatus;
-import src.model.Appointment;
 import src.interfaces.IAppointmentRepository;
+import src.interfaces.IMedicalRecordRepository;
+import src.interfaces.IMedicineRepository;
+import src.model.Appointment;
 import src.model.MedicalRecord;
 import src.model.MedicationStorage;
 import src.model.PrescribeMedications;
-import src.interfaces.IMedicalRecordRepository;
-import src.interfaces.IMedicineRepository;
 import src.utils.MedicationLoader;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.InputMismatchException;
+import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Controller class that manages medicine and pharmacy operations including inventory management and medication dispensing.

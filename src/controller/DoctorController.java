@@ -1,18 +1,15 @@
 package src.controller;
 
 import src.enums.AppointmentStatus;
-import src.model.Appointment;
-import src.interfaces.IAppointmentRepository;
-import src.model.*;
 import src.interfaces.IAdminRepository;
+import src.interfaces.IAppointmentRepository;
 import src.interfaces.IMedicalRecordRepository;
 import src.interfaces.IPatientRepository;
+import src.model.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
-
-import static java.lang.Integer.parseInt;
 
 /**
  * Controller class that handles doctor operations including managing appointments, medical records and patient data.

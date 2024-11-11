@@ -1,15 +1,13 @@
 package src.view;
 
 import src.controller.PatientController;
-import src.model.*;
+import src.model.Appointment;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;

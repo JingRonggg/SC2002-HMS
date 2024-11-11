@@ -1,7 +1,7 @@
 package src.utils;
 
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Utility class for generating unique medical record IDs.

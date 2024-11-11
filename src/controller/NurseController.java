@@ -2,14 +2,8 @@ package src.controller;
 
 import src.interfaces.INurseRepository;
 import src.model.Patient;
-import src.model.Appointment;
-import src.enums.AppointmentStatus;
-import src.repository.NurseRepository;
 import src.repository.AppointmentRepository;
-
-import java.time.Duration;
-import java.util.Collection;
-import java.util.Collections;
+import src.repository.NurseRepository;
 
 /**
  * Controller class that manages nurse operations including patient registration and validation.

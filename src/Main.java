@@ -1,27 +1,16 @@
 package src;
 
-import src.repository.AppointmentRepository;
 import src.controller.*;
-import src.repository.MedicalRecordRepository;
-import src.repository.MedicineRepository;
-import src.repository.UserRepository;
+import src.interfaces.IAdminRepository;
+import src.interfaces.IMedicalRecordRepository;
+import src.interfaces.IPatientRepository;
+import src.model.User;
+import src.repository.*;
 import src.utils.MedicineCsvExporter;
 import src.utils.PatientCsvExporter;
 import src.utils.StaffCsvExporter;
 import src.view.MainMenuBoundary;
-import src.controller.MedicineController;
-import src.controller.AuthenticationController;
-import src.controller.LoginController;
-import src.controller.AdminController;
-import src.controller.PatientController;
 
-import src.model.User;
-import src.interfaces.IAdminRepository;
-import src.interfaces.IPatientRepository;
-import src.interfaces.IMedicalRecordRepository;
-import src.repository.AdminRepository;
-import src.repository.PatientRepository;
-import src.repository.NurseRepository;
 import java.util.Scanner;
 
 /**

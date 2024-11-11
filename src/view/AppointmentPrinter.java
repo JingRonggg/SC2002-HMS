@@ -1,6 +1,7 @@
 package src.view;
 
 import src.model.Appointment;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;

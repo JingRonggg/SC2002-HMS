@@ -2,13 +2,6 @@ package src.repository;
 
 import src.interfaces.INurseRepository;
 import src.model.Patient;
-import src.model.Appointment;
-import src.model.User;
-import src.enums.AppointmentStatus;
-import java.util.*;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 /**
  * Repository class for managing nurse-related operations.

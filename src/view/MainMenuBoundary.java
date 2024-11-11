@@ -2,8 +2,6 @@ package src.view;
 
 import src.controller.*;
 import src.model.User;
-import src.controller.AdminController;
-import src.controller.MedicineController;
 
 import java.util.Scanner;
 
