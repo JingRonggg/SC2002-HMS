@@ -2,11 +2,7 @@ package src.repository;
 
 import src.enums.PrescribeMedicationsStatus;
 import src.interfaces.IMedicalRecordRepository;
-import src.model.MedicalRecord;
-import src.model.MedicalRecordWrapper;
-import src.model.PastDiagnosis;
-import src.model.PrescribeMedications;
-import src.model.Treatments;
+import src.model.*;
 import src.utils.AppointmentIDGenerator;
 import src.utils.MedicalRecordCsvExporter;
 

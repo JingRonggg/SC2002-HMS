@@ -1,15 +1,13 @@
 package src.view;
 
+import src.controller.MedicineController;
+import src.model.Appointment;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
-
-import src.controller.AdminController;
-import src.controller.MedicineController;
-import src.model.*;
 
 /**
  * Boundary class that handles the pharmacist interface and interactions

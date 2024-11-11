@@ -1,17 +1,14 @@
 package src.controller;
 
-import src.model.Appointment;
-import src.interfaces.IAppointmentRepository;
-import src.model.Administrator;
-import src.model.Doctor;
-import src.model.Pharmacist;
-import src.model.Staff;
 import src.interfaces.IAdminRepository;
+import src.interfaces.IAppointmentRepository;
+import src.model.*;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
+
+import static java.lang.Integer.parseInt;
 
 /**
  * Controller class that handles administrative operations for managing staff and appointments.
@@ -123,36 +120,61 @@ public class AdminController {
      */
     private Staff collectStaffDetails() {
         try {
-            System.out.print("ID: ");
-            String id = scanner.nextLine();
-            if (staffRepo.userExists(id)){
-                System.out.println("Staff already exists.");
-                return null;
+            // Auto-generate the ID based on role
+            System.out.print("Role (doctor/pharmacist/administrator): ");
+            String role = scanner.nextLine().trim().toLowerCase();
+    
+            String idPrefix;
+            switch (role) {
+                case "doctor":
+                    idPrefix = "D";
+                    break;
+                case "pharmacist":
+                    idPrefix = "P0";
+                    break;
+                case "administrator":
+                    idPrefix = "A";
+                    break;
+                default:
+                    System.out.println("Invalid role!");
+                    return null;
             }
-
-            System.out.print("Name: ");
-            String name = scanner.nextLine();
-
-            System.out.print("Role: (doctor/pharmacist/administrator)");
-            String role = scanner.nextLine();
-            role = role.toLowerCase();
-            role = role.substring(0, 1).toUpperCase() + role.substring(1);
-
-            if (!role.equals("Doctor") && !role.equals("Administrator") && !role.equals("Pharmacist")) {
+            try {
+                System.out.println("Enter Identification Number (PXXX) i.e XXX part:");
+                String identificationNumber = scanner.nextLine();
+                int test = parseInt(identificationNumber);
+                String id = idPrefix + String.valueOf(identificationNumber);
+                
+                if (staffRepo.userExists(id)) {
+                    System.out.println("Generated ID already exists. Please try again.");
+                    return null;
+                }
+                
+                System.out.print("Name: ");
+                String name = scanner.nextLine();
+                
+                role = role.substring(0, 1).toUpperCase() + role.substring(1); // Capitalize role
+                
+                System.out.print("Gender: ");
+                String gender = scanner.nextLine();
+                
+                System.out.print("Age: ");
+                String age = scanner.nextLine();
+                
+                // Create a new instance based on the role
+                if (role.equals("Doctor")) {
+                    return new Doctor(id, name, role, gender, age);
+                } else if (role.equals("Pharmacist")) {
+                    return new Pharmacist(id, name, role, gender, age);
+                } else {
+                    return new Administrator(id, name, role, gender, age);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid 3-digit number.");
                 return null;
-            }
-
-            System.out.print("Gender: ");
-            String gender = scanner.nextLine();
-            System.out.print("Age: ");
-            String age = scanner.nextLine();
-
-            if (role.equals("Doctor")) {
-                return new Doctor(id, name, role, gender, age);
-            } else if (role.equals("Pharmacist")) {
-                return new Pharmacist(id, name, role, gender, age);
-            } else {
-                return new Administrator(id, name, role, gender, age);
+            } catch (Exception e) {
+                System.out.println("Error in scanning identification number: " + e.getMessage());
+                return null;
             }
         } catch (Exception e) {
             System.out.println("Error collecting staff details: " + e.getMessage());

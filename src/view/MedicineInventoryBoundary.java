@@ -1,7 +1,9 @@
 package src.view;
-import java.util.Scanner;
-import java.util.InputMismatchException;
+
 import src.controller.MedicineController;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 /**
  * Boundary class for handling medicine inventory operations through a command-line interface.

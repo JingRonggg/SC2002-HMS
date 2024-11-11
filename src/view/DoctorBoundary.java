@@ -1,14 +1,18 @@
 package src.view;
 
-import src.enums.PrescribeMedicationsStatus;
 import src.controller.DoctorController;
-import src.model.*;
+import src.model.Appointment;
+import src.model.MedicalRecord;
+import src.model.Patient;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 

@@ -1,8 +1,8 @@
 package src.interfaces;
 
-import java.util.HashMap;
-
 import src.model.MedicationStorage;
+
+import java.util.HashMap;
 
 /**
  * Interface defining operations for managing medicine inventory

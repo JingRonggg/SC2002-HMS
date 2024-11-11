@@ -1,7 +1,7 @@
 package src.view;
 
-import src.controller.MedicineController;
 import src.controller.AdminController;
+import src.controller.MedicineController;
 
 import java.util.Scanner;
 

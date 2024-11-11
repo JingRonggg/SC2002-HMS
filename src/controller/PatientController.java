@@ -1,14 +1,14 @@
 package src.controller;
 
-import src.model.Appointment;
 import src.enums.AppointmentStatus;
+import src.interfaces.IAdminRepository;
 import src.interfaces.IAppointmentRepository;
+import src.interfaces.IMedicalRecordRepository;
+import src.interfaces.IPatientRepository;
+import src.model.Appointment;
 import src.model.Doctor;
 import src.model.MedicalRecord;
 import src.model.Patient;
-import src.interfaces.IAdminRepository;
-import src.interfaces.IMedicalRecordRepository;
-import src.interfaces.IPatientRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

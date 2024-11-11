@@ -1,8 +1,6 @@
 package src.interfaces;
 
 import src.model.Patient;
-import java.util.Collection;
-import java.time.Duration;
 
 /**
  * Repository interface for managing nurse-related operations in the system.

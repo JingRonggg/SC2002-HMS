@@ -1,8 +1,8 @@
 package src.repository;
 
+import src.enums.AppointmentStatus;
 import src.interfaces.IAppointmentRepository;
 import src.model.Appointment;
-import src.enums.AppointmentStatus;
 import src.model.AppointmentWrapper;
 import src.utils.AppointmentCsvExporter;
 import src.utils.AppointmentIDGenerator;

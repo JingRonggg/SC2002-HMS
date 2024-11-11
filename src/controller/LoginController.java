@@ -1,7 +1,7 @@
 package src.controller;
 
-import src.model.User;
 import src.Main;
+import src.model.User;
 
 import java.util.Scanner;
 
