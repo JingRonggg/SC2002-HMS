@@ -281,6 +281,12 @@ public class PatientController {
         return true;
     }
 
+    /**
+     * Checks if an appointment exists.
+     *
+     * @param appointmentID The unique identifier for the appointment
+     * @return Appointment object containing Appointment information
+     */
     public Appointment getAppointment(String appointmentID) {
         return appointmentRepository.getSpecificAppointment(appointmentID);
     }

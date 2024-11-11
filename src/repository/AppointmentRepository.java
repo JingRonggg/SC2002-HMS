@@ -121,7 +121,8 @@ public class AppointmentRepository implements IAppointmentRepository {
     public HashMap<String, Appointment> getScheduledPatientAppointment(String patientID) {
         return filterAppointments(appointment ->
                 appointment.getPatientID().equals(patientID) &&
-                        !appointment.getStatus().equals(AppointmentStatus.COMPLETED));
+                        !appointment.getStatus().equals(AppointmentStatus.COMPLETED) &&
+                        !appointment.getStatus().equals(AppointmentStatus.CANCELLED));
     }
 
     /**
