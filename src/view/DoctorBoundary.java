@@ -134,7 +134,7 @@ public class DoctorBoundary {
                             AppointmentPrinter.printAppointmentDetails(doctorController.viewPendingAppointments(doctorID));
                             System.out.println("Which Appointment do you want to accept/decline?");
                             String appointmentID = scanner.nextLine();
-                            if(doctorController.findAppointment(appointmentID).getDoctorID().equals(doctorID)){
+                            if(doctorController.findAppointment(appointmentID).getDoctorID().equals(doctorID) && !doctorController.findAppointment(appointmentID).getPatientID().equals("null")) {
                                 System.out.println("Press 1 to accept, Press 2 to decline");
                                 String outcome = scanner.nextLine();
                                 if (outcome.equals("1")) {

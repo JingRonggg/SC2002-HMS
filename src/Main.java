@@ -9,6 +9,7 @@ import src.repository.*;
 import src.utils.MedicineCsvExporter;
 import src.utils.PatientCsvExporter;
 import src.utils.StaffCsvExporter;
+import src.view.AppointmentPrinter;
 import src.view.MainMenuBoundary;
 
 import java.util.Scanner;
@@ -31,6 +32,7 @@ public class Main {
         try {
             UserRepository userRepository = new UserRepository();
             MedicalRecordRepository medicalRecordRepository = new MedicalRecordRepository();
+            AppointmentPrinter.setMedicalRecordRepository(medicalRecordRepository);
             MedicineRepository medicineRepository = new MedicineRepository();
             AppointmentRepository appointmentRepo = new AppointmentRepository();
             NurseRepository nurseRepo = new NurseRepository();

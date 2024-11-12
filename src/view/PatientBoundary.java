@@ -161,9 +161,9 @@ public class PatientBoundary {
                         break;
                     case 8:
                         try {
-                            System.out.println("Completed appointments found. Here is the list");
+                            System.out.println("Here is the list of the completed appointments and their respective appointment outcome record");
                             HashMap<String, Appointment> completedAppointments = patientController.viewCompletedAppointments(hospitalID);
-                            AppointmentPrinter.printScheduledAppointments(completedAppointments);
+                            AppointmentPrinter.printAppointmentDetails(completedAppointments);
                         } catch (Exception e) {
                             System.out.println("Error viewing completed appointments: " + e.getMessage());
                         }

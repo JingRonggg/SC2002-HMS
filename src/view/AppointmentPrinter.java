@@ -2,6 +2,9 @@ package src.view;
 
 import src.enums.AppointmentStatus;
 import src.model.Appointment;
+import src.model.MedicalRecord;
+import src.model.PrescribeMedications;
+import src.repository.MedicalRecordRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,6 +21,12 @@ public class AppointmentPrinter {
      * 
      * @param appointments HashMap containing appointment IDs mapped to Appointment objects
      */
+    private static MedicalRecordRepository medicalRecordRepository;
+
+    public static void setMedicalRecordRepository(MedicalRecordRepository repository) {
+        medicalRecordRepository = repository;
+    }
+
     public static void printAppointmentDetails(HashMap<String, Appointment> appointments) {
         System.out.println("------------------------------------------");
 
@@ -34,7 +43,24 @@ public class AppointmentPrinter {
             System.out.println("End Time: " + appointment.getAppointmentEndTime());
             System.out.println("Appointment status: " + appointment.getStatus());
             if (appointment.getStatus() == AppointmentStatus.COMPLETED){
-                System.out.println("Consultation notes: " + appointment.getConsultationNotes());
+                HashMap<String, MedicalRecord> medicalRecordData = medicalRecordRepository.getMedicalRecordsByDoctorAndPatientID(appointment.getDoctorID(), appointment.getPatientID());
+                for (Map.Entry<String, MedicalRecord> medicalRecordEntry : medicalRecordData.entrySet()) {
+                    String medicalRecordID = medicalRecordEntry.getKey();
+                    MedicalRecord medicalRecord = medicalRecordRepository.getMedicalRecordByID(medicalRecordID);
+                    System.out.println("--------Appointment Outcome Record--------");
+                    System.out.println("Type of Service: " + medicalRecord.getTreatments().getTreatmentName());
+                    // Print Prescribed Medications
+                    List<PrescribeMedications> medications = medicalRecord.getPrescribeMedications();
+                    if (!medications.isEmpty()) {
+                        System.out.println("Prescribed Medications:");
+                        for (PrescribeMedications medication : medications) {
+                            System.out.printf(" - %s | Status: %s %n", medication.getMedicineName(), medication.getStatus());
+                        }
+                    } else {
+                        System.out.println("Prescribed Medications: None");
+                    }
+                    System.out.println("Consultation notes: " + appointment.getConsultationNotes());
+                }
             }
             System.out.println("------------------------------------------");
         }
