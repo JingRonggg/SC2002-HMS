@@ -1,5 +1,6 @@
 package src.view;
 
+import src.enums.AppointmentStatus;
 import src.model.Appointment;
 
 import java.time.LocalDate;
@@ -26,11 +27,15 @@ public class AppointmentPrinter {
 
             System.out.println("Appointment ID: " + appointmentID);
             System.out.println("Details: ");
+            System.out.println("DoctorID: " + appointment.getDoctorID());
             System.out.println("PatientID: " + appointment.getPatientID());
             System.out.println("Date: " + appointment.getAppointmentDate());
             System.out.println("Start Time: " + appointment.getAppointmentStartTime());
             System.out.println("End Time: " + appointment.getAppointmentEndTime());
-            System.out.println("Consultation notes: " + appointment.getConsultationNotes());
+            System.out.println("Appointment status: " + appointment.getStatus());
+            if (appointment.getStatus() == AppointmentStatus.COMPLETED){
+                System.out.println("Consultation notes: " + appointment.getConsultationNotes());
+            }
             System.out.println("------------------------------------------");
         }
     }
