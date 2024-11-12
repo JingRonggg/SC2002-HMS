@@ -236,13 +236,13 @@ public class PatientController {
             HashMap<String, Appointment> completedAppointments = appointmentRepository.getCompletedPatientAppointment(patientID);
 
             if (completedAppointments.isEmpty()) {
-                System.out.println("No scheduled appointments found.");
+                System.out.println("No completed appointments found.");
                 return new HashMap<>();
             } else {
                 return completedAppointments;
             }
         }catch(Exception e){
-            System.out.println("Error in getting scheduled appointments.");
+            System.out.println("Error in getting completed appointments.");
             return new HashMap<>();
         }
     }
