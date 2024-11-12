@@ -188,7 +188,7 @@ public class PatientController {
         } catch (Exception e) {
             System.out.println("Error in scheduling appointment.");
         }
-        return "Appointment requested successfully.";
+        return "Appointment rescheduled successfully.";
     }
 
     /**
@@ -200,7 +200,6 @@ public class PatientController {
     public String cancelAppointment(String appointmentID) {
         try{
             if (appointmentRepository.getSpecificAppointment(appointmentID) == null) {
-                System.out.println("Appointment not found.");
                 return "Appointment not found.";
             }
             appointmentRepository.deleteAppointment(appointmentID);

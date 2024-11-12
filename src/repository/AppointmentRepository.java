@@ -191,7 +191,9 @@ public class AppointmentRepository implements IAppointmentRepository {
         try {
             for (String appointmentID : appointments.keySet()) {
                 Appointment appointment = appointments.get(appointmentID);
-                allAppointments.put(appointmentID, appointment);
+                if (!appointment.getPatientID().equals("null")){
+                    allAppointments.put(appointmentID, appointment);
+                }
             }
         } catch (Exception e) {
             System.out.println("An error occurred while getting the appointment: " + e.getMessage());
