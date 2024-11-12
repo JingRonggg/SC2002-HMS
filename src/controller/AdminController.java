@@ -164,12 +164,14 @@ public class AdminController {
                 String age = scanner.nextLine();
                 
                 // Create a new instance based on the role
-                if (role.equals("Doctor")) {
+                if (role.equals("doctor")) {
                     return new Doctor(id, name, role, gender, age);
-                } else if (role.equals("Pharmacist")) {
+                } else if (role.equals("pharmacist")) {
                     return new Pharmacist(id, name, role, gender, age);
-                } else {
+                } else if (role.equals("administrator")) {
                     return new Administrator(id, name, role, gender, age);
+                } else {
+                    return new Nurse(id, name, role, gender, age);
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a valid 3-digit number.");
