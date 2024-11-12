@@ -121,7 +121,7 @@ public class AdminController {
     private Staff collectStaffDetails() {
         try {
             // Auto-generate the ID based on role
-            System.out.print("Role (doctor/pharmacist/administrator): ");
+            System.out.print("Role (doctor/pharmacist/administrator/nurse): ");
             String role = scanner.nextLine().trim().toLowerCase();
     
             String idPrefix;
@@ -135,6 +135,8 @@ public class AdminController {
                 case "administrator":
                     idPrefix = "A";
                     break;
+                case "nurse":
+                    idPrefix = "N";
                 default:
                     System.out.println("Invalid role!");
                     return null;
