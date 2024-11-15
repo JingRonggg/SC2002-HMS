@@ -83,13 +83,11 @@ public class MedicalRecordLoader {
                     LocalDate diagnosisDate = LocalDate.parse(fields[4]); // Parse the date
                     PastDiagnosis pastDiagnosis = new PastDiagnosis(conditionName, diagnosisDate);
                     
-                    System.out.println("diagnosis");
                     // Parsing Treatments
                     String treatmentName = fields[5]; // Treatment name
                     LocalDate treatmentDate = LocalDate.parse(fields[6]); // Parse the treatment date
                     String treatmentDetails = fields[7]; // Treatment details
                     Treatments treatments = new Treatments(treatmentName, treatmentDate, treatmentDetails);
-                    System.out.println("quack");
                     
                     // Parsing PrescribedMedications
                     List<PrescribeMedications> prescribedMedications = new ArrayList<>();
@@ -97,12 +95,12 @@ public class MedicalRecordLoader {
                     int quantity = Integer.parseInt(fields[9]); // Parse quantity
                     PrescribeMedicationsStatus medicineStatus = PrescribeMedicationsStatus.valueOf(fields[10].toUpperCase()); 
                     prescribedMedications.add(new PrescribeMedications(medicineName, quantity, medicineStatus));
-                    System.out.println("quack quack");
+
 
                     // Create and add MedicalRecord to the controller
                     MedicalRecord medicalRecord = new MedicalRecord(medicalRecordID, doctorID, patientID, pastDiagnosis, treatments, prescribedMedications);
                     MedicalRecordController.addMedicalRecord(medicalRecordID, medicalRecord);
-                    System.out.println("LAODED");
+
                     
                 }
             }
