@@ -51,7 +51,6 @@ public class AppointmentLoader {
         }
 
         // Initialize the generator with the collected IDs
-        System.out.println(existingIDs);
         AppointmentIDGenerator.initializeWithExistingIDs(existingIDs);
 
         // Second pass: Load appointments
