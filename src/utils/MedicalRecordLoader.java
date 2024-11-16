@@ -72,7 +72,6 @@ public class MedicalRecordLoader {
             reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
-                System.out.println("fields");
                 if (fields.length >= 11) { // Ensure the line has enough fields
                     String medicalRecordID = fields[0];
                     String doctorID = fields[1];
