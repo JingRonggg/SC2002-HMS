@@ -92,7 +92,8 @@ public class MedicalRecordCsvExporter {
                 "TreatmentDetails",
                 "MedicineName",
                 "Quantity",
-                "Status");
+                "Status",
+                "AppointmentID");
         lines.add(headers);
     }
 
@@ -122,7 +123,8 @@ public class MedicalRecordCsvExporter {
                     treatment.getTreatmentDetails(),
                     medication.getMedicineName(),
                     String.valueOf(medication.getQuantity()),
-                    medication.getStatus().toString()
+                    medication.getStatus().toString(),
+                    medicalRecord.getAppointmentID()
             );
             lines.add(line);
         }

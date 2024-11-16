@@ -43,7 +43,7 @@ public class AppointmentPrinter {
             System.out.println("End Time: " + appointment.getAppointmentEndTime());
             System.out.println("Appointment status: " + appointment.getStatus());
             if (appointment.getStatus() == AppointmentStatus.COMPLETED && !appointment.getPatientID().equals("null")){
-                HashMap<String, MedicalRecord> medicalRecordData = medicalRecordRepository.getMedicalRecordsByDoctorAndPatientID(appointment.getDoctorID(), appointment.getPatientID());
+                HashMap<String, MedicalRecord> medicalRecordData = medicalRecordRepository.getMedicalRecordByAppointmentID(appointmentID);
                 for (Map.Entry<String, MedicalRecord> medicalRecordEntry : medicalRecordData.entrySet()) {
                     String medicalRecordID = medicalRecordEntry.getKey();
                     MedicalRecord medicalRecord = medicalRecordRepository.getMedicalRecordByID(medicalRecordID);

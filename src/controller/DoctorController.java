@@ -265,9 +265,9 @@ public class DoctorController {
      * @param treatments Treatment information
      * @param newPrescribeMedications List of prescribed medications
      */
-    public void createNewMedicalRecord (String doctorID, String patientID, PastDiagnosis pastDiagnosis, Treatments treatments, List<PrescribeMedications> newPrescribeMedications) {
+    public void createNewMedicalRecord (String doctorID, String patientID, PastDiagnosis pastDiagnosis, Treatments treatments, List<PrescribeMedications> newPrescribeMedications, String appointmentID) {
         try {
-            medicalRecordRepository.createMedicalRecord(doctorID, patientID, pastDiagnosis, treatments, newPrescribeMedications);
+            medicalRecordRepository.createMedicalRecord(doctorID, patientID, pastDiagnosis, treatments, newPrescribeMedications,appointmentID);
         } catch (Exception e) {
             handleException("Creating Medical Record", e);
         }

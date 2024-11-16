@@ -96,9 +96,10 @@ public class MedicalRecordLoader {
                     PrescribeMedicationsStatus medicineStatus = PrescribeMedicationsStatus.valueOf(fields[10].toUpperCase()); 
                     prescribedMedications.add(new PrescribeMedications(medicineName, quantity, medicineStatus));
 
+                    String appointmentID = fields[11];
 
                     // Create and add MedicalRecord to the controller
-                    MedicalRecord medicalRecord = new MedicalRecord(medicalRecordID, doctorID, patientID, pastDiagnosis, treatments, prescribedMedications);
+                    MedicalRecord medicalRecord = new MedicalRecord(medicalRecordID, doctorID, patientID, pastDiagnosis, treatments, prescribedMedications,appointmentID);
                     MedicalRecordController.addMedicalRecord(medicalRecordID, medicalRecord);
 
                     
