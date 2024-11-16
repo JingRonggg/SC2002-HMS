@@ -28,7 +28,7 @@ public class AppointmentPrinter {
     }
 
     public static void printAppointmentDetails(HashMap<String, Appointment> appointments) {
-        System.out.println("------------------------------------------");
+        System.out.println("=======================================================");
 
         for (Map.Entry<String, Appointment> entry : appointments.entrySet()) {
             String appointmentID = entry.getKey();
@@ -43,7 +43,7 @@ public class AppointmentPrinter {
             System.out.println("End Time: " + appointment.getAppointmentEndTime());
             System.out.println("Appointment status: " + appointment.getStatus());
             if (appointment.getStatus() == AppointmentStatus.COMPLETED && !appointment.getPatientID().equals("null")){
-                HashMap<String, MedicalRecord> medicalRecordData = medicalRecordRepository.getMedicalRecordsByDoctorAndPatientID(appointment.getDoctorID(), appointment.getPatientID());
+                HashMap<String, MedicalRecord> medicalRecordData = medicalRecordRepository.getMedicalRecordByAppointmentID(appointmentID);
                 for (Map.Entry<String, MedicalRecord> medicalRecordEntry : medicalRecordData.entrySet()) {
                     String medicalRecordID = medicalRecordEntry.getKey();
                     MedicalRecord medicalRecord = medicalRecordRepository.getMedicalRecordByID(medicalRecordID);
@@ -62,7 +62,7 @@ public class AppointmentPrinter {
                     System.out.println("Consultation notes: " + appointment.getConsultationNotes());
                 }
             }
-            System.out.println("------------------------------------------");
+            System.out.println("=======================================================");
         }
     }
 

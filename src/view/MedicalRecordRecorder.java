@@ -25,7 +25,7 @@ public class MedicalRecordRecorder {
      * @return A new MedicalRecord object containing the entered information
      *         with null values for patient-specific fields
      */
-    public static MedicalRecord askingForMedicalRecordDetails (){
+    public static MedicalRecord askingForMedicalRecordDetails (String appointmentID){
         // Get new diagnosis details
         Scanner scanner = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -86,6 +86,6 @@ public class MedicalRecordRecorder {
             System.out.println("Do you want to add another medication? (yes/no)");
             addMore = scanner.nextLine();
         } while (addMore.equalsIgnoreCase("yes"));
-        return new MedicalRecord(null, null, null, newDiagnosis, newTreatment, newPrescribeMedications);
+        return new MedicalRecord(null, null, null, newDiagnosis, newTreatment, newPrescribeMedications,appointmentID);
     }
 }

@@ -72,7 +72,6 @@ public class MedicalRecordLoader {
             reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
-                System.out.println("fields");
                 if (fields.length >= 11) { // Ensure the line has enough fields
                     String medicalRecordID = fields[0];
                     String doctorID = fields[1];
@@ -96,9 +95,10 @@ public class MedicalRecordLoader {
                     PrescribeMedicationsStatus medicineStatus = PrescribeMedicationsStatus.valueOf(fields[10].toUpperCase()); 
                     prescribedMedications.add(new PrescribeMedications(medicineName, quantity, medicineStatus));
 
+                    String appointmentID = fields[11];
 
                     // Create and add MedicalRecord to the controller
-                    MedicalRecord medicalRecord = new MedicalRecord(medicalRecordID, doctorID, patientID, pastDiagnosis, treatments, prescribedMedications);
+                    MedicalRecord medicalRecord = new MedicalRecord(medicalRecordID, doctorID, patientID, pastDiagnosis, treatments, prescribedMedications,appointmentID);
                     MedicalRecordController.addMedicalRecord(medicalRecordID, medicalRecord);
 
                     

@@ -33,21 +33,36 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
      * @param pastDiagnosis The past diagnosis information
      * @param treatments The treatments information
      * @param newPrescribeMedications List of prescribed medications
+     * @param appointmentID foreignkey to appointment
      */
     @Override
-    public void createMedicalRecord(String doctorID, String patientID, PastDiagnosis pastDiagnosis, Treatments treatments, List<PrescribeMedications> newPrescribeMedications) {
+    public void createMedicalRecord(String doctorID, String patientID, PastDiagnosis pastDiagnosis, Treatments treatments, List<PrescribeMedications> newPrescribeMedications, String appointmentID) {
         try {
             // Generate a new MedicalRecordID
             String medicalRecordID = AppointmentIDGenerator.nextAppointmentID();
 
             // Create a new MedicalRecord instance
-            MedicalRecord medicalRecord = new MedicalRecord(medicalRecordID, doctorID, patientID, pastDiagnosis, treatments, newPrescribeMedications);
+            MedicalRecord medicalRecord = new MedicalRecord(medicalRecordID, doctorID, patientID, pastDiagnosis, treatments, newPrescribeMedications, appointmentID);
 
             // Add the medical record to the repository
             medicalRecordData.put(medicalRecordID, medicalRecord);
         } catch (Exception e) {
             handleException("creating the Medical Record", e);
         }
+    }
+
+    public HashMap<String, MedicalRecord> getMedicalRecordByAppointmentID(String appointmentID) {
+        HashMap<String, MedicalRecord> matchingRecords = new HashMap<>();
+        try {
+            for (MedicalRecord medicalRecord : medicalRecordData.values()) {
+                if (medicalRecord.getAppointmentID().equals(appointmentID)) {
+                    matchingRecords.put(medicalRecord.getMedicalRecordID(), medicalRecord); // Add to the HashMap
+                }
+            }
+        } catch (Exception e) {
+            handleException("getting the Medical Record by Appointment ID", e);
+        }
+        return matchingRecords; // Return the HashMap of matching records
     }
 
     /**

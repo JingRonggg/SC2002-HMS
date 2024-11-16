@@ -20,10 +20,10 @@ public class NewMedicalRecord {
         try{
             if(doctorController.recordAppointmentOutcome(appointmentID , doctorID, consultationNotes)) {
                 Appointment appointment = doctorController.findAppointment(appointmentID);
-                MedicalRecord medicalRecord = MedicalRecordRecorder.askingForMedicalRecordDetails();
+                MedicalRecord medicalRecord = MedicalRecordRecorder.askingForMedicalRecordDetails(appointmentID);
                 doctorController.createNewMedicalRecord(doctorID, appointment.getPatientID(), 
                     medicalRecord.getPastDiagnosis(), medicalRecord.getTreatments(), 
-                    medicalRecord.getPrescribeMedications());
+                    medicalRecord.getPrescribeMedications(),appointmentID);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

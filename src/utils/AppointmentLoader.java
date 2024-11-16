@@ -42,7 +42,7 @@ public class AppointmentLoader {
             reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
-                if (fields.length == 8) {
+                if (fields.length == 9) {
                     existingIDs.add(fields[0]); // Collect existing IDs
                 }
             }
@@ -51,6 +51,7 @@ public class AppointmentLoader {
         }
 
         // Initialize the generator with the collected IDs
+        System.out.println(existingIDs);
         AppointmentIDGenerator.initializeWithExistingIDs(existingIDs);
 
         // Second pass: Load appointments

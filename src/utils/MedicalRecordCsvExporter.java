@@ -8,8 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Utility class for exporting medical records to CSV format.
@@ -25,47 +25,37 @@ public class MedicalRecordCsvExporter {
      * @param medicalRecordWrapper The medical record wrapper containing the record to be exported
      */
     public static void exportMedicalRecordToCsv(MedicalRecordWrapper medicalRecordWrapper) {
-        List<String> lines = new ArrayList<>();
-        boolean recordExists = false;
-    
+        Set<String> records = new HashSet<>();
+        String headers = getHeaders();
+        boolean recordUpdated = false;
+
         try {
-            // Check if file exists and read existing records
+            // Check if the file exists and load existing records (excluding headers) into the set
             if (Files.exists(Paths.get(CSV_FILE_PATH))) {
                 try (BufferedReader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        // Split line into fields
-                        String[] fields = line.split(",");
-                        // Add headers if present
-                        if (fields[0].equals("MedicalRecordID")) {
-                            lines.add(line); // Add headers
-                            continue;
+                        if (line.equals(headers)) {
+                            continue; // Skip headers
                         }
-                        // Check if this RecordID matches the current record's ID
-                        if (fields[0].equals(medicalRecordWrapper.getMedicalRecordID())) {
-                            // Update the existing record line
-                            for (String formattedLine : formatMedicalRecordToCsv(medicalRecordWrapper)) {
-                                lines.add(formattedLine);
-                            }
-                            recordExists = true;
-                            continue;
-                        }
-                        lines.add(line);
+                        records.add(line); // Add each record line to the set
                     }
                 }
-            } else {
-                // File does not exist, so add headers
-                writeHeaders(lines);
             }
-    
-            // If record doesn't exist, add it to the lines
-            if (!recordExists) {
-                lines.addAll(formatMedicalRecordToCsv(medicalRecordWrapper));
+
+            // Update or add the medical record
+            for (String formattedLine : formatMedicalRecordToCsv(medicalRecordWrapper)) {
+                if (records.contains(formattedLine)) {
+                    recordUpdated = true; // Indicate that a duplicate was found and already exists
+                }
+                records.add(formattedLine); // Add new or updated record to the set
             }
-    
-            // Write all lines back to the CSV
+
+            // Write all records back to the CSV file
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(CSV_FILE_PATH, false))) {
-                for (String record : lines) {
+                writer.write(headers); // Write headers first
+                writer.newLine();
+                for (String record : records) {
                     writer.write(record);
                     writer.newLine();
                 }
@@ -76,24 +66,24 @@ public class MedicalRecordCsvExporter {
     }
 
     /**
-     * Writes the CSV header row to the list of lines.
+     * Returns the CSV header row.
      *
-     * @param lines The list to which the headers will be added
+     * @return The header row as a string
      */
-    private static void writeHeaders(List<String> lines) {
-        String headers = String.join(",",
+    private static String getHeaders() {
+        return String.join(",",
                 "MedicalRecordID",
                 "DoctorID",
                 "PatientID",
-                "Condition",
                 "Diagnosis",
-                "Treatments",
+                "DiagnosisDate",
+                "Treatment",
                 "TreatmentDate",
                 "TreatmentDetails",
                 "MedicineName",
                 "Quantity",
-                "Status");
-        lines.add(headers);
+                "Status",
+                "AppointmentID");
     }
 
     /**
@@ -103,13 +93,13 @@ public class MedicalRecordCsvExporter {
      * @param medicalRecordWrapper The medical record wrapper to be formatted
      * @return A list of CSV formatted strings representing the medical record
      */
-    private static List<String> formatMedicalRecordToCsv(MedicalRecordWrapper medicalRecordWrapper) {
-        List<String> lines = new ArrayList<>();
+    private static Set<String> formatMedicalRecordToCsv(MedicalRecordWrapper medicalRecordWrapper) {
+        Set<String> lines = new HashSet<>();
         MedicalRecord medicalRecord = medicalRecordWrapper.getMedicalRecord();
         PastDiagnosis past = medicalRecord.getPastDiagnosis();
         Treatments treatment = medicalRecord.getTreatments();
-        
-        // Loop through each PrescribeMedications in the list
+
+        // Loop through each prescribed medication in the list
         for (PrescribeMedications medication : medicalRecord.getPrescribeMedications()) {
             String line = String.join(",",
                     medicalRecordWrapper.getMedicalRecordID(),
@@ -122,7 +112,8 @@ public class MedicalRecordCsvExporter {
                     treatment.getTreatmentDetails(),
                     medication.getMedicineName(),
                     String.valueOf(medication.getQuantity()),
-                    medication.getStatus().toString()
+                    medication.getStatus().toString(),
+                    medicalRecord.getAppointmentID()
             );
             lines.add(line);
         }

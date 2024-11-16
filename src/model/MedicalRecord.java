@@ -13,6 +13,7 @@ public class MedicalRecord {
     private PastDiagnosis pastDiagnosis;
     private Treatments treatments;
     private List<PrescribeMedications> prescribeMedications;
+    private String appointmentID;
 
     /**
      * Constructs a new MedicalRecord with the specified details.
@@ -23,18 +24,33 @@ public class MedicalRecord {
      * @param pastDiagnosis Past diagnosis information
      * @param treatments Treatment information
      * @param prescribeMedications List of prescribed medications
+     * @param appointmentID Foreign key to Appointment
      */
     public MedicalRecord(String medicalRecordID, String doctorID, String patientID,
                          PastDiagnosis pastDiagnosis, Treatments treatments,
-                         List<PrescribeMedications> prescribeMedications) {
+                         List<PrescribeMedications> prescribeMedications, String appointmentID) {
         this.medicalRecordID = medicalRecordID;
         this.doctorID = doctorID;
         this.patientID = patientID;
         this.pastDiagnosis = pastDiagnosis;
         this.treatments = treatments;
         this.prescribeMedications = prescribeMedications != null ? prescribeMedications : new ArrayList<>();
+        this.appointmentID = appointmentID;
     }
-
+    /**
+     * Sets the appointmentID
+     * @param appointmentID foreign key for appointment
+     */
+    public void setAppointmentID(String appointmentID){
+        this.appointmentID = appointmentID;
+    }
+    /**
+     * returns appointmentID
+     * @param appointmentID Appointment ID
+     */
+    public String getAppointmentID(){
+        return appointmentID;
+    }
     /**
      * Sets the medical record ID.
      * @param medicalRecordID New medical record ID

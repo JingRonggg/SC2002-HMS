@@ -19,8 +19,9 @@ public interface IMedicalRecordDoctorOperations {
      * @param pastDiagnosis The past diagnosis information
      * @param treatments The treatments prescribed
      * @param newPrescribeMedications List of medications prescribed
+     * @param appointmentID foreignkey to appointment
      */
-    void createMedicalRecord(String doctorID, String patientID, PastDiagnosis pastDiagnosis, Treatments treatments, List<PrescribeMedications> newPrescribeMedications);
+    void createMedicalRecord(String doctorID, String patientID, PastDiagnosis pastDiagnosis, Treatments treatments, List<PrescribeMedications> newPrescribeMedications, String appointmentID);
 
     /**
      * Retrieves all medical records for a specific patient created by a specific doctor

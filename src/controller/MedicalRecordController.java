@@ -30,7 +30,6 @@ public class MedicalRecordController {
      */
     private void loadMedicalRecords() {
         MedicalRecordLoader.loadMedicalRecords();
-        System.out.println("added");
     }
 
     /**
