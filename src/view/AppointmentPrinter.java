@@ -28,7 +28,7 @@ public class AppointmentPrinter {
     }
 
     public static void printAppointmentDetails(HashMap<String, Appointment> appointments) {
-        System.out.println("------------------------------------------");
+        System.out.println("=======================================================");
 
         for (Map.Entry<String, Appointment> entry : appointments.entrySet()) {
             String appointmentID = entry.getKey();
@@ -62,7 +62,7 @@ public class AppointmentPrinter {
                     System.out.println("Consultation notes: " + appointment.getConsultationNotes());
                 }
             }
-            System.out.println("------------------------------------------");
+            System.out.println("=======================================================");
         }
     }
 

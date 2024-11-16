@@ -40,6 +40,7 @@ public class AppointmentIDGenerator {
         if (!ids.isEmpty()) {
             // Set appointmentID to the next available number after the max existing ID
             appointmentID = ids.stream().mapToInt(Integer::parseInt).max().orElse(0) + 1;
+            System.out.println("this is appointmentID" + appointmentID);
         }
     }
 }
