@@ -1,4 +1,8 @@
 ﻿Patient ID,Name,Date of Birth,Gender,Blood Type,Contact Information,Password,Hashed Password
-P1001,Alice Brown,1980-05-14,Female,A+,alice.brown@example.com,p,Kv7PgRvErCyja9v9f+w79zqtX8OE4AlFP+A0Yn+y0Hk=
-P1002,Bob Stone,1975-11-22,Male,B+,bob.stone@example.com,password,aPG4tEjTgkjZo+nBvOs3aZJP7GyEZiNEXsx0gxSNlH8=
-P1003,Charlie White,1990-07-08,Male,O-,charlie.white@example.com,password,aPG4tEjTgkjZo+nBvOs3aZJP7GyEZiNEXsx0gxSNlH8=
+P1001,Alice Brown,5/14/1980,Female,A+,alice.brown@example.com,password,aPG4tEjTgkjZo+nBvOs3aZJP7GyEZiNEXsx0gxSNlH8=
+P1002,Bob Stone,11/22/1975,Male,B+,bob.stone@example.com,password,aPG4tEjTgkjZo+nBvOs3aZJP7GyEZiNEXsx0gxSNlH8=
+P1003,Charlie White,7/8/1990,Male,O-,charlie.white@example.com,password,aPG4tEjTgkjZo+nBvOs3aZJP7GyEZiNEXsx0gxSNlH8=
+P1007,Sam Smith,12/10/1989,M,A+,Sam@gmail.com,password,aPG4tEjTgkjZo+nBvOs3aZJP7GyEZiNEXsx0gxSNlH8=
+P1005,Steve Rogers,12/12/2000,M,A-,Steve@gmail.com,password,aPG4tEjTgkjZo+nBvOs3aZJP7GyEZiNEXsx0gxSNlH8=
+P1006,Arthur Curry,10/10/1988,M,B+,Arthur@gmail.com,password,aPG4tEjTgkjZo+nBvOs3aZJP7GyEZiNEXsx0gxSNlH8=
+P1004,John Doe,12/12/2000,M,O-,John@gmail.com,password,aPG4tEjTgkjZo+nBvOs3aZJP7GyEZiNEXsx0gxSNlH8=
