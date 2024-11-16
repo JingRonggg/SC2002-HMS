@@ -13,7 +13,7 @@ public class MedicalRecordIDGenerator {
     private static int medicalRecordID = 0;
     
     /** Set containing all existing medical record IDs to ensure uniqueness */
-    private static final Set<String> existingIDs = new HashSet<>();
+    private static Set<String> existingMedicalRecordIDs = new HashSet<>();
 
     /**
      * Generates the next available unique medical record ID.
@@ -25,8 +25,8 @@ public class MedicalRecordIDGenerator {
         String newID;
         do {
             newID = String.valueOf(medicalRecordID++);
-        } while (existingIDs.contains(newID)); // Ensure unique ID
-        existingIDs.add(newID); // Add to existing IDs
+        } while (existingMedicalRecordIDs.contains(newID)); // Ensure unique ID
+        existingMedicalRecordIDs.add(newID); // Add to existing IDs
         return newID;
     }
 
@@ -36,8 +36,8 @@ public class MedicalRecordIDGenerator {
      *
      * @param ids Set of existing medical record IDs to initialize with
      */
-    public static synchronized void initializeWithExistingIDs(Set<String> ids) {
-        existingIDs.addAll(ids);
+    public static void initializeWithExistingIDs(Set<String> ids) {
+        existingMedicalRecordIDs.addAll(ids);
         if (!ids.isEmpty()) {
             // Set medicalRecordID to the next available number after the max existing ID
             medicalRecordID = ids.stream().mapToInt(Integer::parseInt).max().orElse(0) + 1;

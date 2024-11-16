@@ -44,7 +44,7 @@ public class MedicalRecordLoader {
      * Any errors during file reading or data processing are caught and logged to System.out.
      */
     public static void loadMedicalRecords() {
-        Set<String> existingIDs = new HashSet<>();
+        Set<String> existingMedicalRecordIDs= new HashSet<>();
 
         // First pass: Collect existing medical record IDs
         try (BufferedReader reader = new BufferedReader(new FileReader(MedicalRecordCsvExporter.CSV_FILE_PATH))) {
@@ -53,9 +53,8 @@ public class MedicalRecordLoader {
             reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
-                if (fields.length >= 6) {
-                    String medicalRecordID = fields[0];
-                    existingIDs.add(medicalRecordID);
+                if (fields.length == 12) {
+                    existingMedicalRecordIDs.add(fields[0]);
                 }
             }
         } catch (IOException e) {
@@ -63,7 +62,7 @@ public class MedicalRecordLoader {
         }
         // System.out.println("hello");
         // Initialize the generator with the collected IDs
-        MedicalRecordIDGenerator.initializeWithExistingIDs(existingIDs);
+        MedicalRecordIDGenerator.initializeWithExistingIDs(existingMedicalRecordIDs);
 
         // Second pass: Load medical records
         try (BufferedReader reader = new BufferedReader(new FileReader(MedicalRecordCsvExporter.CSV_FILE_PATH))) {
@@ -72,7 +71,7 @@ public class MedicalRecordLoader {
             reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
-                if (fields.length >= 11) { // Ensure the line has enough fields
+                if (fields.length == 12) { // Ensure the line has enough fields
                     String medicalRecordID = fields[0];
                     String doctorID = fields[1];
                     String patientID = fields[2];

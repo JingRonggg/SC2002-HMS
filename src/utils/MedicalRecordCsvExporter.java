@@ -8,14 +8,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Utility class for exporting medical records to CSV format.
  */
 public class MedicalRecordCsvExporter {
-    /** The file path where the CSV file will be stored */
+
     protected static final String CSV_FILE_PATH = "./data/MedicalRecord_List.csv";
 
     /**
@@ -25,62 +25,58 @@ public class MedicalRecordCsvExporter {
      * @param medicalRecordWrapper The medical record wrapper containing the record to be exported
      */
     public static void exportMedicalRecordToCsv(MedicalRecordWrapper medicalRecordWrapper) {
-        Set<String> records = new HashSet<>();
-        String headers = getHeaders();
-        boolean recordUpdated = false;
-    
+        List<String> records = new ArrayList<>();
+        boolean recordExists = false;
+
         // Load existing records from the CSV file
         try {
             if (Files.exists(Paths.get(CSV_FILE_PATH))) {
                 try (BufferedReader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        if (line.equals(headers)) {
+                        String[] fields = line.split(",");
+                        if (fields[0].equals("MedicalRecordID")) {
+                            records.add(line); // Add headers to records list
                             continue; // Skip headers
                         }
-    
-                        String[] fields = line.split(",");
-                        if (fields.length > 0 && fields[0].equals(medicalRecordWrapper.getMedicalRecordID())) {
-                            // If the record with the same MedicalRecordID is found, update it
-                            for (String formattedLine : formatMedicalRecordToCsv(medicalRecordWrapper)) {
-                                records.add(formattedLine);
-                            }
-                            recordUpdated = true;
-                        } else {
-                            // Keep the existing record if it doesn't match
-                            records.add(line);
-                        }
+
+                        if (fields[0].equals(medicalRecordWrapper.getMedicalRecordID())) {
+                            // If the record with the same MedicalRecordID exists, mark it and update the record
+                            line = formatMedicalRecordToCsv(medicalRecordWrapper); // Add the updated record
+                            recordExists = true;
+                        } 
+
+                        records.add(line);
                     }
                 }
+            } else {
+                getHeaders(records); // Add headers if the file doesn't exist
             }
-    
-            // If the record wasn't updated, add the new record
-            if (!recordUpdated) {
-                records.addAll(formatMedicalRecordToCsv(medicalRecordWrapper));
+
+            // If the record doesn't exist, add the new record
+            if (!recordExists) {
+                records.add(formatMedicalRecordToCsv(medicalRecordWrapper)); // Add new record if not present
             }
-    
+
             // Write all records back to the CSV file
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(CSV_FILE_PATH, false))) {
-                writer.write(headers);
-                writer.newLine();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(CSV_FILE_PATH))) {
                 for (String record : records) {
                     writer.write(record);
                     writer.newLine();
                 }
             }
         } catch (IOException e) {
-            System.out.println("An error occurred while exporting medical records to CSV: " + e.getMessage());
+            System.err.println("An error occurred while exporting medical records to CSV: " + e.getMessage());
         }
     }
-    
 
     /**
      * Returns the CSV header row.
      *
-     * @return The header row as a string
+     * @param records The list to which the header row will be added
      */
-    private static String getHeaders() {
-        return String.join(",",
+    private static void getHeaders(List<String> records) {
+        String headers = String.join(",",
                 "MedicalRecordID",
                 "DoctorID",
                 "PatientID",
@@ -93,6 +89,7 @@ public class MedicalRecordCsvExporter {
                 "Quantity",
                 "Status",
                 "AppointmentID");
+        records.add(headers);
     }
 
     /**
@@ -100,10 +97,9 @@ public class MedicalRecordCsvExporter {
      * Concatenates multiple prescribed medications using "|" as a separator.
      *
      * @param medicalRecordWrapper The medical record wrapper to be formatted
-     * @return A set of CSV formatted strings representing the medical record
+     * @return A CSV formatted string representing the medical record
      */
-    private static Set<String> formatMedicalRecordToCsv(MedicalRecordWrapper medicalRecordWrapper) {
-        Set<String> lines = new HashSet<>();
+    private static String formatMedicalRecordToCsv(MedicalRecordWrapper medicalRecordWrapper) {
         MedicalRecord medicalRecord = medicalRecordWrapper.getMedicalRecord();
         PastDiagnosis past = medicalRecord.getPastDiagnosis();
         Treatments treatment = medicalRecord.getTreatments();
@@ -126,7 +122,7 @@ public class MedicalRecordCsvExporter {
         }
 
         // Create the CSV line with all medication details concatenated
-        String line = String.join(",",
+        return String.join(",",
                 medicalRecordWrapper.getMedicalRecordID(),
                 medicalRecord.getDoctorID(),
                 medicalRecord.getPatientID(),
@@ -140,8 +136,5 @@ public class MedicalRecordCsvExporter {
                 statuses.toString(),
                 medicalRecord.getAppointmentID()
         );
-
-        lines.add(line);
-        return lines;
     }
 }

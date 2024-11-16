@@ -5,6 +5,7 @@ import src.interfaces.IMedicalRecordRepository;
 import src.model.*;
 import src.utils.AppointmentIDGenerator;
 import src.utils.MedicalRecordCsvExporter;
+import src.utils.MedicalRecordIDGenerator;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +40,7 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
     public void createMedicalRecord(String doctorID, String patientID, PastDiagnosis pastDiagnosis, Treatments treatments, List<PrescribeMedications> newPrescribeMedications, String appointmentID) {
         try {
             // Generate a new MedicalRecordID
-            String medicalRecordID = AppointmentIDGenerator.nextAppointmentID();
+            String medicalRecordID = MedicalRecordIDGenerator.nextMedicalRecordID();
 
             // Create a new MedicalRecord instance
             MedicalRecord medicalRecord = new MedicalRecord(medicalRecordID, doctorID, patientID, pastDiagnosis, treatments, newPrescribeMedications, appointmentID);
