@@ -1,8 +1,8 @@
 Medicine Name,Initial Stock,Low Stock Level Alert
 Omeprazole,80,20
-Paracetamol,100,20
+Paracetamol,99,20
 Aspirin,90,25
-Ibuprofen,40,60
+Ibuprofen,36,60
 Amoxicillin,75,15
 Azithromycin,150,40
 Ranitidine,110,30

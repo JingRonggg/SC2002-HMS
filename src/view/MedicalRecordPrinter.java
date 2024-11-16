@@ -57,7 +57,7 @@ public class MedicalRecordPrinter {
             if (!medications.isEmpty()) {
                 System.out.println("Prescribed Medications:");
                 for (PrescribeMedications medication : medications) {
-                    System.out.printf(" - %s (%s)| Status: %s %n", medication.getMedicineName(), medication.getQuantity(), medication.getStatus());
+                    System.out.printf(" - %s | Quantity: (%s) | Status: %s %n", medication.getMedicineName(), medication.getQuantity(), medication.getStatus());
                 }
             } else {
                 System.out.println("Prescribed Medications: None");

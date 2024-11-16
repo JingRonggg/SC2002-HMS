@@ -28,9 +28,9 @@ public class MedicalRecordCsvExporter {
         Set<String> records = new HashSet<>();
         String headers = getHeaders();
         boolean recordUpdated = false;
-
+    
+        // Load existing records from the CSV file
         try {
-            // Check if the file exists and load existing records (excluding headers) into the set
             if (Files.exists(Paths.get(CSV_FILE_PATH))) {
                 try (BufferedReader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
                     String line;
@@ -38,22 +38,30 @@ public class MedicalRecordCsvExporter {
                         if (line.equals(headers)) {
                             continue; // Skip headers
                         }
-                        records.add(line); // Add each record line to the set
+    
+                        String[] fields = line.split(",");
+                        if (fields.length > 0 && fields[0].equals(medicalRecordWrapper.getMedicalRecordID())) {
+                            // If the record with the same MedicalRecordID is found, update it
+                            for (String formattedLine : formatMedicalRecordToCsv(medicalRecordWrapper)) {
+                                records.add(formattedLine);
+                            }
+                            recordUpdated = true;
+                        } else {
+                            // Keep the existing record if it doesn't match
+                            records.add(line);
+                        }
                     }
                 }
             }
-
-            // Update or add the medical record
-            for (String formattedLine : formatMedicalRecordToCsv(medicalRecordWrapper)) {
-                if (records.contains(formattedLine)) {
-                    recordUpdated = true; // Indicate that a duplicate was found and already exists
-                }
-                records.add(formattedLine); // Add new or updated record to the set
+    
+            // If the record wasn't updated, add the new record
+            if (!recordUpdated) {
+                records.addAll(formatMedicalRecordToCsv(medicalRecordWrapper));
             }
-
+    
             // Write all records back to the CSV file
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(CSV_FILE_PATH, false))) {
-                writer.write(headers); // Write headers first
+                writer.write(headers);
                 writer.newLine();
                 for (String record : records) {
                     writer.write(record);
@@ -64,6 +72,7 @@ public class MedicalRecordCsvExporter {
             System.out.println("An error occurred while exporting medical records to CSV: " + e.getMessage());
         }
     }
+    
 
     /**
      * Returns the CSV header row.
@@ -87,11 +96,11 @@ public class MedicalRecordCsvExporter {
     }
 
     /**
-     * Formats a medical record into CSV lines.
-     * Creates one line for each prescribed medication in the medical record.
+     * Formats a medical record into a single CSV line.
+     * Concatenates multiple prescribed medications using "|" as a separator.
      *
      * @param medicalRecordWrapper The medical record wrapper to be formatted
-     * @return A list of CSV formatted strings representing the medical record
+     * @return A set of CSV formatted strings representing the medical record
      */
     private static Set<String> formatMedicalRecordToCsv(MedicalRecordWrapper medicalRecordWrapper) {
         Set<String> lines = new HashSet<>();
@@ -99,24 +108,40 @@ public class MedicalRecordCsvExporter {
         PastDiagnosis past = medicalRecord.getPastDiagnosis();
         Treatments treatment = medicalRecord.getTreatments();
 
-        // Loop through each prescribed medication in the list
+        // Prepare the concatenated strings for medication details
+        StringBuilder medicineNames = new StringBuilder();
+        StringBuilder quantities = new StringBuilder();
+        StringBuilder statuses = new StringBuilder();
+
+        // Loop through each prescribed medication and build the concatenated strings
         for (PrescribeMedications medication : medicalRecord.getPrescribeMedications()) {
-            String line = String.join(",",
-                    medicalRecordWrapper.getMedicalRecordID(),
-                    medicalRecord.getDoctorID(),
-                    medicalRecord.getPatientID(),
-                    past.getConditionName(),
-                    past.getDiagnosisDate().toString(),
-                    treatment.getTreatmentName(),
-                    treatment.getTreatmentDate().toString(),
-                    treatment.getTreatmentDetails(),
-                    medication.getMedicineName(),
-                    String.valueOf(medication.getQuantity()),
-                    medication.getStatus().toString(),
-                    medicalRecord.getAppointmentID()
-            );
-            lines.add(line);
+            if (medicineNames.length() > 0) {
+                medicineNames.append("|");
+                quantities.append("|");
+                statuses.append("|");
+            }
+            medicineNames.append(medication.getMedicineName());
+            quantities.append(medication.getQuantity());
+            statuses.append(medication.getStatus().toString());
         }
+
+        // Create the CSV line with all medication details concatenated
+        String line = String.join(",",
+                medicalRecordWrapper.getMedicalRecordID(),
+                medicalRecord.getDoctorID(),
+                medicalRecord.getPatientID(),
+                past.getConditionName(),
+                past.getDiagnosisDate().toString(),
+                treatment.getTreatmentName(),
+                treatment.getTreatmentDate().toString(),
+                treatment.getTreatmentDetails(),
+                medicineNames.toString(),
+                quantities.toString(),
+                statuses.toString(),
+                medicalRecord.getAppointmentID()
+        );
+
+        lines.add(line);
         return lines;
     }
 }

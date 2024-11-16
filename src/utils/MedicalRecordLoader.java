@@ -76,7 +76,7 @@ public class MedicalRecordLoader {
                     String medicalRecordID = fields[0];
                     String doctorID = fields[1];
                     String patientID = fields[2];
-                
+            
                     // Parsing PastDiagnosis
                     String conditionName = fields[3];
                     LocalDate diagnosisDate = LocalDate.parse(fields[4]); // Parse the date
@@ -89,12 +89,29 @@ public class MedicalRecordLoader {
                     Treatments treatments = new Treatments(treatmentName, treatmentDate, treatmentDetails);
                     
                     // Parsing PrescribedMedications
+                    // Parsing PrescribedMedications
                     List<PrescribeMedications> prescribedMedications = new ArrayList<>();
-                    String medicineName = fields[8];
-                    int quantity = Integer.parseInt(fields[9]); // Parse quantity
-                    PrescribeMedicationsStatus medicineStatus = PrescribeMedicationsStatus.valueOf(fields[10].toUpperCase()); 
-                    prescribedMedications.add(new PrescribeMedications(medicineName, quantity, medicineStatus));
+                    String[] medicineNames = fields[8].split("\\|"); // Split medicine names by "|"
+                    String[] quantities = fields[9].split("\\|");    // Split quantities by "|"
+                    String[] statuses = fields[10].split("\\|");     // Split statuses by "|"
 
+                    // Iterate through all medications and create PrescribeMedications objects
+                    for (int i = 0; i < medicineNames.length; i++) {
+                        String medicineName = medicineNames[i].trim();
+                        int quantity = Integer.parseInt(quantities[i].trim());
+                        // Ensure the status string is properly formatted
+                        String statusString = statuses[i].trim().toUpperCase();
+                        
+                        try {
+                            PrescribeMedicationsStatus medicineStatus = PrescribeMedicationsStatus.valueOf(statusString);
+                            prescribedMedications.add(new PrescribeMedications(medicineName, quantity, medicineStatus));
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid status found: " + statusString);
+                            // Handle the invalid status case, perhaps by skipping or assigning a default status
+                        }
+                    }
+
+                  
                     String appointmentID = fields[11];
 
                     // Create and add MedicalRecord to the controller
