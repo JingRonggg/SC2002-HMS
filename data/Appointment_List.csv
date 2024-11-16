@@ -1,5 +1,16 @@
-AppointmentID,PatientID,DoctorID,DoctorName,AppointmentDate,AppointmentStartTime,AppointmentEndTime,Status, ConsultationNotes
-0,P1001,D001,John Smith,2012-12-12,12:00,12:30,COMPLETED,HANDSOME
-1,null,D001,John Smith,2012-12-12,00:00,00:00,NOT_AVAILABLE,null
-2,null,D001,John Smith,2012-12-12,16:00,16:01,NOT_AVAILABLE,null
-3,P1001,D001,John Smith,2024-12-12,13:00,13:30,COMPLETED,hi
+AppointmentID,PatientID,DoctorID,DoctorName,AppointmentDate,AppointmentStartTime,AppointmentEndTime,Status,ConsultationNotes
+0,P1001,D001,John Smith,2012-12-12,12:00,12:30,COMPLETED,Follow-up in 2 weeks.
+1,P1002,D001,John Smith,2012-12-12,13:00,13:30,COMPLETED,Prescribed medication for flu.
+2,null,D001,John Smith,2012-12-12,14:00,14:30,NOT_AVAILABLE,null
+3,null,D001,John Smith,2012-12-12,15:00,15:30,NOT_AVAILABLE,null
+4,P1003,D001,John Smith,2012-12-12,16:00,16:30,CANCELLED,Cancelled by patient.
+5,P1005,D003,Gregory House,2012-12-13,10:00,10:45,CONFIRMED,Annual physical examination.
+6,null,D004,John Watson,2012-12-13,11:00,11:30,NOT_AVAILABLE,null
+7,P1006,D002,Emily Clarke,2012-12-13,12:00,12:30,COMPLETED,Advised on managing cholesterol levels.
+8,P1007,D005,Stephen Strange,2012-12-14,14:00,14:45,COMPLETED,Prescribed physical therapy.
+9,null,D005,Stephen Strange,2012-12-14,15:00,15:30,NOT_AVAILABLE,null
+10,P1008,D002,Emily Clarke,2012-12-13,13:00,13:30,PENDING,null
+11,P1009,D001,John Smith,2012-12-14,09:00,09:30,PENDING,null
+12,P1010,D003,Gregory House,2012-12-14,10:00,10:45,PENDING,null
+13,P1011,D005,Stephen Strange,2012-12-14,16:00,16:30,PENDING,null
+14,P1012,D004,John Watson,2012-12-15,11:00,11:30,PENDING,null
