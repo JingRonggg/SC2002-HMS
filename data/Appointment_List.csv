@@ -2,4 +2,4 @@ AppointmentID,PatientID,DoctorID,DoctorName,AppointmentDate,AppointmentStartTime
 0,P1001,D001,John Smith,2012-12-12,12:00,12:30,COMPLETED,HANDSOME
 1,null,D001,John Smith,2012-12-12,00:00,00:00,NOT_AVAILABLE,null
 2,null,D001,John Smith,2012-12-12,16:00,16:01,NOT_AVAILABLE,null
-3,P1001,D001,John Smith,2024-12-12,13:00,13:30,CONFIRMED,null
+3,P1001,D001,John Smith,2024-12-12,13:00,13:30,COMPLETED,hi

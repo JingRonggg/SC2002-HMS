@@ -1,3 +1,4 @@
-MedicalRecordID,DoctorID,PatientID,Diagnosis,DiagnosisDate,Treatment,TreatmentDate,TreatmentDetails,MedicineName,Quantity,Status
-10,D001,P1001,FLU,2024-12-13,FLU MEDICINE,2024-12-13,1 TIMES A DAY,Ibuprofen,2,PENDING
-01,D001,P1002,diarrhea,2024-12-12,none,2024-12-12,minor,Ibuprofen,2,DISPENSED
+MedicalRecordID,DoctorID,PatientID,Diagnosis,DiagnosisDate,Treatment,TreatmentDate,TreatmentDetails,MedicineName,Quantity,Status,AppointmentID
+10,D001,P1001,FLU,2024-12-13,FLU MEDICINE,2024-12-12,1 TIMES A DAY,Cancer,2,PENDING,0
+10,D001,P1001,FLU,2024-12-13,FLU MEDICINE,2024-12-12,1 TIMES A DAY,Cancer,2,PENDING,0
+01,D001,P1002,diarrhea,2024-12-12,none,2024-12-12,minor,Ibuprofen,2,DISPENSED,1
