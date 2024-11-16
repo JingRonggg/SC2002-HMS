@@ -120,7 +120,7 @@ public class AppointmentRepository implements IAppointmentRepository {
     @Override
     public HashMap<String, Appointment> getScheduledPatientAppointment(String patientID) {
         return filterAppointments(appointment ->
-                appointment.getPatientID().equals(patientID) &&
+                appointment.getPatientID() != null && appointment.getPatientID().equals(patientID) &&
                         !appointment.getStatus().equals(AppointmentStatus.COMPLETED) &&
                         !appointment.getStatus().equals(AppointmentStatus.CANCELLED));
     }
@@ -191,7 +191,7 @@ public class AppointmentRepository implements IAppointmentRepository {
         try {
             for (String appointmentID : appointments.keySet()) {
                 Appointment appointment = appointments.get(appointmentID);
-                if (!appointment.getPatientID().equals("null")){
+                if (!appointment.getStatus().equals(AppointmentStatus.NOT_AVAILABLE) && !appointment.getPatientID().equals("null")){
                     allAppointments.put(appointmentID, appointment);
                 }
             }
