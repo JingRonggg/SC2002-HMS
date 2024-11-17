@@ -1,7 +1,5 @@
 package src.model;
 
-import src.enums.MedicationStorageStatus;
-
 /**
  * Represents storage information for a medication in the system.
  * Tracks the medication name and its current availability status.

@@ -1,6 +1,6 @@
 package src.repository;
 
-import src.enums.MedicationStorageStatus;
+import src.model.MedicationStorageStatus;
 import src.interfaces.IMedicineRepository;
 import src.model.MedicationStorage;
 

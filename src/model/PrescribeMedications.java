@@ -1,7 +1,5 @@
 package src.model;
 
-import src.enums.PrescribeMedicationsStatus;
-
 /**
  * Represents a prescription for medications in the system.
  * This class handles the details of a medication prescription including the medicine name,

@@ -1,6 +1,6 @@
 package src.controller;
 
-import src.enums.AppointmentStatus;
+import src.model.AppointmentStatus;
 import src.interfaces.IAdminRepository;
 import src.interfaces.IAppointmentRepository;
 import src.interfaces.IMedicalRecordRepository;

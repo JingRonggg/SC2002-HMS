@@ -1,4 +1,4 @@
-package src.enums;
+package src.model;
 
 /**
  * Enum representing the different possible statuses of prescribed medications in the hospital system.

@@ -1,7 +1,7 @@
 package src.utils;
 
 import src.controller.AppointmentController;
-import src.enums.AppointmentStatus;
+import src.model.AppointmentStatus;
 import src.model.Appointment;
 
 import java.io.BufferedReader;

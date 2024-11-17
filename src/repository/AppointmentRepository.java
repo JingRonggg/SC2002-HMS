@@ -1,6 +1,6 @@
 package src.repository;
 
-import src.enums.AppointmentStatus;
+import src.model.AppointmentStatus;
 import src.interfaces.IAppointmentRepository;
 import src.model.Appointment;
 import src.model.AppointmentWrapper;

@@ -1,7 +1,7 @@
 package src.utils;
 
 import src.controller.MedicalRecordController;
-import src.enums.PrescribeMedicationsStatus;
+import src.model.PrescribeMedicationsStatus;
 import src.model.MedicalRecord;
 import src.model.PastDiagnosis;
 import src.model.PrescribeMedications;

@@ -1,6 +1,6 @@
 package src.view;
 
-import src.enums.AppointmentStatus;
+import src.model.AppointmentStatus;
 import src.model.Appointment;
 import src.model.MedicalRecord;
 import src.model.PrescribeMedications;
