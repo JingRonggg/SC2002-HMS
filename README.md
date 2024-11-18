@@ -173,7 +173,7 @@ PASSWORD: password
 
 ```bash
 #Doctor
-USERID: D001
+USERID: D002
 PASSWORD: password
 
 #Pharmacist
