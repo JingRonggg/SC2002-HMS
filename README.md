@@ -12,7 +12,7 @@
 [Ong Wee Kiat,Ryan](https://github.com/RyanOngWK)|
 [Ong Yao Sheng](https://github.com/kuehlapis)|
 
-**Docs:** [Report](https://github.com/JingRonggg/SC2002-HMS/blob/main/HMSReport.pdf) | 
+**Docs:** [Report](https://github.com/JingRonggg/SC2002-HMS/blob/main/report/HMSReport.pdf) | 
 [UML Class Diagram](https://github.com/JingRonggg/SC2002-HMS/blob/main/UML/SC2002-HMS.pdf) |
 [Java Docs](https://github.com/JingRonggg/SC2002-HMS/blob/main/doc/index.html)
 ## 📋 Project Overview
